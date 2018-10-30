@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnshu.sildenafil.system.mapper.StudentDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jnshu.sildenafil.system.domain.Student">
+        <id column="id" property="id" />
+        <result column="create_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
+        <result column="update_by" property="updateBy" />
+        <result column="openid" property="openid" />
+        <result column="nickname" property="nickname" />
+        <result column="grade" property="grade" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="bean" property="bean" />
+        <result column="status" property="status" />
+        <result column="img" property="img" />
+        <result column="max_cont_sign" property="maxContSign" />
+        <result column="cont_sign" property="contSign" />
+        <result column="total_sign" property="totalSign" />
+    </resultMap>
+
+</mapper>
