@@ -54,10 +54,10 @@ public class Student implements Serializable {
     private String nickname;
 
     /**
-     * 年级
+     * 年级（默认为全部0，初一1，初二2，初二3，高一4，高二5，高三6）
      */
     @TableField("grade")
-    private String grade;
+    private Integer grade;
 
     /**
      * 邮箱
@@ -149,11 +149,11 @@ public class Student implements Serializable {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
     public String getEmail() {

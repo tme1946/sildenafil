@@ -18,7 +18,7 @@ public class SildenafilApplicationTests {
         long time = System.currentTimeMillis();
         User user = new User();
         user.setCreateAt(time);
-        user.setCreateBy("Taimur");
+        user.setCreateBy("GengGui");
         user.setPassword("dfaffafaffasfdfdsf");
         user.setRoleId(2323l);
         user.setUpdateAt(time);
