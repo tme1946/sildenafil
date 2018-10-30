@@ -1,6 +1,8 @@
 package com.jnshu.sildenafil;
 
+import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.domain.User;
+import com.jnshu.sildenafil.system.service.StudentService;
 import com.jnshu.sildenafil.system.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,20 +13,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SildenafilApplicationTests {
+    long TIME = System.currentTimeMillis();
     @Autowired
-    UserService userService;
+    StudentService studentService;
     @Test
     public void contextLoads() {
-        long time = System.currentTimeMillis();
-        User user = new User();
-        user.setCreateAt(time);
-        user.setCreateBy("GengGui");
-        user.setPassword("dfaffafaffasfdfdsf");
-        user.setRoleId(2323l);
-        user.setUpdateAt(time);
-        user.setUpdateBy("Taimur");
-        user.setUserName("tom");
-        userService.save(user);
+//        Student student = new Student();
+//        student.setCreateAt(TIME);
+//        student.setUpdateAt(TIME);
+//        student.setUpdateBy("Taimur");
+//        student.setNickname("tom"+student.getId());
+//        student.setBean(666);
+//        student.setOpenid("dsjfo;isdjfi;ldsjfli");
+//        student.setEmail("fajklajf@666.com");
+//        student.setPhone(12312312312l);
+//        student.setGrade(1);
+//        student.setStatus(0);
+//        student.setImg("ifoidsjfoidsjfids");
+//        student.setMaxContSign(666);
+//        student.setContSign(666);
+//        student.setTotalSign(666);
+//        studentService.save(student);
+
     }
 
 }
