@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Taimur
- * @since 2018-10-30
+ * @since 2018-10-31
  */
 public class Sign implements Serializable {
 
@@ -26,8 +26,8 @@ public class Sign implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("creat_at")
-    private Long creatAt;
+    @TableField("create_at")
+    private Long createAt;
 
     /**
      * 学生id
@@ -42,12 +42,12 @@ public class Sign implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getCreatAt() {
-        return creatAt;
+    public Long getCreateAt() {
+        return createAt;
     }
 
-    public void setCreatAt(Long creatAt) {
-        this.creatAt = creatAt;
+    public void setCreateAt(Long createAt) {
+        this.createAt = createAt;
     }
     public Long getStudentId() {
         return studentId;
@@ -61,7 +61,7 @@ public class Sign implements Serializable {
     public String toString() {
         return "Sign{" +
         "id=" + id +
-        ", creatAt=" + creatAt +
+        ", createAt=" + createAt +
         ", studentId=" + studentId +
         "}";
     }

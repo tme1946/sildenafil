@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.jnshu.sildenafil.system.domain.Sign">
         <id column="id" property="id" />
-        <result column="creat_at" property="creatAt" />
+        <result column="create_at" property="createAt" />
         <result column="student_id" property="studentId" />
     </resultMap>
 

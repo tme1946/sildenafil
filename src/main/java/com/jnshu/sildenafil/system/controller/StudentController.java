@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author Taimur
- * @since 2018-10-30
+ * @since 2018-10-31
  */
 @Controller
 @RequestMapping("/system/student")
