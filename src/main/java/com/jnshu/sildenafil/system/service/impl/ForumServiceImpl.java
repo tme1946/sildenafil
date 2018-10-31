@@ -38,14 +38,12 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
             wrapper.in("student_id",idList);
         }
         if(title != null){
-            wrapper.like("title",title);
-        }
-        if(end == 0){
-            wrapper.ge("create_at",start);
-        }else if(start == 0){
-            wrapper.le("create_at",end);
-        }else{
             wrapper.between("create_at",start,end);
+        }
+        if(end != 0){
+            wrapper.between("create_at",start,end);
+        }else if(start != 0) {
+            wrapper.ge("create_at", start);
         }
         wrapper.select("title","body","student_id","create_at");
         return forumDao.selectList(wrapper);
