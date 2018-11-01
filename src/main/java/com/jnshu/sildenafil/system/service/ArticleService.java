@@ -35,6 +35,6 @@ public interface ArticleService extends IService<Article> {
      * @param article
      * @return 成功后返回修改的记录的id
      */
-    long changeArticle(Article article);
+    Long changeArticle(Article article);
 
 }

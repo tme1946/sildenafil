@@ -1,7 +1,9 @@
 spring:
-  #Î´Ê¹ÓÃredis£¬ÅäÎªnone
+  #æœªä½¿ç”¨redisï¼Œé…ä¸ºnone
   session:
     store-type: none
+  profiles:
+      active: local
   datasource:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
@@ -9,46 +11,47 @@ spring:
       url: jdbc:mysql://118.24.35.164:3306/sildenafil?useUnicode=true&characterEncoding=utf8
       username: root
       password: admin
-      # Á¬½Ó³ØÅäÖÃ
+      # è¿æ¥æ± é…ç½®
       initial-size: 5
       min-idle: 5
       max-active: 20
-      # Á¬½ÓµÈ´ı³¬Ê±Ê±¼ä
+      # è¿æ¥ç­‰å¾…è¶…æ—¶æ—¶é—´
       max-wait: 30000
-      # ÅäÖÃ¼ì²â¿ÉÒÔ¹Ø±ÕµÄ¿ÕÏĞÁ¬½Ó¼ä¸ôÊ±¼ä
+      # é…ç½®æ£€æµ‹å¯ä»¥å…³é—­çš„ç©ºé—²è¿æ¥é—´éš”æ—¶é—´
       time-between-eviction-runs-millis: 60000
-      # ÅäÖÃÁ¬½ÓÔÚ³ØÖĞµÄ×îĞ¡Éú´æÊ±¼ä
+      # é…ç½®è¿æ¥åœ¨æ± ä¸­çš„æœ€å°ç”Ÿå­˜æ—¶é—´
       min-evictable-idle-time-millis: 300000
       validation-query: select '1' from dual
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      #      # ´ò¿ª PSCache£¬²¢ÇÒÖ¸¶¨Ã¿¸öÁ¬½ÓÉÏPSCacheµÄ´óĞ¡
-      #      pool-prepared-statements: true
-      #      max-open-prepared-statements: 20
-      #      max-pool-prepared-statement-per-connection-size: 20
-      #      # ÅäÖÃ¼à¿ØÍ³¼ÆÀ¹½ØµÄfilters, È¥µôºó¼à¿Ø½çÃæsqlÎŞ·¨Í³¼Æ, 'wall'ÓÃÓÚ·À»ğÇ½
-      #      filters: stat,wall
-      #      # Spring¼à¿ØAOPÇĞÈëµã£¬Èçx.y.z.service.*,ÅäÖÃ¶à¸öÓ¢ÎÄ¶ººÅ·Ö¸ô
-      #      aop-patterns: com.springboot.servie.*
-      #      # WebStatFilterÅäÖÃ
-      #      web-stat-filter:
-      #        enabled: true
-      #        # Ìí¼Ó¹ıÂË¹æÔò
-      #        url-pattern: /*
-      #        # ºöÂÔ¹ıÂËµÄ¸ñÊ½
-      #        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-      #
-      # StatViewServletÅäÖÃ
+#      æ‰“å¼€ PSCacheï¼Œå¹¶ä¸”æŒ‡å®šæ¯ä¸ªè¿æ¥ä¸ŠPSCacheçš„å¤§å°
+#      pool-prepared-statements: true
+#      max-open-prepared-statements: 20
+#      max-pool-prepared-statement-per-connection-size: 20
+#      # é…ç½®ç›‘æ§ç»Ÿè®¡æ‹¦æˆªçš„filters, å»æ‰åç›‘æ§ç•Œé¢sqlæ— æ³•ç»Ÿè®¡, 'wall'ç”¨äºé˜²ç«å¢™
+#      filters: stat,wall
+#      # Springç›‘æ§AOPåˆ‡å…¥ç‚¹ï¼Œå¦‚x.y.z.service.*,é…ç½®å¤šä¸ªè‹±æ–‡é€—å·åˆ†éš”
+#      aop-patterns: com.springboot.servie.*
+#      # WebStatFilteré…ç½®
+#      web-stat-filter:
+#        enabled: true
+#        # æ·»åŠ è¿‡æ»¤è§„åˆ™
+#        url-pattern: /*
+#        # å¿½ç•¥è¿‡æ»¤çš„æ ¼å¼
+#      exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#
+#      StatViewServleté…ç½®
       stat-view-servlet:
         enabled: true
-        # ·ÃÎÊÂ·¾¶Îª/druidÊ±£¬Ìø×ªµ½StatViewServlet
+        # è®¿é—®è·¯å¾„ä¸º/druidæ—¶ï¼Œè·³è½¬åˆ°StatViewServlet
         url-pattern: /druid/*
-        # ÊÇ·ñÄÜ¹»ÖØÖÃÊı¾İ
+        # æ˜¯å¦èƒ½å¤Ÿé‡ç½®æ•°æ®
         reset-enable: false
-        # ĞèÒªÕËºÅÃÜÂë²ÅÄÜ·ÃÎÊ¿ØÖÆÌ¨
+        # éœ€è¦è´¦å·å¯†ç æ‰èƒ½è®¿é—®æ§åˆ¶å°
         login-username: druid
         login-password: druid123
+
 
 mybatis-plus:
   type-aliases-package: com.jnshu.sildenafil.system.domain
