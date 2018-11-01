@@ -2,6 +2,8 @@ spring:
   #未使用redis，配为none
   session:
     store-type: none
+  profiles:
+      active: local
   datasource:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
@@ -49,6 +51,7 @@ spring:
         # 需要账号密码才能访问控制台
         login-username: druid
         login-password: druid123
+
 
 mybatis-plus:
   type-aliases-package: com.jnshu.sildenafil.system.domain
