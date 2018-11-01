@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class ArticleServiceImp extends ServiceImpl<ArticleDao, Article> implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements ArticleService {
 
     @Autowired(required = false)
     private ArticleDao articleDao;
