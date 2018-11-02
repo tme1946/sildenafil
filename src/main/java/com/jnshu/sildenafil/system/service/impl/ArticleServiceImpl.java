@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * <p>
  *  服务实现类
  * </p>
- *
+ *TODO
  * @author feifei
  * @since 2018-10-30
  */
@@ -35,7 +35,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         //调整page和size--默认会调整
 //        page= page<=1? 1 : page;
 //        size= size<=1||size>20 ? 10 : size;
-        MyPage pageQuery=new MyPage(page,size).setDesc("update_at");
+        IPage<Article> pageQuery=new MyPage<Article>(page,size).setDesc("update_at");
         QueryWrapper<Article> queryWrapper=new QueryWrapper<>();
         if(article!=null) {
             queryWrapper
@@ -45,7 +45,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
                     .eq(null != article.getStatus(), "status", article.getStatus())
             ;
         }
-        IPage articleIPage=articleDao.selectPage(pageQuery,queryWrapper);
+        IPage articleIPage=articleDao.selectPage( pageQuery,queryWrapper);
         if(articleIPage.getRecords().size()>0)
         {
             log.info("result for pageArticleList's size is {}",articleIPage.getRecords().size());
@@ -55,8 +55,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         return articleIPage;
     }
 
-    /**
-     * @return
+
+    /**查询单个文章
+     * @param articleId
+     * @return 查询结果
      */
     @Override
     public  Article getArticle(Long articleId) {
@@ -71,36 +73,53 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         }
     }
 
+    /**保存文章
+     * @param article
+     * @return 保存后的文章信息
+     */
     @Override
     public Article saveArticle(Article article) {
         log.info("args for saveArticle is: {}",article);
         //参数验证，验证必要的参数是否填了；
-        article.setCreateAt(System.currentTimeMillis());
-        article.setUpdateAt(System.currentTimeMillis());
-        article.setCreateBy("studentId:"+article.getId());
-        article.setUpdateBy("studentId:"+article.getId());
-        long l= articleDao.insert(article)>0 ? article.getId() : -3002;
-        log.info("result for save articleId={};{}",l,article);
-        return article;
+        try{
+            if(article.getId()==null||article.getAuthor()==null||article.getTitle()==null
+                ||article.getType()==null||article.getBody()==null||article.getCover()==null
+                ||article.getDigest()==null){throw new NullPointerException();}
+            article.setCreateAt(System.currentTimeMillis());
+            article.setUpdateAt(System.currentTimeMillis());
+            article.setCreateBy("studentId:"+article.getId());
+            article.setUpdateBy("studentId:"+article.getId());
+            long l= articleDao.insert(article)>0 ? article.getId() : -3002;
+            log.info("result for saveArticle success;result detail: articleId={};{}",l,article);
+            return article;
+        }catch(NullPointerException npe) {
+            log.error("result for saveArticle error;reason is args error;detail exception is:{}",(Object)npe.getStackTrace());
+            return null;
+        }
     }
 
+    /**更改文章信息
+     * @param article 待更改的信息
+     * @return 更改的文章id
+     */
     @Override
     public Long changeArticle(Article article) {
         log.info("changeArticle's args is {}",article);
         //参数验证
         try {
-            if(article.getId()==null){throw new NullPointerException();}//此句话同时判断article和articleI的是否为null
+            //article为null或articleId为null都抛异常；
+            if(article.getId()==null){throw new NullPointerException();}
             article.setUpdateAt(System.currentTimeMillis());
             //设置更改人；如果是后台管理员，改为管理员id
             article.setUpdateBy("studentId:" + article.getId());
+            //id符合格式，但是不存在报错为-3003
             long l = articleDao.updateById(article) > 0 ? article.getId() : -3003;
             log.info("result for change articleId={}", l);
             return l;
         }catch(NullPointerException npe){
             //article为null;或article.getId为null；
-            log.error("changeArticle error;reason is args null; exception detail message is:{}",npe.getStackTrace());
+            log.error("changeArticle error;reason is args null; exception detail message is:{}", (Object) npe.getStackTrace());
             return null;
         }
     }
-
 }
