@@ -3,6 +3,8 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.util.First;
+import com.jnshu.sildenafil.util.Second;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +26,7 @@ public class Article implements Serializable {
     /**
      * 文章id
      */
-    @NotNull(message = "{article.id.validation.error}")
+    @NotNull(message = "{article.id.validation.error}", groups=First.class)
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -55,46 +57,46 @@ public class Article implements Serializable {
     /**
      * 文章作者
      */
-    @Max(value = 20,message = "{article.author.validation.maxError}")
-    @NotBlank(message = "{article.author.validation.error}")
+    @Max(value = 20,message = "{article.author.validation.maxError}",groups = Second.class)
+    @NotBlank(message = "{article.author.validation.error}",groups = Second.class)
     @TableField("author")
     private String author;
 
     /**
      * 文章正文
      */
-    @NotBlank(message = "{article.body.validation.error}")
+//    @NotBlank(message = "{article.body.validation.error}")
     @TableField("body")
     private String body;
 
     /**
      * 类型（默认0正常，1banner）
      */
-    @TableField("type")
-    @NotNull(message = "{article.type.validation.error}")
+//    @TableField("type")
+//    @NotNull(message = "{article.type.validation.error}")
     private Integer type;
 
     /**
      * 封面图片链接
      */
-    @Max(value = 100,message = "{article.cover.validation.maxError}")
-    @NotBlank(message = "{article.cover.validation.error}")
+//    @Max(value = 100,message = "{article.cover.validation.maxError}")
+//    @NotBlank(message = "{article.cover.validation.error}")
     @TableField("cover")
     private String cover;
 
     /**
      * 摘要
      */
-    @Max(value = 100,message = "{article.digest.validation.maxError}")
-    @NotBlank(message = "{article.digest.validation.error}")
+//    @Max(value = 100,message = "{article.digest.validation.maxError}")
+//    @NotBlank(message = "{article.digest.validation.error}")
     @TableField("digest")
     private String digest;
 
     /**
      * 标题
      */
-    @Max(value = 50,message = "{article.title.validation.maxError}")
-    @NotBlank(message = "{article.title.validation.error}")
+//    @Max(value = 50,message = "{article.title.validation.maxError}")
+//    @NotBlank(message = "{article.title.validation.error}")
     @TableField("title")
     private String title;
 
@@ -113,7 +115,7 @@ public class Article implements Serializable {
     /**
      * 状态（默认0下架，1上架）
      */
-    @NotNull(message = "{article.status.validation.error}")
+//    @NotNull(message = "{article.status.validation.error}")
     @TableField("status")
     private Integer status;
 

@@ -22,18 +22,22 @@ public class ValidationUtils {
      * @see
      * @since
      */
-    public static <T> void validate(T obj) {
-        //校验的结果集
-        Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
-        try {
-            if (constraintViolations.size() > 0) {
-                for (ConstraintViolation<T> constraintViolation : constraintViolations) {
-                    System.out.println(constraintViolation);
-                }
-                throw new ServiceExcetpion(String.format("args validation error:%s", constraintViolations.iterator().next().getMessage()));
-            }
-        }catch(ServiceExcetpion se) {
-            log.error("validation error;detail message is: {}",se.getMessage());
+    public static <T> void validate(T obj,Class<?>... groups) throws ServiceExcetpion {
+        //校验的结果集，groups为校验组；
+        //Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj,groups);
+
+        if (constraintViolations.size() > 0) {
+//            log.error("validation error;detail message is: {}",
+//                    constraintViolations.iterator().next().getMessage());
+//                for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+//
+//                    System.out.println(constraintViolation);
+//                }
+            throw new ServiceExcetpion(
+                    String.format("args validation error:%s",
+                            constraintViolations.iterator().next().getMessage()));
+
         }
     }
 }
