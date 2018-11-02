@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 public class SildenafilApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SildenafilApplication.class, args);
     }

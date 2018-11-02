@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @ProjectName: sildenafil
  * @Package: com.jnshu.sildenafil.common
  * @ClassName: MyBatisPlus
- * @Description: java类作用描述
+ * @Description: mybatisPlus配置类
  * @Author: Taimur
  * @CreateDate: 2018/10/30 19:26
  */
