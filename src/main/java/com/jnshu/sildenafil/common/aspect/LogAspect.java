@@ -35,7 +35,7 @@ public class LogAspect {
 //    private LogService logService;
 
 
-    @Pointcut("@annotation(com.jnshu.task.common.annotation.Log)")
+    @Pointcut("@annotation(com.jnshu.sildenafil.common.annotation.Log)")
     public void pointcut() {
         // do nothing
     }
