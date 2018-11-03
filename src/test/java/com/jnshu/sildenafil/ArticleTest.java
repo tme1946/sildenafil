@@ -38,7 +38,7 @@ public class ArticleTest {
     @Test
     public void changeArticle() {
         Article article=new Article();
-        articleService.changeArticle(null);
+        articleService.changeArticle(article);
     }
 
     @Test
@@ -46,6 +46,12 @@ public class ArticleTest {
         Article article=new Article();
 //        article.setAuthor("yuefeifei");
 //        @Valid
-        ValidationUtils.validate(article);
+//        ValidationUtils.validate(article);
+    }
+
+    @Test
+    public void save() {
+        Article article=new Article();
+        articleService.saveArticle(article);
     }
 }

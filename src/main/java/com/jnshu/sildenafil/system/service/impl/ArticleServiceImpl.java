@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jnshu.sildenafil.system.domain.Article;
 import com.jnshu.sildenafil.system.mapper.ArticleDao;
 import com.jnshu.sildenafil.system.service.ArticleService;
-import com.jnshu.sildenafil.util.MyPage;
+import com.jnshu.sildenafil.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,9 +82,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         log.info("args for saveArticle is: {}",article);
         //参数验证，验证必要的参数是否填了；
         try{
-            if(article.getId()==null||article.getAuthor()==null||article.getTitle()==null
-                ||article.getType()==null||article.getBody()==null||article.getCover()==null
-                ||article.getDigest()==null){throw new NullPointerException();}
+            ValidationUtils.validate(article);
             article.setCreateAt(System.currentTimeMillis());
             article.setUpdateAt(System.currentTimeMillis());
             article.setCreateBy("studentId:"+article.getId());
@@ -92,6 +90,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             long l= articleDao.insert(article)>0 ? article.getId() : -3002;
             log.info("result for saveArticle success;result detail: articleId={};{}",l,article);
             return article;
+        }catch(ServiceExcetpion se){
+          log.error("result for saveArticle error;reason is args error;detail exception is:{}",
+                  se.getMessage());
+          return null;
         }catch(NullPointerException npe) {
             log.error("result for saveArticle error;reason is args error;detail exception is:{}",(Object)npe.getStackTrace());
             return null;
@@ -108,7 +110,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         //参数验证
         try {
             //article为null或articleId为null都抛异常；
-            if(article.getId()==null){throw new NullPointerException();}
+//            if(article.getId()==null){throw new NullPointerException();}
+            ValidationUtils.validate(article,First.class);
             article.setUpdateAt(System.currentTimeMillis());
             //设置更改人；如果是后台管理员，改为管理员id
             article.setUpdateBy("studentId:" + article.getId());
@@ -116,6 +119,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             long l = articleDao.updateById(article) > 0 ? article.getId() : -3003;
             log.info("result for change articleId={}", l);
             return l;
+        }catch(ServiceExcetpion se){
+            log.error("result for changeArticle error;reason is args error;detail exception is:{}",
+                    se.getMessage());
+            return null;
         }catch(NullPointerException npe){
             //article为null;或article.getId为null；
             log.error("changeArticle error;reason is args null; exception detail message is:{}", (Object) npe.getStackTrace());
