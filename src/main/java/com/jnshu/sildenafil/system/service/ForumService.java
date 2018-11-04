@@ -20,5 +20,5 @@ public interface ForumService extends IService<Forum> {
      * @param [title, author, start, end]
      * @return  java.util.List<com.jnshu.sildenafil.system.domain.Forum>
      */
-    IPage FormFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end);
+    IPage ForumFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end);
 }

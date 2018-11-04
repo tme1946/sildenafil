@@ -2,6 +2,7 @@ package com.jnshu.sildenafil;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.Assert;
 import com.jnshu.sildenafil.system.domain.Forum;
 import com.jnshu.sildenafil.system.domain.Student;
@@ -31,6 +32,8 @@ public class SildenafilApplicationTests {
     ForumDao forumDao;
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    ForumService forumService;
     @Test
     public void contextLoads() {
 //        Student student = new Student();
@@ -50,24 +53,26 @@ public class SildenafilApplicationTests {
 //        student.setTotalSign(666);
 //        studentService.save(student);
 //        System.out.println(TIME%(TIME/1000));
-        String title = "233";
-        String nickname = "tom";
-        QueryWrapper<Student> studentWrapper = new QueryWrapper<>();
-        studentWrapper.select("id").like("nickname",nickname);
-        List<Student> stuList = studentDao.selectList(studentWrapper);
-        List idList = stuList.stream().map(Student::getId).collect(Collectors.toList());
-        QueryWrapper<Forum> wrapper = new QueryWrapper<>();
-        wrapper.in("student_id",idList);
-        //wrapper.like("title",title);
-        wrapper.select("title","body","student_id");
-        List list = forumDao.selectList(wrapper);
-        for (Object o : list) {
-            System.out.println(o);
-        }
+//        String title = "233";
+//        String nickname = "tom";
+//        QueryWrapper<Student> studentWrapper = new QueryWrapper<>();
+//        studentWrapper.select("id").like("nickname",nickname);
+//        List<Student> stuList = studentDao.selectList(studentWrapper);
+//        List idList = stuList.stream().map(Student::getId).collect(Collectors.toList());
+//        QueryWrapper<Forum> wrapper = new QueryWrapper<>();
+//        wrapper.in("student_id",idList);
+//        //wrapper.like("title",title);
+//        wrapper.select("title","body","student_id");
+//        List list = forumDao.selectList(wrapper);
+//        for (Object o : list) {
+//            System.out.println(o);
+//        }
 //
 //        long id = 1;
 //        int total = studentDao.selectById(id).getTotalSign();
 //        System.out.println(total);
+        IPage iPage = forumService.ForumFuzzySelect(1,2,null,null, 1540908414565l,1541315652000l);
+        System.out.println(iPage.getRecords());
     }
 
 }

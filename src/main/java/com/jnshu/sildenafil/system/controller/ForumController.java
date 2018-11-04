@@ -23,7 +23,7 @@ public class ForumController {
     @GetMapping(value = "/a/u/common/bbs/list")
     public ResponseBo forumList(Integer page, Integer size
             , String title, String author, Long start, Long end){
-        IPage forumList = forumService.FormFuzzySelect(page,size,title,author,start,end);
+        IPage forumList = forumService.ForumFuzzySelect(page,size,title,author,start,end);
         return ResponseBo.ok().put("forumList",forumList);
     }
 
