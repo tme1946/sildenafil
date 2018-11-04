@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil.common.Config;
+package com.jnshu.sildenafil.common.config;
 
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.hibernate.validator.resourceloading.PlatformResourceBundleLocator;

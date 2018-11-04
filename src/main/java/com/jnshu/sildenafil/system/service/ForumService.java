@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Forum;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,5 +20,5 @@ public interface ForumService extends IService<Forum> {
      * @param [title, author, start, end]
      * @return  java.util.List<com.jnshu.sildenafil.system.domain.Forum>
      */
-    public List<Forum> FormFuzzySelect(String title,String author,long start,long end);
+    IPage FormFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end);
 }
