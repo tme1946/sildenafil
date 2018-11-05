@@ -8,15 +8,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author Taimur
- * @since 2018-10-31
+ * @author lihoo
+ * @since 2018-11-02
  */
 public interface SignService extends IService<Sign> {
 
     /**
-     * <p>
-     * 插入一条记录（选择字段，策略插入）
-     * </p>
+     * 学生签到
      *
      * @param studentId 实体对象
      * @return 签到是否成功
