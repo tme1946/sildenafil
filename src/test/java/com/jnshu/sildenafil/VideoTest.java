@@ -2,7 +2,7 @@ package com.jnshu.sildenafil;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -128,16 +129,96 @@ public class VideoTest {
 //        System.out.println(newVideo);
     }
 
-
     @Test
     public void testGetVideoPage() {
 
         IPage aaaa = videoService
-                .getPage(1,5, null, null, null, null,
-                        1, null, 1, null,
-                        null,1);
+                .getPage(1,5, "b", null, null, null,
+                        null, null, null, null,
+                        null,null);
         aaaa.getRecords().forEach(System.out::println);
 
 
+    }
+
+    @Test
+    public void updateVideo() {
+        Video v = new Video();
+        v.setId(10L);
+        v.setGrade(6);
+        v.setSubject(6);
+        v.setTeacherId(6L);
+        v.setTitle("6");
+        v.setType(0);
+        v.setCover("6");
+        v.setDigest("6");
+        v.setUrl("6");
+        v.setBody("6");
+
+        System.out.println(videoDao.updateById(v));
+
+    }
+
+    @Test
+    public void update() {
+        Video v = new Video();
+        v.setId(11L);
+        v.setGrade(2);
+        v.setSubject(2);
+        v.setTeacherId(2L);
+        v.setTitle("2");
+        v.setType(0);
+        v.setCover("2");
+        v.setDigest("2");
+        v.setUrl("2");
+        v.setBody("2");
+        Long aaaa = videoService.updateVideo(v);
+        System.out.println(aaaa);
+
+    }
+
+    @Test
+    public void getVById() {
+        Long id = 13L;
+
+        Video v = videoService.getVideoById(id);
+//        System.out.println(v.getGrade());
+//        System.out.println(v.getSubject());
+        System.out.println(v.getTitle());
+        System.out.println(v.getUpdateAt());
+//        System.out.println(v.getTeacherId());//将id转换为老师名,service安排一下
+        System.out.println(teacherDao.selectById(v.getTeacherId()).getNickname());
+
+//        封装一个通过videoId来查询老师名的
+
+
+//        System.out.println(v.getType());//判断是card还是banner，进入视频详情还用分banner和card？？？
+//        System.out.println(v.getCover());
+        System.out.println(v.getDigest());
+        System.out.println(v.getUrl());
+        System.out.println(v.getBody());
+        System.out.println(v.getLikeAmount());
+        System.out.println(v.getCollectionAmount());
+    }
+
+    @Test
+    public void idToNickname() {
+        Long tid = 2L;
+        QueryWrapper<Teacher> tqw = new QueryWrapper<>();
+        tqw.select("nickname").eq("id", tid);
+        Teacher teacherbenren = teacherDao.selectOne(tqw);
+        System.out.println(teacherbenren);
+        System.out.println(teacherbenren.getNickname());
+
+        List nameList = new ArrayList<>();
+        nameList.add(teacherbenren);
+//        System.out.println(nameList);
+//        tqw.in("teacher_id", nameList);
+    }
+
+    @Test
+    public void deleteVideo() {
+        Boolean aaa = videoService.removeVideoById(52L);
+        System.out.println(aaa);
     }
 }

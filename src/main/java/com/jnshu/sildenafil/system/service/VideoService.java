@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -62,5 +64,21 @@ public interface VideoService extends IService<Video> {
      * @return 更新后的视频id
      */
     Long updateVideo(Video video);
+
+    /**
+     * 后台更新视频上下架状态
+     * @param status 上下架
+     * @return 更新上下架视频id
+     */
+//    Long updateStatus(Integer status);
+
+    //    前台点赞PUT
+//    Long addLikeAmount(Integer like);
+
+    //    前台收藏PUT
+//    Long addCollectionAmount(Integer collection);
+
+    //    前台Banner视频列表
+//    List getBannerList(Integer page, Integer size,  );
 
 }
