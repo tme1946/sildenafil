@@ -18,6 +18,7 @@
         <result column="subject" property="subject" />
         <result column="digest" property="digest" />
         <result column="title" property="title" />
+        <result column="time_length" property="timeLength" />
         <result column="like_amount" property="likeAmount" />
         <result column="collection_amount" property="collectionAmount" />
         <result column="status" property="status" />

@@ -104,8 +104,6 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
         log.info("args for saveVideo is: {}", videoId);
         if (videoId != null) {
             Video video = videoDao.selectById(videoId);
-            String teacherNickname = teacherDao.selectById(video.getTeacherId()).getNickname();
-
             log.info("result of getVideoById is: {}", video);
             return video;
         } else {
@@ -126,10 +124,10 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             ValidationUtils.validate(video);
             video.setCreateAt(NOW);
             video.setUpdateAt(NOW);
-            //后台管理员userName
-            video.setCreateBy("userName");
-            //后台管理员userName
-            video.setUpdateBy("userName");
+            //后台管理员admin
+            video.setCreateBy("admin");
+            //后台管理员admin
+            video.setUpdateBy("admin");
             if (video.getType() == 1) {
                 video.setCover(video.getCover());
             } else if (video.getType() == 0) {
@@ -137,7 +135,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             } else {
                 log.info("type false.");
             }
-            videoDao.insert(video);
+            Long id = videoDao.insert(video) > 0 ? video.getId() : -10000;
+            log.info("result for saveVideo success; result detail: videoId={}; {}", id, video);
             return video;
         } catch (ServiceExcetpion serviceExcetpion) {
             log.error("服务出错: {}", serviceExcetpion.getMessage());

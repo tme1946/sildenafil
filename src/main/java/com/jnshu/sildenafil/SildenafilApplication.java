@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author lihoo
+ */
 @MapperScan("com.jnshu.sildenafil.system.mapper")
 @SpringBootApplication
 @EnableTransactionManagement

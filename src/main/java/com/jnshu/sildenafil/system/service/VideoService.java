@@ -40,7 +40,7 @@ public interface VideoService extends IService<Video> {
     /**
      * 前台查询视频详情
      * @param videoId 视频id
-     * @return 增加的视频详情
+     * @return 查询到的视频详情
      */
     Video getVideoById(Long videoId);
 

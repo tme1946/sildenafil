@@ -6,6 +6,7 @@ import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
+import com.jnshu.sildenafil.system.service.TeacherService;
 import com.jnshu.sildenafil.system.service.VideoService;
 import com.jnshu.sildenafil.util.MyPage;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,9 @@ public class VideoTest {
 
     @Autowired
     private VideoService videoService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @Test
     public void teacherName() {
@@ -95,18 +99,19 @@ public class VideoTest {
     @Test
     public void addVideo() {
         Video v = new Video();
-        v.setGrade(4);
-        v.setSubject(7);
+        v.setGrade(1);
+        v.setSubject(1);
         //传入老师id,返回老师名和头像
-        v.setTeacherId(2L);
-        v.setTitle("testTitle");
-        //是card还是banner
+        v.setTeacherId(4L);
+        v.setTitle("黑人问号的由来");
+        //是0card还是1banner
         v.setType(1);
-        //        //判断是banner还是card
-        v.setCover("testcoverrrrrr");
-        v.setDigest("testDigest");
-        v.setUrl("testUrl");
-        v.setBody("testBody");
+        //判断是banner还是card
+        v.setCover("https:nichoushaaaaaa!!!!");
+        v.setDigest("nba 球员的黑历史");
+        v.setUrl("http:www.nba.com");
+        v.setTimeLength("50:17");
+        v.setBody("qwertyuiopasdfghjklxcvbgnhdfghjk42310.98652798+5643121000054231131");
 
         System.out.println(videoService.saveVideo(v));
 //        Long now = System.currentTimeMillis();
@@ -179,16 +184,14 @@ public class VideoTest {
 
     @Test
     public void getVById() {
-        Long id = 13L;
-
+        Long id = 1L;
         Video v = videoService.getVideoById(id);
 //        System.out.println(v.getGrade());
 //        System.out.println(v.getSubject());
         System.out.println(v.getTitle());
         System.out.println(v.getUpdateAt());
-//        System.out.println(v.getTeacherId());//将id转换为老师名,service安排一下
-        System.out.println(teacherDao.selectById(v.getTeacherId()).getNickname());
-
+        String tname = teacherService.getTeacherById(v.getTeacherId()).getNickname();
+        System.out.println(tname);
 //        封装一个通过videoId来查询老师名的
 
 
@@ -196,6 +199,7 @@ public class VideoTest {
 //        System.out.println(v.getCover());
         System.out.println(v.getDigest());
         System.out.println(v.getUrl());
+        System.out.println(v.getTimeLength());
         System.out.println(v.getBody());
         System.out.println(v.getLikeAmount());
         System.out.println(v.getCollectionAmount());
@@ -220,5 +224,16 @@ public class VideoTest {
     public void deleteVideo() {
         Boolean aaa = videoService.removeVideoById(52L);
         System.out.println(aaa);
+    }
+
+    @Test
+    public void getTimeLength() {
+        System.out.println(videoDao.selectById(1L).getTimeLength());
+    }
+
+    @Test
+    public void BatchTimeLength() {
+//        videoDao.update()
+
     }
 }
