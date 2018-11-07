@@ -102,6 +102,12 @@ public class Video implements Serializable {
     private String title;
 
     /**
+     * 视频时长
+     */
+    @TableField("time_length")
+    private String timeLength;
+
+    /**
      * 点赞数，默认0
      */
     @TableField("like_amount")
@@ -221,6 +227,14 @@ public class Video implements Serializable {
         return likeAmount;
     }
 
+    public String getTimeLength() {
+        return timeLength;
+    }
+
+    public void setTimeLength(String timeLength) {
+        this.timeLength = timeLength;
+    }
+
     public void setLikeAmount(Integer likeAmount) {
         this.likeAmount = likeAmount;
     }
@@ -256,6 +270,7 @@ public class Video implements Serializable {
         ", subject=" + subject +
         ", digest=" + digest +
         ", title=" + title +
+        ", timeLength=" + timeLength +
         ", likeAmount=" + likeAmount +
         ", collectionAmount=" + collectionAmount +
         ", status=" + status +
