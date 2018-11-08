@@ -21,4 +21,7 @@ public interface SignService extends IService<Sign> {
      */
     boolean sign(Long studentId);
 
+
+//    进入签到页面。加一个查询当天签到状态
+
 }

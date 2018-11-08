@@ -184,7 +184,7 @@ public class VideoTest {
 
     @Test
     public void getVById() {
-        Long id = 1L;
+        Long id = 50L;
         Video v = videoService.getVideoById(id);
 //        System.out.println(v.getGrade());
 //        System.out.println(v.getSubject());

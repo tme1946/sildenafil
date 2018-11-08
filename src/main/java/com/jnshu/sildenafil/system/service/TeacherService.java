@@ -16,6 +16,8 @@ public interface TeacherService extends IService<Teacher> {
 
 //    IPage getTeacherPage(Integer page, Integer size, );
 
+//    后台查询老师昵称List
+
     /**
      * 后台通过id查询老师详情
      * @param teacherId 老师id
