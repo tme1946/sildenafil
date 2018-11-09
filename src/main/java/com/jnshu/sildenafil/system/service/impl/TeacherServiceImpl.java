@@ -4,7 +4,7 @@ import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jnshu.sildenafil.util.ServiceExcetpion;
+import com.jnshu.sildenafil.util.ServiceException;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -34,6 +34,8 @@ public class SildenafilApplicationTests {
     StudentDao studentDao;
     @Autowired
     ForumService forumService;
+
+
     @Test
     public void contextLoads() {
 //        Student student = new Student();
@@ -67,12 +69,8 @@ public class SildenafilApplicationTests {
 //        for (Object o : list) {
 //            System.out.println(o);
 //        }
-//
-//        long id = 1;
-//        int total = studentDao.selectById(id).getTotalSign();
-//        System.out.println(total);
-        IPage iPage = forumService.ForumFuzzySelect(1,2,null,null, 1540908414565l,1541315652000l);
-        System.out.println(iPage.getRecords());
+        IPage page = studentService.studentFuzzySelect(1,2,null,null,null,null,null,null,1,null);
+        System.out.println(page.getRecords());
     }
 
 }
