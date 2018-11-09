@@ -21,7 +21,7 @@ public class ArticleTest {
     @Test
     public void testPageList() {
         Article article=new Article();
-        articleService.getPageList(1,null,null);
+//        articleService.getPageList(1,null,null);
     }
 
     @Test

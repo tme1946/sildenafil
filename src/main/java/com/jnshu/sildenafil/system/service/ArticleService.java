@@ -18,10 +18,11 @@ public interface ArticleService extends IService<Article> {
      * @param size
      * @return 分页信息和数据信息
      */
-    IPage getPageList(Integer page, Integer size,Article article);
+    IPage getPageList(Integer page, Integer size,Article article,Integer likeStart,Integer likeEnd,
+                      Integer collectionStart,Integer collectionEnd);
     /**
-     * @param articleId
-     * @return
+     * @param articleId 文章id
+     * @return 对应文章
      */
     Article getArticle(Long articleId);
     /**增加文章

@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.util;
 
 
-public interface Second {
+public interface Save {
 }
+
