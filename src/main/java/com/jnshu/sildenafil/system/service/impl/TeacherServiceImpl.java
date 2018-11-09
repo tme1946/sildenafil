@@ -103,7 +103,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
         Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
         log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
         return teacher;
-
     }
 
     /**
