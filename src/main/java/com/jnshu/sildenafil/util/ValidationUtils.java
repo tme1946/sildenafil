@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author feifei
@@ -37,27 +38,25 @@ public class ValidationUtils {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj,groups);
 
         if (constraintViolations.size() > 0) {
+
+            //使用lambda循环拼接校验错误信息
 //<<<<<<< Updated upstream
             //循环输出校验信息
             for (ConstraintViolation<T> constraintViolation : constraintViolations) {
                 System.out.println(constraintViolation.getMessage());
             }
 
-//=======
 //            log.error("validation error;detail message is: {}",
 //                    constraintViolations.iterator().next().getMessage());
 //                for (ConstraintViolation<T> constraintViolation : constraintViolations) {
 //
 //                    System.out.println(constraintViolation);
 //                }
-//>>>>>>> Stashed changes
+
             throw new ServiceException(
                     String.format("args validation error:%s",
-                            constraintViolations.iterator().next().getMessage()));
-
+                            constraintViolations.stream().map(ConstraintViolation::getMessage)
+                            .collect(Collectors.joining(","))));
         }
     }
-
-
-
 }
