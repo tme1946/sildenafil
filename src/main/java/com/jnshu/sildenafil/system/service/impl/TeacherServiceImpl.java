@@ -76,24 +76,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
     @Override
     public Teacher saveTeacher(Teacher teacher) throws ServiceException, ParamIsNullException {
         log.info("args for saveTeacher is: {}", teacher);
-
-        try {
-            ValidationUtils.validate(teacher);
-            teacher.setCreateAt(NOW);
-            teacher.setCreateBy("admin-lihoo");
-            Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
-            log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
-            return teacher;
-        } catch (ServiceException serviceExcetpion) {
-            log.error("service have problem, code: {}", serviceExcetpion.getMessage());
-            return null;
-        } catch (NullPointerException npe) {
-            log.error("F! NullPointerException: {}", (Object) npe.getStackTrace());
-            return null;
-        } catch (Throwable t) {
-            log.error("unknown error: {}", t.getMessage());
-            return null;
-
         if (teacher == null) {
             throw new ParamIsNullException("teacher is null");
         }
