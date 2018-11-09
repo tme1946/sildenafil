@@ -36,7 +36,7 @@ public class Review implements Serializable {
     private Long studentId;
 
     /**
-     * 类型(无默认，0forum/1article/2video
+     * 类型(无默认，1forum/2article/3video
      */
     @TableField("type")
     private Integer type;
