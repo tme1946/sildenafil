@@ -30,8 +30,8 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
     @Autowired
     StudentDao studentDao;
     @Override
-    public IPage ForumFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end){
-        MyPage myPage = new MyPage(page,size).setDesc("create_at");
+    public IPage forumFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end){
+        IPage myPage = new MyPage(page,size).setDesc("create_at");
         QueryWrapper<Forum> wrapper = new QueryWrapper<>();
         if(author!= null) {
             QueryWrapper<Student> studentWrapper = new QueryWrapper<>();
@@ -40,15 +40,11 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
             List idList = stuList.stream().map(Student::getId).collect(Collectors.toList());
             wrapper.in("student_id",idList);
         }
-//        if(end != null){
-//            wrapper.le("create_at",end);
-//        }else if(start != null) {
-//            wrapper.ge("create_at", start);
-//        }
         wrapper.like(null != title,"title",title)
                 .ge(null != start,"create_at",start)
                 .le(null != end,"create_at",end)
-                .select("title","body","student_id","create_at").orderByDesc("create_at");
+                .select("title","body","student_id","create_at")
+                .orderByDesc("create_at");
         return forumDao.selectPage(myPage,wrapper);
     }
 }

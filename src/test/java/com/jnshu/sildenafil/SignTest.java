@@ -18,15 +18,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Slf4j
+
 public class SignTest {
     @Autowired
     private SignService signService;
-
     @Test
     public void testSign() {
-        boolean a = signService.sign(1L);
-        log.info("boolean is: {}", a);
     }
 
+    @Test
+    public void getSignList() {
+        signService.getSignList(1L).forEach(System.out::println);
+    }
 }

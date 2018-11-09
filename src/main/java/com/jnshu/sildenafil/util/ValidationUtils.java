@@ -38,12 +38,25 @@ public class ValidationUtils {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj,groups);
 
         if (constraintViolations.size() > 0) {
+
             //使用lambda循环拼接校验错误信息
+//<<<<<<< Updated upstream
+            //循环输出校验信息
+            for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+                System.out.println(constraintViolation.getMessage());
+            }
+
+//            log.error("validation error;detail message is: {}",
+//                    constraintViolations.iterator().next().getMessage());
+//                for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+//
+//                    System.out.println(constraintViolation);
+//                }
+
             throw new ServiceException(
                     String.format("args validation error:%s",
                             constraintViolations.stream().map(ConstraintViolation::getMessage)
                             .collect(Collectors.joining(","))));
-
         }
     }
 }

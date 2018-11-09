@@ -3,8 +3,8 @@ package com.jnshu.sildenafil.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 
 /**
  * <p>
@@ -44,12 +44,15 @@ public interface VideoService extends IService<Video> {
      */
     Video getVideoById(Long videoId);
 
+
     /**
      * 后台新增视频
      * @param video 视频
      * @return 新增加的视频
+     * @throws ServiceException service错误
+     * @throws ParamIsNullException 参数为空
      */
-    Video saveVideo(Video video);
+    Video saveVideo(Video video) throws ServiceException, ParamIsNullException;
 
     /**
      * 后台删除视频
@@ -62,8 +65,10 @@ public interface VideoService extends IService<Video> {
      * 后台修改视频详情
      * @param video 视频
      * @return 更新后的视频id
+     * @throws ServiceException service错误
+     * @throws ParamIsNullException 参数为空
      */
-    Long updateVideo(Video video);
+    Long updateVideo(Video video) throws ServiceException, ParamIsNullException;
 
     /**
      * 后台更新视频上下架状态
@@ -78,7 +83,7 @@ public interface VideoService extends IService<Video> {
     //    前台收藏PUT
 //    Long addCollectionAmount(Integer collection);
 
-    //    前台Banner视频列表
+//        前台Banner视频列表
 //    List getBannerList(Integer page, Integer size,  );
 
 }
