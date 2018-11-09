@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -72,18 +74,30 @@ public interface VideoService extends IService<Video> {
 
     /**
      * 后台更新视频上下架状态
-     * @param status 上下架
-     * @return 更新上下架视频id
+     * @param videoId 视频id
+     * @param status 视频上下架状态
+     * @return 更新上下架后的视频
      */
-//    Long updateStatus(Integer status);
+    Video updateStatus(Long videoId, Integer status);
 
-    //    前台点赞PUT
-//    Long addLikeAmount(Integer like);
+    /**
+     * 前台改变点赞状态，增加点赞数PUT
+     * @param videoId 视频id
+     * @return 点赞后的视频
+     */
+    Video updateLike(Long videoId);
 
-    //    前台收藏PUT
-//    Long addCollectionAmount(Integer collection);
+    /**
+     * 前台改变收藏状态，增加收藏数PUT
+     * @param videoId 视频id
+     * @return 收藏后的视频
+     */
+    Video updateCollection(Long videoId);
 
-//        前台Banner视频列表
-//    List getBannerList(Integer page, Integer size,  );
+    /**
+     * 前台Banner视频列表
+     * @return Banner视频List
+     */
+    List getBannerList();
 
 }

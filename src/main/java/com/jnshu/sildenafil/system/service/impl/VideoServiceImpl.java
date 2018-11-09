@@ -186,5 +186,58 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
 
     }
 
+    /**
+     * 后台更新视频上下架状态
+     * @param videoId 视频id
+     * @param status 视频上下架状态
+     * @return 更新上下架后的视频
+     */
+    @Override
+    public Video updateStatus(Long videoId, Integer status) {
+        log.info("args for updateStatus is: {}", videoId);
+        Video v = new Video();
+        v.setId(videoId);
+        v.setStatus(status);
+        Long vid = videoDao.updateById(v) > 0 ? v.getId() : -10000;
+        log.info("result for updateStatus success; result detail: videoId={}", vid);
+        return v;
+    }
+
+    /**
+     * 前台改变点赞状态，增加点赞数PUT
+     * @param videoId 视频id
+     * @return 点赞后的视频
+     */
+    @Override
+    public Video updateLike(Long videoId) {
+        log.info("args for updateLike is: {}", videoId);
+        Video v = new Video();
+        v.setId(videoId);
+//        v.setLikeAmount(1);
+
+        Long vid = videoDao.updateById(v) > 0 ? v.getId() : -10000;
+        log.info("result for updateLike success; result detail: videoId={}", vid);
+        return v;
+    }
+
+    /**
+     * 前台改变收藏状态，增加收藏数PUT
+     * @param videoId 视频id
+     * @return 收藏后的视频
+     */
+    @Override
+    public Video updateCollection(Long videoId) {
+        return null;
+    }
+
+    /**
+     * 前台Banner视频列表
+     * @return Banner视频List
+     */
+    @Override
+    public List getBannerList() {
+        return null;
+    }
+
 
 }
