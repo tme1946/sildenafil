@@ -10,6 +10,7 @@ import com.jnshu.sildenafil.system.mapper.ArticleDao;
 import com.jnshu.sildenafil.system.service.ArticleService;
 import com.jnshu.sildenafil.util.*;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.statement.select.First;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +30,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     private ArticleDao articleDao;
 
     @Override
-    public IPage getPageList(Integer page, Integer size,Article article){
+    public IPage getPageList(Integer page, Integer size,Article article,Integer likeStart,Integer likeEnd,
+                            Integer collectionStart,Integer collectionEnd){
         log.info("args for getArticlePageList is:*** page={}&size={}&{} ***"
                 ,page,size,article);
         //调整page和size--默认会调整
-//        page= page<=1? 1 : page;
-//        size= size<=1||size>20 ? 10 : size;
+        page= null==page||page<=1? 1 : page;
+        size= null==size||size<=1||size>20 ? 10 : size;
         IPage<Article> pageQuery=new MyPage<Article>(page,size).setDesc("update_at");
         QueryWrapper<Article> queryWrapper=new QueryWrapper<>();
         if(article!=null) {
@@ -43,16 +45,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
                     .like(StringUtils.isNotEmpty(article.getAuthor()), "author", article.getAuthor())
                     .eq(null != article.getType(), "type", article.getType())
                     .eq(null != article.getStatus(), "status", article.getStatus())
+                    .between(likeEnd>likeStart&&likeStart>0,"like_amount",likeStart,likeEnd)
+                    .between(collectionEnd>collectionStart&&collectionStart>0,"collection_amount",collectionStart,collectionEnd)
             ;
         }
         IPage articleIPage=articleDao.selectPage( pageQuery,queryWrapper);
         if(articleIPage.getRecords().size()>0)
         {
             log.info("result for pageArticleList's size is {}",articleIPage.getRecords().size());
+            return articleIPage;
         } else{
             log.error("result for pageArticleList error :***reason is list null***");
+            return null;
         }
-        return articleIPage;
+
     }
 
 
@@ -82,7 +88,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         log.info("args for saveArticle is: {}",article);
         //参数验证，验证必要的参数是否填了；
         try{
-            ValidationUtils.validate(article);
+            //使用save验证组对参数进行验证
+            ValidationUtils.validate(article,Save.class);
             article.setCreateAt(System.currentTimeMillis());
             article.setUpdateAt(System.currentTimeMillis());
             article.setCreateBy("studentId:"+article.getId());
@@ -90,7 +97,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             long l= articleDao.insert(article)>0 ? article.getId() : -3002;
             log.info("result for saveArticle success;result detail: articleId={};{}",l,article);
             return article;
-        }catch(ServiceExcetpion se){
+        }catch(ServiceException se){
           log.error("result for saveArticle error;reason is args error;detail exception is:{}",
                   se.getMessage());
           return null;
@@ -109,9 +116,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         log.info("changeArticle's args is {}",article);
         //参数验证
         try {
-            //article为null或articleId为null都抛异常；
-//            if(article.getId()==null){throw new NullPointerException();}
-            ValidationUtils.validate(article,First.class);
+            //使用change验证组对参数进行验证
+            ValidationUtils.validate(article,Change.class);
             article.setUpdateAt(System.currentTimeMillis());
             //设置更改人；如果是后台管理员，改为管理员id
             article.setUpdateBy("studentId:" + article.getId());
@@ -119,7 +125,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             long l = articleDao.updateById(article) > 0 ? article.getId() : -3003;
             log.info("result for change articleId={}", l);
             return l;
-        }catch(ServiceExcetpion se){
+        }catch(ServiceException se){
             log.error("result for changeArticle error;reason is args error;detail exception is:{}",
                     se.getMessage());
             return null;
