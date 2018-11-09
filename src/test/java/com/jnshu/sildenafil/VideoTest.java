@@ -236,4 +236,10 @@ public class VideoTest {
 //        videoDao.update()
 
     }
+
+    @Test
+    public void updateStatus() {
+        Video vvv =  videoService.updateStatus(68L, 1);
+        System.out.println(vvv.getStatus());
+    }
 }
