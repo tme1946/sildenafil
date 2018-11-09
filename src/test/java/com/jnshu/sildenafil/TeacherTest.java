@@ -2,6 +2,8 @@ package com.jnshu.sildenafil;
 
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.service.TeacherService;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,11 +34,17 @@ public class TeacherTest {
     }
 
     @Test
-    public void addTeacher() {
+    public void addTeacher() throws ServiceException, ParamIsNullException {
         Teacher t = new Teacher();
-        t.setNickname("尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬尼克扬");
-        t.setImg("https://img.moegirl.org/common/thumb/4/41/Nicky.jpg/250px-Nicky.jpg");
+        t.setNickname("李白");
+        t.setImg("yashilali");
         Teacher aaa = teacherService.saveTeacher(t);
         System.out.println(aaa);
+    }
+
+    @Test
+    public void getNameList() {
+        teacherService.getTeacherNameList().forEach(System.out::println);
+
     }
 }

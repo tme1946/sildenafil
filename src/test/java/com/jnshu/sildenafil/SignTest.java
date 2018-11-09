@@ -24,7 +24,10 @@ public class SignTest {
     private SignService signService;
     @Test
     public void testSign() {
-        boolean a = signService.sign(1L);
     }
 
+    @Test
+    public void getSignList() {
+        signService.getSignList(1L).forEach(System.out::println);
+    }
 }

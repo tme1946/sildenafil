@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  *  服务实现类
@@ -35,8 +38,14 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
         this.signDao = signDao;
     }
 
+    /**
+     * 学生签到
+     *
+     * @param studentId 实体对象
+     * @return 签到是否成功
+     */
     @Override
-    public boolean sign(Long studentId) {
+    public boolean addSign(Long studentId) {
         log.info("args for sign is: {}", studentId);
         Sign sign = new Sign();
         Student student = new Student();
@@ -105,6 +114,23 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
             log.info("Sign in success.");
             return true;
         }
+    }
+
+    /**
+     * 进入签到页面
+     * 查询一个月（31天）签到记录
+     * 根据签到记录判断当天是否签到
+     * @param studentId 学生id
+     * @return 该学生签到记录List
+     */
+    @Override
+    public List getSignList(Long studentId) {
+        log.info("args for getSignList is: {}", studentId);
+        QueryWrapper<Sign> signQueryWrapper = new QueryWrapper<>();
+        List<Sign> signList = signDao.selectList(signQueryWrapper);
+        List signTimelineList = signList.stream().map(Sign::getCreateAt).collect(Collectors.toList());
+        log.info("result of getSignList is: {}", signTimelineList);
+        return signTimelineList;
     }
 
 }
