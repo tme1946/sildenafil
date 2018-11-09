@@ -38,7 +38,8 @@ public class ArticleTest {
 
     @Test
     public void saveArticle() {
-
+        Article article=new Article();
+        articleService.saveArticle(null);
     }
 
     @Test
