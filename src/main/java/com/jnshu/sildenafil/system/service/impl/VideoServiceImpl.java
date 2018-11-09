@@ -3,21 +3,21 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
 import com.jnshu.sildenafil.system.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jnshu.sildenafil.util.MyPage;
-import com.jnshu.sildenafil.util.ServiceExcetpion;
-import com.jnshu.sildenafil.util.ValidationUtils;
+import com.jnshu.sildenafil.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -69,10 +69,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
             teacherQueryWrapper.select("id").like("nickname", teacher);
             List<Teacher> teacherList = teacherDao.selectList(teacherQueryWrapper);
-            List idList = new ArrayList<>();
-            for (Teacher s: teacherList) {
-                idList.add(s.getId());
-            }
+            List idList = teacherList.stream().map(Teacher::getId).collect(Collectors.toList());
             videoQueryWrapper.in("teacher_id", idList);
         }
         videoQueryWrapper
@@ -118,33 +115,28 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      * @return 新增视频详情
      */
     @Override
-    public Video saveVideo(Video video) {
+    public Video saveVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for saveVideo is: {}", video);
-        try {
-            ValidationUtils.validate(video);
-            video.setCreateAt(NOW);
-            video.setUpdateAt(NOW);
-            //后台管理员admin
-            video.setCreateBy("admin");
-            //后台管理员admin
-            video.setUpdateBy("admin");
-            if (video.getType() == 1) {
-                video.setCover(video.getCover());
-            } else if (video.getType() == 0) {
-                video.setCover(null);
-            } else {
-                log.info("type false.");
-            }
-            Long id = videoDao.insert(video) > 0 ? video.getId() : -10000;
-            log.info("result for saveVideo success; result detail: videoId={}; {}", id, video);
-            return video;
-        } catch (ServiceExcetpion serviceExcetpion) {
-            log.error("服务出错: {}", serviceExcetpion.getMessage());
-            return null;
-        } catch (NullPointerException npe) {
-            log.error("F! NullPointerException : {}", (Object) npe.getStackTrace());
-            return null;
+        if (video == null) {
+            throw new ParamIsNullException("video is null");
         }
+        ValidationUtils.validate(video);
+        video.setCreateAt(NOW);
+        video.setUpdateAt(NOW);
+        //后台管理员admin
+        video.setCreateBy("admin");
+        //后台管理员admin
+        video.setUpdateBy("admin");
+        if (video.getType() == 1) {
+            video.setCover(video.getCover());
+        } else if (video.getType() == 0) {
+            video.setCover(null);
+        } else {
+            log.info("type false.");
+        }
+        Long id = videoDao.insert(video) > 0 ? video.getId() : -10000;
+        log.info("result for saveVideo success; result detail: videoId={}; {}", id, video);
+        return video;
     }
 
     /**
@@ -171,34 +163,27 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      * @return 更新后视频id
      */
     @Override
-    public Long updateVideo(Video video) {
-        Long videoId = video.getId();
+    public Long updateVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for updateVideo is: {}", video);
-        try {
-            ValidationUtils.validate(video);
-            video.setUpdateAt(NOW);
-            //后台管理员userName
-            video.setUpdateBy("admin");
-            video.setStatus(0);
-            if (video.getType() == 1) {
-                video.setCover(video.getCover());
-            } else if (video.getType() == 0) {
-                video.setCover(null);
-            } else {
-                log.info("illegal type.");
-            }
-            videoDao.updateById(video);
-            return videoId;
-        } catch (ServiceExcetpion serviceExcetpion) {
-            log.error("service bug: {}", serviceExcetpion.getMessage());
-            return null;
-        } catch (NullPointerException npe) {
-            log.error("F! NullPointerException: {}", (Object) npe.getStackTrace());
-            return null;
-        } catch (Throwable t) {
-            log.error("unknown error: {}", t.getMessage());
-            return null;
+        if (video == null) {
+            throw new ParamIsNullException("video is null");
         }
+        Long videoId = video.getId();
+        ValidationUtils.validate(video);
+        video.setUpdateAt(NOW);
+        //后台管理员userName
+        video.setUpdateBy("admin");
+        video.setStatus(0);
+        if (video.getType() == 1) {
+            video.setCover(video.getCover());
+        } else if (video.getType() == 0) {
+            video.setCover(null);
+        } else {
+            log.info("illegal type.");
+        }
+        videoDao.updateById(video);
+        return videoId;
+
     }
 
 

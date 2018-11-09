@@ -1,14 +1,19 @@
 package com.jnshu.sildenafil.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jnshu.sildenafil.util.ServiceExcetpion;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -28,6 +33,19 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
     @Autowired
     public TeacherServiceImpl(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
+    }
+
+    /**
+     * 后台查询老师昵称List
+     * @return 老师昵称List
+     */
+    @Override
+    public List getTeacherNameList() {
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        List<Teacher> teacherList = teacherDao.selectList(teacherQueryWrapper);
+        List teacherNameList = teacherList.stream().map(Teacher::getNickname).collect(Collectors.toList());
+        log.info("result of getTeacherNameList is: {}", teacherNameList);
+        return teacherNameList;
     }
 
     /**
@@ -54,26 +72,17 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
      * @return 新增后返回的老师详情
      */
     @Override
-    public Teacher saveTeacher(Teacher teacher) {
+    public Teacher saveTeacher(Teacher teacher) throws ServiceException, ParamIsNullException {
         log.info("args for saveTeacher is: {}", teacher);
-        try {
-            ValidationUtils.validate(teacher);
-            teacher.setCreateAt(NOW);
-            teacher.setCreateBy("admin-lihoo");
-            Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
-            log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
-            return teacher;
-        } catch (ServiceExcetpion serviceExcetpion) {
-            log.error("service have problem, code: {}", serviceExcetpion.getMessage());
-            return null;
-        } catch (NullPointerException npe) {
-            log.error("F! NullPointerException: {}", (Object) npe.getStackTrace());
-            return null;
-        } catch (Throwable t) {
-            log.error("unknown error: {}", t.getMessage());
-            return null;
+        if (teacher == null) {
+            throw new ParamIsNullException("teacher is null");
         }
-
+        ValidationUtils.validate(teacher);
+        teacher.setCreateAt(NOW);
+        teacher.setCreateBy("admin-lihoo");
+        Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
+        log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
+        return teacher;
 
     }
 

@@ -113,7 +113,7 @@ public class VideoTest {
         v.setTimeLength("50:17");
         v.setBody("qwertyuiopasdfghjklxcvbgnhdfghjk42310.98652798+5643121000054231131");
 
-        System.out.println(videoService.saveVideo(v));
+//        System.out.println(videoService.saveVideo(v));
 //        Long now = System.currentTimeMillis();
 //        Video v = new Video();
 //        v.setCreateAt(now);
@@ -177,8 +177,8 @@ public class VideoTest {
         v.setDigest("2");
         v.setUrl("2");
         v.setBody("2");
-        Long aaaa = videoService.updateVideo(v);
-        System.out.println(aaaa);
+//        Long aaaa = videoService.updateVideo(v);
+//        System.out.println(aaaa);
 
     }
 

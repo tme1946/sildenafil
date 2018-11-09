@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.util;
 
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 
@@ -36,15 +37,27 @@ public class ValidationUtils {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj,groups);
 
         if (constraintViolations.size() > 0) {
+//<<<<<<< Updated upstream
             //循环输出校验信息
             for (ConstraintViolation<T> constraintViolation : constraintViolations) {
                 System.out.println(constraintViolation.getMessage());
             }
 
+//=======
+//            log.error("validation error;detail message is: {}",
+//                    constraintViolations.iterator().next().getMessage());
+//                for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+//
+//                    System.out.println(constraintViolation);
+//                }
+//>>>>>>> Stashed changes
             throw new ServiceException(
                     String.format("args validation error:%s",
                             constraintViolations.iterator().next().getMessage()));
 
         }
     }
+
+
+
 }
