@@ -31,7 +31,7 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
     StudentDao studentDao;
     @Override
     public IPage forumFuzzySelect(Integer page, Integer size, String title, String author, Long start, Long end){
-        MyPage myPage = new MyPage(page,size).setDesc("create_at");
+        IPage myPage = new MyPage(page,size).setDesc("create_at");
         QueryWrapper<Forum> wrapper = new QueryWrapper<>();
         if(author!= null) {
             QueryWrapper<Student> studentWrapper = new QueryWrapper<>();

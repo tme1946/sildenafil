@@ -3,6 +3,7 @@ package com.jnshu.sildenafil.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Forum;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jnshu.sildenafil.util.MyPage;
 
 import java.util.List;
 
