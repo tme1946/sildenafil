@@ -1,7 +1,9 @@
 package com.jnshu.sildenafil;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Article;
 import com.jnshu.sildenafil.system.service.ArticleService;
+import com.jnshu.sildenafil.util.MyPage;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,14 +22,18 @@ public class ArticleTest {
 
     @Test
     public void testPageList() {
-        Article article=new Article();
-//        articleService.getPageList(1,null,null);
+
+        IPage articleMyPage=articleService.getAdminPageList(null,null,null,null,null,
+                null,30,80,500,800);
+        for (Object o : articleMyPage.getRecords()) {
+            System.out.println(o);
+        }
     }
 
     @Test
     public void getOneArticle() {
 
-        articleService.getArticle(23L);
+        articleService.getArticleById(23L);
     }
 
     @Test
@@ -36,9 +42,9 @@ public class ArticleTest {
     }
 
     @Test
-    public void changeArticle() {
+    public void updateArticle() {
         Article article=new Article();
-        articleService.changeArticle(article);
+        articleService.updateArticle(article);
     }
 
     @Test
@@ -52,6 +58,6 @@ public class ArticleTest {
     @Test
     public void save() {
         Article article=new Article();
-        articleService.saveArticle(article);
+        articleService.saveArticle(null);
     }
 }

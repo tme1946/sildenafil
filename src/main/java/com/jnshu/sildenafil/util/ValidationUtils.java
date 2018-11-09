@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.util;
 
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 
@@ -7,6 +8,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author feifei
@@ -36,14 +38,11 @@ public class ValidationUtils {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj,groups);
 
         if (constraintViolations.size() > 0) {
-            //循环输出校验信息
-            for (ConstraintViolation<T> constraintViolation : constraintViolations) {
-                System.out.println(constraintViolation.getMessage());
-            }
-
+            //使用lambda循环拼接校验错误信息
             throw new ServiceException(
                     String.format("args validation error:%s",
-                            constraintViolations.iterator().next().getMessage()));
+                            constraintViolations.stream().map(ConstraintViolation::getMessage)
+                            .collect(Collectors.joining(","))));
 
         }
     }

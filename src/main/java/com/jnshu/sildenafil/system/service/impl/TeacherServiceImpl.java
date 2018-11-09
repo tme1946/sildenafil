@@ -4,7 +4,7 @@ import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jnshu.sildenafil.util.ServiceExcetpion;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
             Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
             log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
             return teacher;
-        } catch (ServiceExcetpion serviceExcetpion) {
+        } catch (ServiceException serviceExcetpion) {
             log.error("service have problem, code: {}", serviceExcetpion.getMessage());
             return null;
         } catch (NullPointerException npe) {

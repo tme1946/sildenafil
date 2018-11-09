@@ -10,7 +10,7 @@ import com.jnshu.sildenafil.system.mapper.VideoDao;
 import com.jnshu.sildenafil.system.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jnshu.sildenafil.util.MyPage;
-import com.jnshu.sildenafil.util.ServiceExcetpion;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +138,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             Long id = videoDao.insert(video) > 0 ? video.getId() : -10000;
             log.info("result for saveVideo success; result detail: videoId={}; {}", id, video);
             return video;
-        } catch (ServiceExcetpion serviceExcetpion) {
+        } catch (ServiceException serviceExcetpion) {
             log.error("服务出错: {}", serviceExcetpion.getMessage());
             return null;
         } catch (NullPointerException npe) {
@@ -189,7 +189,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             }
             videoDao.updateById(video);
             return videoId;
-        } catch (ServiceExcetpion serviceExcetpion) {
+        } catch (ServiceException serviceExcetpion) {
             log.error("service bug: {}", serviceExcetpion.getMessage());
             return null;
         } catch (NullPointerException npe) {

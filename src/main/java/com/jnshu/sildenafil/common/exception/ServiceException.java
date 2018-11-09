@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil.util;
+package com.jnshu.sildenafil.common.exception;
 
 public class ServiceException extends Exception{
 
