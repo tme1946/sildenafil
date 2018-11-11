@@ -3,6 +3,10 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.ArticleUpdate;
+import com.jnshu.sildenafil.common.validation.VideoUpdate;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -20,6 +24,7 @@ public class Video implements Serializable {
     /**
      * 视频id
      */
+    @NotNull(message = "{video.id.validation.error}", groups = { VideoUpdate.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

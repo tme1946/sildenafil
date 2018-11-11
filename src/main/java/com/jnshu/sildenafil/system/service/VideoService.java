@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.system.domain.LikeAsset;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
@@ -57,13 +58,6 @@ public interface VideoService extends IService<Video> {
     Video saveVideo(Video video) throws ServiceException, ParamIsNullException;
 
     /**
-     * 后台删除视频
-     * @param videoId 视频id
-     * @return 是否成功删除视频
-     */
-    Boolean removeVideoById(Long videoId);
-
-    /**
      * 后台修改视频详情
      * @param video 视频
      * @return 更新后的视频id
@@ -83,16 +77,16 @@ public interface VideoService extends IService<Video> {
     /**
      * 前台改变点赞状态，增加点赞数PUT
      * @param videoId 视频id
-     * @return 点赞后的视频
+     * @return 视频点赞数
      */
-    Video updateLike(Long videoId);
+    int updateLikeAmount(Long videoId);
 
     /**
      * 前台改变收藏状态，增加收藏数PUT
      * @param videoId 视频id
-     * @return 收藏后的视频
+     * @return 视频收藏数
      */
-    Video updateCollection(Long videoId);
+    int updateCollectionAmount(Long videoId);
 
     /**
      * 前台Banner视频列表
