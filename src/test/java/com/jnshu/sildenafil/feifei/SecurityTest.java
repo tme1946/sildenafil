@@ -1,9 +1,6 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.feifei;
 
-import com.jnshu.sildenafil.system.mapper.ModuleDao;
-import com.jnshu.sildenafil.system.mapper.RoleDao;
-import com.jnshu.sildenafil.system.mapper.RoleModuleDao;
-import com.jnshu.sildenafil.system.mapper.UserDao;
+
 import com.jnshu.sildenafil.system.service.ModuleService;
 import com.jnshu.sildenafil.system.service.RoleModuleService;
 import com.jnshu.sildenafil.system.service.RoleService;
