@@ -13,7 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LikeAssetService extends IService<LikeAsset> {
 
-    /**前台对文章进行点赞
+    /**
+     * 前台对文章进行点赞
      * @param type 资料类型
      * @param typeId 资料id
      * @param studentId 学生id
@@ -21,11 +22,12 @@ public interface LikeAssetService extends IService<LikeAsset> {
      */
     Long insertLike(Integer type,Long typeId,Long studentId);
 
-    /**前台查询资料的点赞状态
+    /**
+     * 前台查询资料的点赞状态
      * @param type 资料类型
      * @param typeId 资料id
      * @param studentId 学生id
      * @return 0为不赞，1为点赞
      */
-    Long selectLike(Integer type,Long typeId,Long studentId);
+    int selectLike(Integer type,Long typeId,Long studentId);
 }

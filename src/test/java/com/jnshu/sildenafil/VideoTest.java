@@ -2,8 +2,12 @@ package com.jnshu.sildenafil;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
+import com.jnshu.sildenafil.system.domain.LikeAsset;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.domain.Video;
+import com.jnshu.sildenafil.system.mapper.LikeAssetDao;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
 import com.jnshu.sildenafil.system.service.TeacherService;
@@ -160,7 +164,14 @@ public class VideoTest {
         v.setUrl("6");
         v.setBody("6");
 
-        System.out.println(videoDao.updateById(v));
+        try{
+            videoService.updateVideo(new Video());
+        }catch(ServiceException se){
+            System.out.println("JB" + se.getMessage());
+        }catch (ParamIsNullException pa){
+            log.error("paramnull{}",pa.getMessage());
+
+        }
 
     }
 
@@ -220,11 +231,11 @@ public class VideoTest {
 //        tqw.in("teacher_id", nameList);
     }
 
-    @Test
-    public void deleteVideo() {
-        Boolean aaa = videoService.removeVideoById(52L);
-        System.out.println(aaa);
-    }
+//    @Test
+//    public void deleteVideo() {
+//        Boolean aaa = videoService.removeVideoById(52L);
+//        System.out.println(aaa);
+//    }
 
     @Test
     public void getTimeLength() {
@@ -241,5 +252,22 @@ public class VideoTest {
     public void updateStatus() {
         Video vvv =  videoService.updateStatus(68L, 1);
         System.out.println(vvv.getStatus());
+    }
+
+    @Autowired
+    private LikeAssetDao likeAssetDao;
+
+    @Test
+    public void updateLike() {
+        Long videoId = 2L;
+        System.out.println(videoService.updateLikeAmount(videoId));
+    }
+
+    @Test
+    public void delete() {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("student_id", 1);
+        queryWrapper.eq("type_id", 2);
+        System.out.println(likeAssetDao.delete(queryWrapper));
     }
 }

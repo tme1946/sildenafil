@@ -5,8 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
+import com.jnshu.sildenafil.common.validation.VideoUpdate;
+import com.jnshu.sildenafil.system.domain.LikeAsset;
+import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.domain.Video;
+import com.jnshu.sildenafil.system.mapper.LikeAssetDao;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
 import com.jnshu.sildenafil.system.service.VideoService;
@@ -36,11 +40,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
 
     private final VideoDao videoDao;
     private final TeacherDao teacherDao;
+    private final LikeAssetDao likeAssetDao;
 
     @Autowired(required = false)
-    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao) {
+    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao, LikeAssetDao likeAssetDao) {
         this.videoDao = videoDao;
         this.teacherDao = teacherDao;
+        this.likeAssetDao = likeAssetDao;
     }
 
     /**
@@ -142,24 +148,6 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     }
 
     /**
-     *后台通过id删除视频
-     * @param videoId 视频id
-     * @return 是否成功删除视频
-     */
-    @Override
-    public Boolean removeVideoById(Long videoId) {
-        log.info("args for removeVideoById is: {}", videoId);
-        if (videoId != null) {
-            int flag = videoDao.deleteById(videoId);
-            log.info("result of removeVideoById is: {}", flag);
-            return true;
-        } else {
-            log.error("args is null");
-            return null;
-        }
-    }
-
-    /**
      *后台更新视频详情
      * @param video 视频
      * @return 更新后视频id
@@ -168,10 +156,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     public Long updateVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for updateVideo is: {}", video);
         if (video == null) {
-            throw new ParamIsNullException("video is null");
+            throw new ParamIsNullException("hhh video is null");
+
         }
         Long videoId = video.getId();
-        ValidationUtils.validate(video);
+        ValidationUtils.validate(video, VideoUpdate.class);
         video.setUpdateAt(NOW);
         //后台管理员userName
         video.setUpdateBy("admin");
@@ -207,29 +196,34 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
 
     /**
      * 前台改变点赞状态，增加点赞数PUT
+     * 一个学生id只能给一个视频点一个赞
      * @param videoId 视频id
-     * @return 点赞后的视频
+     * @return 点赞数
      */
     @Override
-    public Video updateLike(Long videoId) {
-        log.info("args for updateLike is: {}", videoId);
+    public int updateLikeAmount(Long videoId) {
+        log.info("args for updateLikeAmount is: {}", videoId);
+        QueryWrapper<LikeAsset> countQueryWrapper = new QueryWrapper<>();
+        countQueryWrapper.eq("type_id", videoId);
+        int likeAmount =  likeAssetDao.selectCount(countQueryWrapper);
         Video v = new Video();
         v.setId(videoId);
-//        v.setLikeAmount(1);
-
-        Long vid = videoDao.updateById(v) > 0 ? v.getId() : -10000;
-        log.info("result for updateLike success; result detail: videoId={}", vid);
-        return v;
+        v.setLikeAmount(likeAmount);
+        Long id = videoDao.updateById(v) > 0 ? v.getId() : -10000;
+        log.info("result for updateLikeAmount success; result detail: videoId={}", id);
+        return likeAmount;
     }
 
     /**
      * 前台改变收藏状态，增加收藏数PUT
      * @param videoId 视频id
-     * @return 收藏后的视频
+     * @return 收藏数
      */
     @Override
-    public Video updateCollection(Long videoId) {
-        return null;
+    public int updateCollectionAmount(Long videoId) {
+
+
+        return 1;
     }
 
     /**
