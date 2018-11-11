@@ -1,6 +1,10 @@
 package com.jnshu.sildenafil.common.security.config;
 
-import com.jnshutask.security.*;
+
+import com.jnshu.sildenafil.common.security.TaExpiredSessionStrategy;
+import com.jnshu.sildenafil.common.security.TaInvalidSessionStrategy;
+import com.jnshu.sildenafil.common.security.TaSecurityProperties;
+import com.jnshu.sildenafil.common.security.TaUserDetailsServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +30,6 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("serviceRMI");
@@ -35,7 +37,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     TaSecurityProperties taSecurityProperties;
     @Autowired(required = false)
-    TaUserDetailsServiceImp taUserDetailsServiceImp;
+    TaUserDetailsServiceImpl taUserDetailsServiceImpl;
     // 数据库处理 rememberMe 自动登录认证；使用缓存的记住我功能
     @Autowired(required = false)
     private DataSource dataSource;
@@ -85,7 +87,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe() // 添加记住我功能
                 .tokenRepository(persistentTokenRepository()) // 配置 token 持久化仓库
                 .tokenValiditySeconds(taSecurityProperties.getRememberMeTimeout()) // rememberMe 过期时间，单为秒
-                .userDetailsService(taUserDetailsServiceImp) // 处理自动登录逻辑
+                .userDetailsService(taUserDetailsServiceImpl) // 处理自动登录逻辑
                 .and()
                 .sessionManagement()//配置 session管理器
                 .invalidSessionStrategy(invalidSessionStrategy())//处理 session失效,可不配，使用默认
@@ -113,10 +115,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-//        auth.inMemoryAuthentication().withUser("admin").password("{noop}123456").roles("ADMIN")
-//                .and().withUser("user").password("{noop}123456").roles("USER");
-        //user Details Service验证,指定使用默认密码加密方式；不指定为默认；
-        auth.userDetailsService(taUserDetailsServiceImp).passwordEncoder(passwordEncoder());
+        //user Details Service验证,可指定默认密码加密方式；不指定为默认；
+        auth.userDetailsService(taUserDetailsServiceImpl).passwordEncoder(passwordEncoder());
     }
 }

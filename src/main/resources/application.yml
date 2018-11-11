@@ -56,3 +56,18 @@ spring:
 mybatis-plus:
   type-aliases-package: com.jnshu.sildenafil.system.domain
   mapper-locations: classpath:mapper/*.xml
+
+#secuirty的相关信息配置
+tasksecurity:
+    # 登录路径
+    login-url: /denglu
+    # 登出路径
+    logout-url: /dengchu
+    # 首页路径
+    index-url: /index
+    # 免认证资源路径
+    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/denglu,/dengchu,/va/**,/bsHome
+    # 记住我有效时间，单位为秒
+    remember-me-timeout: 36000
+    #session的同时存在；-1表示无限制
+    maximum-sessions: 1
