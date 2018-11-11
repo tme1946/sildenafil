@@ -12,7 +12,9 @@ import com.jnshu.sildenafil.util.MyPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -43,8 +45,15 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
         wrapper.like(null != title,"title",title)
                 .ge(null != start,"create_at",start)
                 .le(null != end,"create_at",end)
-                .select("title","body","student_id","create_at")
                 .orderByDesc("create_at");
-        return forumDao.selectPage(myPage,wrapper);
+        IPage forumPage = forumDao.selectPage(myPage,wrapper);
+        return forumPage;
+    }
+    @Override
+    public IPage forumFrontList(Integer page,Integer size){
+        IPage frontPage = new MyPage(page,size).setDesc("create_at");
+        QueryWrapper<Forum> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_at");
+        return forumDao.selectPage(frontPage,wrapper);
     }
 }
