@@ -57,7 +57,7 @@ public class ReviewController {
             log.info("result for deleteReviewId is : reviewId={}",reviewId);
             return ResponseBo.ok();
         }else{
-            log.error("deleteReview error");
+            log.error("result for deleteReview error");
             return ResponseBo.error("delete error");
         }
     }

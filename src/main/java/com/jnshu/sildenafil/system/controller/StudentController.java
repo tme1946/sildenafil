@@ -70,7 +70,7 @@ public class StudentController {
             log.info("result for changeStuStates is : studentId={}",student.getId());
             return ResponseBo.ok().put("data",student);
         }else {
-            log.error("changeStudentState error");
+            log.error("result for changeStudentState error");
             return ResponseBo.error("change states error");
         }
     }
