@@ -59,6 +59,6 @@ public class ArticleTest {
     @Test
     public void save() {
         Article article=new Article();
-        articleService.saveArticle(null);
+        articleService.saveArticle(article);
     }
 }
