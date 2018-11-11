@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.feifei;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Article;
@@ -59,6 +59,6 @@ public class ArticleTest {
     @Test
     public void save() {
         Article article=new Article();
-        articleService.saveArticle(null);
+        articleService.saveArticle(article);
     }
 }

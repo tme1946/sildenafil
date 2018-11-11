@@ -138,6 +138,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         //构建条件查询语句
         QueryWrapper<Article> queryWrapper=new QueryWrapper<>();
         queryWrapper
+                .select("id","type","title","author","cover","digest","like_amount","collection_amount","update_at")
                 .like(StringUtils.isNotEmpty(title), "title", title)
                 .like(StringUtils.isNotEmpty(author), "author", author)
                 .eq(null != type, "type", type)
