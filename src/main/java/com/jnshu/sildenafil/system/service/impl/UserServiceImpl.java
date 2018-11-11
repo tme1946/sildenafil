@@ -30,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public User getUserByUserName(String userName){
-        log.info("getUserByUserName's args : userName={}",userName);
+        log.info("args for getUserByUserName: userName={}",userName);
         if(StringUtils.isNotEmpty(userName)){
             QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
             userQueryWrapper.eq("user_name",userName);
