@@ -24,17 +24,10 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewDao, Review> implements
     ReviewDao reviewDao;
 
     @Override
-    public IPage<Review> reviewByStudent(Integer page, Integer size,Long studentId){
-        IPage<Review> iPage = new MyPage<>();
-        QueryWrapper<Review> wrapper = new QueryWrapper<>();
-        wrapper.eq("type",1);
-        wrapper.eq("student_id",studentId);
-        wrapper.orderByDesc("create_at");
-        return reviewDao.selectPage(iPage,wrapper);
-    }
-    @Override
     public IPage reviewByType(Integer page,Integer size,Integer type,Long typeId){
-        IPage<Review> iPage = new MyPage<>();
+        page= null==page||page<=1 ? 1 : page;
+        size= null==size||size<=1||size>20 ? 10 : size;
+        IPage<Review> iPage = new MyPage<>(page,size);
         QueryWrapper<Review> wrapper = new QueryWrapper<>();
         wrapper.eq("type",type);
         wrapper.eq("type_id",typeId);

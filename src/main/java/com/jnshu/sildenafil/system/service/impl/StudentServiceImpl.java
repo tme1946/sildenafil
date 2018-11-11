@@ -32,6 +32,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao, Student> impleme
     public IPage studentFuzzySelect(Integer page, Integer size,Long id,String nickname,Integer grade
             ,String email,Long phone,Integer status
             ,Integer minBean,Integer maxBean){
+        page= null==page||page<=1 ? 1 : page;
+        size= null==size||size<=1||size>20 ? 10 : size;
         MyPage myPage = new MyPage(page,size);
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
         wrapper.like(null != id,"id",id);
