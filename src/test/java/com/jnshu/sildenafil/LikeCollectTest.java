@@ -1,6 +1,8 @@
 package com.jnshu.sildenafil;
 
+import com.jnshu.sildenafil.system.service.CollectionAssetService;
 import com.jnshu.sildenafil.system.service.LikeAssetService;
+import com.jnshu.sildenafil.system.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +23,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class LikeCollectTest {
 
     @Autowired
+    private VideoService videoService;
+
+    @Autowired
     private LikeAssetService likeAssetService;
+
+
+    @Autowired
+    private CollectionAssetService collectionAssetService;
 
     @Test
     public void like() {
@@ -31,7 +40,22 @@ public class LikeCollectTest {
 
     @Test
     public void likeStatus() {
-        int aaa =  likeAssetService.selectLike(1, 50L, 10L);
+        int aaa =  likeAssetService.selectLike(1, 2L, 2L);
         System.out.println(aaa);
     }
+
+
+    @Test
+    public void collUpdate() {
+        System.out.println(collectionAssetService.insertCollection(1, 1L, 1L));
+
+    }
+
+    @Test
+    public void collStatus() {
+        System.out.println(collectionAssetService.selectCollection(1, 1L, 101L));
+    }
+
+
+
 }
