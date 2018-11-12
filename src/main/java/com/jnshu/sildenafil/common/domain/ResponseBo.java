@@ -2,6 +2,9 @@ package com.jnshu.sildenafil.common.domain;
 
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class ResponseBo extends HashMap<String, Object> {
 
 	private static final long serialVersionUID = -8713837118340960775L;
@@ -15,27 +18,27 @@ public class ResponseBo extends HashMap<String, Object> {
 
 	public ResponseBo() {
 		put("code", SUCCESS);
-		put("msg", "操作成功");
+		put("message", "操作成功");
 	}
 
 	public static ResponseBo error(Object msg) {
 		ResponseBo responseBo = new ResponseBo();
 		responseBo.put("code", FAIL);
-		responseBo.put("msg", msg);
+		responseBo.put("message", msg);
 		return responseBo;
 	}
 
 	public static ResponseBo warn(Object msg) {
 		ResponseBo responseBo = new ResponseBo();
 		responseBo.put("code", WARN);
-		responseBo.put("msg", msg);
+		responseBo.put("message", msg);
 		return responseBo;
 	}
 
 	public static ResponseBo ok(Object msg) {
 		ResponseBo responseBo = new ResponseBo();
 		responseBo.put("code", SUCCESS);
-		responseBo.put("msg", msg);
+		responseBo.put("message", msg);
 		return responseBo;
 	}
 
