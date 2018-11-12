@@ -25,9 +25,7 @@ public class ArticleTest {
 
         IPage articleMyPage=articleService.getAdminPageList(null,null,null,null,null,
                 null,30,80,500,800);
-        for (Object o : articleMyPage.getRecords()) {
-            System.out.println(o);
-        }
+        System.out.println(articleMyPage);
     }
 
     @Test
