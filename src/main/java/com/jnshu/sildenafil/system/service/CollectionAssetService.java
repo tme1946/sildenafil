@@ -8,9 +8,27 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author Taimur
- * @since 2018-10-31
+ * @author lihoo
+ * @since 2018-11-11
  */
 public interface CollectionAssetService extends IService<CollectionAsset> {
+
+    /**
+     * 前台对资料进行点赞
+     * @param type 资料类型
+     * @param typeId 资料id
+     * @param studentId 学生id
+     * @return 返回点赞的结果
+     */
+    Long insertCollection(Integer type,Long typeId,Long studentId);
+
+    /**
+     * 前台查询资料的点赞状态
+     * @param type 资料类型
+     * @param typeId 资料id
+     * @param studentId 学生id
+     * @return 0为不赞，1为点赞
+     */
+    int selectCollection(Integer type,Long typeId,Long studentId);
 
 }

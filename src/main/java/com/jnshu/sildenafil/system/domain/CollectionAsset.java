@@ -3,6 +3,10 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.CollectionAssetUpdate;
+import com.jnshu.sildenafil.common.validation.LikeAssetUpdate;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -10,7 +14,7 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Taimur
+ * @author lihoo
  * @since 2018-10-31
  */
 public class CollectionAsset implements Serializable {
@@ -20,6 +24,7 @@ public class CollectionAsset implements Serializable {
     /**
      * 收藏id
      */
+    @NotNull(message = "{collectionAsset.id.validation.error}", groups = { CollectionAssetUpdate.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -38,18 +43,21 @@ public class CollectionAsset implements Serializable {
     /**
      * 学生id
      */
+    @NotNull(message = "{collectionAsset.studentId.validation.error}", groups = { CollectionAssetUpdate.class,CollectionAssetUpdate.class})
     @TableField("student_id")
     private Long studentId;
 
     /**
      * 类型
      */
+    @NotNull(message = "{collectionAsset.type.validation.error}", groups = { CollectionAssetUpdate.class,CollectionAssetUpdate.class})
     @TableField("type")
     private Integer type;
 
     /**
      * 类型id
      */
+    @NotNull(message = "{collectionAsset.typeId.validation.error}", groups = { CollectionAssetUpdate.class,CollectionAssetUpdate.class})
     @TableField("type_id")
     private Long typeId;
 
