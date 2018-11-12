@@ -3,6 +3,7 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.system.domain.Forum;
 import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.mapper.StudentDao;
@@ -29,6 +30,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao, Student> impleme
         return getOne(new QueryWrapper<Student>().eq("openid",openId));
     }
     @Override
+    @UseLog("学生列表模糊查询")
     public IPage studentFuzzySelect(Integer page, Integer size,Long id,String nickname,Integer grade
             ,String email,Long phone,Integer status
             ,Integer minBean,Integer maxBean){

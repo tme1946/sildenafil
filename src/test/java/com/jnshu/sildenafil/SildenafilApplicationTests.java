@@ -69,9 +69,8 @@ public class SildenafilApplicationTests {
 //        for (Object o : list) {
 //            System.out.println(o);
 //        }
-//        IPage page = studentService.studentFuzzySelect(1,2,null,null,null,null,null,null,1,null);
-//        System.out.println(page.getRecords());
-        System.out.println(forumService.forumFrontList(1, 4).getRecords());
+        IPage page = studentService.studentFuzzySelect(1,2,null,null,null,null,null,null,1,null);
+        System.out.println(page.getRecords());
 //    [Student
 //    {id=2, createAt=1540908414565, updateAt=1540908414565, updateBy=Taimur, openid=dsjfo;isdjfi;ld, nickname=jerry, grade=0, email=fajklajf@666.com, phone=1231231231, bean=55, status=1, img=ifoidsjfoidsjfids, maxContSign=0, contSign=0, totalSign=0}
 //    , Student
@@ -79,6 +78,7 @@ public class SildenafilApplicationTests {
 //    , Student
 //    {id=2, createAt=1540908414565, updateAt=1540908414565, updateBy=Taimur, openid=dsjfo;isdjfi;ld, nickname=jerry, grade=0, email=fajklajf@666.com, phone=1231231231, bean=55, status=1, img=ifoidsjfoidsjfids, maxContSign=0, contSign=0, totalSign=0}
 //    ]
+
     }
 
 }

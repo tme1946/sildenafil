@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.system.domain.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jnshu.sildenafil.util.MyPage;
@@ -25,6 +26,7 @@ public interface StudentService extends IService<Student> {
      * @param [page, size, id, nickname, grade, email, phone, status, minBean, maxBean]
      * @return  com.baomidou.mybatisplus.core.metadata.IPage
      */
+
     IPage studentFuzzySelect(Integer page, Integer size,
                              Long id, String nickname, Integer grade
             , String email, Long phone, Integer status

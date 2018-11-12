@@ -76,7 +76,7 @@ public class Generator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 //        strategy.setInclude("t_user","t_user_role","t_role_menu","t_role","t_menu","t_dict","t_dept"); // 需要生成的表
         // 需要生成的表
-        strategy.setInclude("article","collection_asset","forum","like_asset","module","review","role","role_module","sign","student","teacher","user","video");
+        strategy.setInclude("log");
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");

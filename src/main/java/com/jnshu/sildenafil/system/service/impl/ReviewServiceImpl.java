@@ -2,6 +2,7 @@ package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.Review;
 import com.jnshu.sildenafil.system.mapper.ReviewDao;
 import com.jnshu.sildenafil.system.service.ReviewService;
@@ -32,6 +33,7 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewDao, Review> implements
         wrapper.eq("type",type);
         wrapper.eq("type_id",typeId);
         wrapper.orderByDesc("create_at");
+
         return reviewDao.selectPage(iPage,wrapper);
     }
 }

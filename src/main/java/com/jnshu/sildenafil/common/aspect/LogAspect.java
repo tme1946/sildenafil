@@ -1,6 +1,9 @@
 package com.jnshu.sildenafil.common.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jnshu.sildenafil.common.config.LogsProperies;
+import com.jnshu.sildenafil.system.domain.Log;
+import com.jnshu.sildenafil.system.service.LogService;
 import com.jnshu.sildenafil.util.HttpContextUtils;
 import com.jnshu.sildenafil.util.IPUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -28,14 +31,14 @@ public class LogAspect {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-//    @Autowired
-//    private FebsProperies febsProperies;
-//
-//    @Autowired
-//    private LogService logService;
+    @Autowired
+    private LogsProperies logsProperies;
+
+    @Autowired
+    private LogService logService;
 
 
-    @Pointcut("@annotation(com.jnshu.sildenafil.common.annotation.Log)")
+    @Pointcut("@annotation(com.jnshu.sildenafil.common.annotation.UseLog)")
     public void pointcut() {
         // do nothing
     }
@@ -47,6 +50,7 @@ public class LogAspect {
         try {
             // 执行方法
             result = point.proceed();
+            System.out.println("--------------------------已切入----------------------");
         } catch (Throwable e) {
             log.error(e.getMessage());
         }
@@ -56,15 +60,15 @@ public class LogAspect {
         // 设置IP地址
         String ip = IPUtils.getIpAddr(request);
         long time = System.currentTimeMillis() - beginTime;
-//        if (febsProperies.isOpenAopLog()) {
-//            // 保存日志
-//            //User user = (User) SecurityUtils.getSubject().getPrincipal();
-//            SysLog log = new SysLog();
-//            log.setUsername("tme");//user.getUsername());
-//            log.setIp(ip);
-//            log.setTime(time);
-//            logService.saveLog(point, log);
-//        }
+        if (logsProperies.isOpenAopLog()) {
+            // 保存日志
+            //User user = (User) SecurityUtils.getSubject().getPrincipal();
+            Log log = new Log();
+            log.setUsername("tme");//user.getUsername());
+            log.setIp(ip);
+            log.setTime(time);
+            logService.saveLog(point, log);
+        }
         return result;
     }
 }

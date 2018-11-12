@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 /**
  * @ProjectName: sildenafil
  * @Package: com.jnshu.sildenafil.common.annotation
- * @ClassName: Log
+ * @ClassName: UseLog
  * @Description: Log注解
  * @Author: Taimur
  * @CreateDate: 2018/11/1 16:44
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Log {
+public @interface UseLog {
     String value() default "";
 }
