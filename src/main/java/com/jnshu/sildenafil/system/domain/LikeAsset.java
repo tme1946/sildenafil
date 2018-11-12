@@ -3,6 +3,11 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.LikeAssetSave;
+import com.jnshu.sildenafil.common.validation.LikeAssetUpdate;
+import com.jnshu.sildenafil.common.validation.VideoUpdate;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -10,7 +15,7 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Taimur
+ * @author lihoo
  * @since 2018-10-31
  */
 public class LikeAsset implements Serializable {
@@ -20,6 +25,7 @@ public class LikeAsset implements Serializable {
     /**
      * 点赞id
      */
+    @NotNull(message = "{likeAsset.id.validation.error}", groups = { LikeAssetUpdate.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -38,18 +44,21 @@ public class LikeAsset implements Serializable {
     /**
      * 学生id
      */
+    @NotNull(message = "{likeAsset.studentId.validation.error}", groups = { LikeAssetUpdate.class})
     @TableField("student_id")
     private Long studentId;
 
     /**
      * 类型
      */
+    @NotNull(message = "{likeAsset.type.validation.error}", groups = { LikeAssetUpdate.class,LikeAssetSave.class})
     @TableField("type")
     private Integer type;
 
     /**
      * 类型id
      */
+    @NotNull(message = "{likeAsset.typeId.validation.error}", groups = { LikeAssetUpdate.class,LikeAssetSave.class})
     @TableField("type_id")
     private Long typeId;
 

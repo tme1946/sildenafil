@@ -1,14 +1,22 @@
 package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.exception.ServiceException;
+import com.jnshu.sildenafil.common.validation.UserUpdate;
+import com.jnshu.sildenafil.system.domain.Article;
 import com.jnshu.sildenafil.system.domain.User;
 import com.jnshu.sildenafil.system.mapper.UserDao;
 import com.jnshu.sildenafil.system.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jnshu.sildenafil.util.MyPage;
+import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 /**
  * <p>
@@ -23,6 +31,36 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
     @Autowired(required = false)
     private UserDao userDao;
+
+    /**条件查询用户列表
+     * @param page 页码
+     * @param size 每页数量
+     * @param roleId 角色id
+     * @param userName 用户名
+     * @return 列表信息
+     */
+    @Override
+    public IPage getUserList(Integer page, Integer size, Long roleId, String userName){
+        log.info("args for getUserList: page={}&size={}&roleId={}&userName={}",page,size,roleId,userName);
+        //调整page和size默认值--
+        page= null==page||page<=1 ? 1 : page;
+        size= null==size||size<=1||size>20 ? 10 : size;
+        IPage<User> pageQuery=new MyPage<User>(page,size).setDesc("update_at");
+        //构建条件查询语句
+        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        queryWrapper
+                .eq(null!=roleId,"role_id",roleId)
+                .eq(StringUtils.isNotBlank(userName),"user_name",userName);
+        IPage userIPage=userDao.selectPage( pageQuery,queryWrapper);
+        if(userIPage.getRecords().size()>0)
+        {
+            log.info("result for getUserList's size is {}",userIPage.getRecords().size());
+            return userIPage;
+        } else{
+            log.error("result for getUserList error :***reason is list null***");
+            return null;
+        }
+    }
 
     /**根据用户名查询用户
      * @param userName 用户名
@@ -45,4 +83,104 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         log.error("result for getUserByUserName error;userName is null");
         return null;
     }
+
+    /**根据用户id查询用户
+     * @param userId 用户id
+     * @return 单个用户对象
+     */
+    @Override
+    public User getUserByUserId(Long userId){
+        log.info("args for getUserByUserId: userId={}",userId);
+        if(null!=userId){
+            User user=userDao.selectById(userId);
+            if(user==null){
+                log.error("result for getUserByUserId error;userId is notExit");
+                return null;
+            }
+            log.info("result for getUserByUserId is:{}",user);
+            return user;
+        }
+        log.error("result for getUserByUserId error;userId is null");
+        return null;
+    }
+
+    /**根据用户id删除用户
+     * @param userId 用户id
+     * @return 删除的用户id
+     */
+    @Override
+    public Long deleteUserByUserId(Long userId){
+        log.info("args for deleteUserByUserId: userId={}",userId);
+        if(null!=userId){
+            int i=userDao.deleteById(userId);
+            if(i==0){
+                log.error("result for deleteUserByUserId error;userId is notExit");
+                return null;
+            }
+            log.info("result for deleteUserByUserId's id:{}",userId);
+            return userId;
+        }
+        log.error("result for getUserByUserId error;userId is null");
+        return null;
+    }
+
+    /**根据用户id修改用户信息
+     * @param user 用户信息
+     * @return 用户id
+     */
+    @Override
+    public Long updateUserByUserId(User user) throws ServiceException{
+        log.info("args for updateUserByUserId: user={}",user);
+        if(null==user){
+            log.error("result for getUserByUserId error;user is null");
+            throw new ServiceException("updateUserByUserId error;args null");
+        }
+        //校验结果抛出serviceException
+        ValidationUtils.validate(user,UserUpdate.class);
+        user.setUpdateAt(System.currentTimeMillis());
+        user.setUpdateBy("admin");
+        int i=userDao.updateById(user);
+        if(i==0){
+            log.error("result for updateUserByUserId error;userId is notExit");
+            return null;
+        }
+        log.info("result for updateUserByUserId's id:{}",user.getId());
+        return user.getId();
+        }
+
+     /**根据用户id修改用户密码
+     * @param userId 用户id
+     * @param passwordOld 旧密码
+     * @param passwordNew 新密码
+     * @return 用户id
+     * @throws ServiceException 自定义异常
+     */
+    @Override
+    public Long updateUserPasswordByUserId (String passwordOld, String passwordNew, Long userId) throws ServiceException{
+        log.info("args for updateUserPasswordByUserId: passwordOld={}&passwordNew={}&userId={}",passwordOld,passwordNew,userId);
+        if(null!=passwordOld && null!=passwordNew && null!=userId){
+            User user=userDao.selectById(userId);
+            //user账户不存在
+            if(user==null){
+                log.error("result for updateUserPasswordByUserId error;userId is notExit");
+                throw new ServiceException("userId is notExit");
+            }
+            //密码相等
+            if(passwordOld.equals(user.getPassword())){
+                user.setPassword(passwordNew);
+                user.setUpdateAt(System.currentTimeMillis());
+                user.setUpdateBy("admin");
+                userDao.updateById(user);
+                log.info("result for updateUserPasswordByUserId's id:{}",user.getId());
+                return userId;
+            }
+            //密码不想等
+            log.error("result for updateUserPasswordByUserId error;password error");
+            return null;
+        }
+            //参数有null值
+            log.error("result for updateUserPasswordByUserId error;args has null");
+            return null;
+    }
 }
+

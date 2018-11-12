@@ -3,9 +3,13 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.ArticleSave;
 import com.jnshu.sildenafil.common.validation.ArticleUpdate;
+import com.jnshu.sildenafil.common.validation.VideoSave;
 import com.jnshu.sildenafil.common.validation.VideoUpdate;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -55,60 +59,73 @@ public class Video implements Serializable {
     /**
      * 老师id
      */
+    @NotNull(message = "{video.teacherId.validation.error}", groups = { VideoSave.class, VideoUpdate.class })
     @TableField("teacher_id")
     private Long teacherId;
 
     /**
      * 视频外链
      */
+    @NotBlank(message = "{video.url.validation.error}", groups = {VideoSave.class, VideoUpdate.class })
     @TableField("url")
     private String url;
 
     /**
      * 正文
      */
+    @NotBlank(message = "{video.body.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("body")
     private String body;
 
     /**
      * 类型（默认0card，1banner）
      */
+    @NotNull(message = "{video.type.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("type")
     private Integer type;
 
     /**
      * 封面
      */
+    @Max(value = 100, message = "{video.cover.validation.maxError}", groups = {VideoSave.class, VideoUpdate.class })
+    @NotBlank(message = "{video.cover.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("cover")
     private String cover;
 
     /**
      * 年级（默认为全部0，初一1，初二2，初二3，高一4，高二5，高三6）
      */
+    @NotNull(message = "{video.grade.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("grade")
     private Integer grade;
 
     /**
      * 科目（默认为全部0，数学1，语文2，英语3，物理4，化学5，生物6，政治7，历史8，地理9）
      */
+    @NotNull(message = "{video.subject.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("subject")
     private Integer subject;
 
     /**
      * 摘要
      */
+    @Max(value = 100,message = "{video.digest.validation.maxError}",groups = {VideoSave.class, VideoUpdate.class })
+    @NotBlank(message = "{video.digest.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("digest")
     private String digest;
 
     /**
      * 标题
      */
+    @Max(value = 50,message = "{video.title.validation.maxError}",groups = {VideoSave.class, VideoUpdate.class })
+    @NotBlank(message = "{video.title.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("title")
     private String title;
 
     /**
      * 视频时长
      */
+    @NotBlank(message = "{video.timeLength.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("time_length")
     private String timeLength;
 
@@ -127,6 +144,7 @@ public class Video implements Serializable {
     /**
      * 状态（默认0下架，1上架）
      */
+    @NotNull(message = "{video.status.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("status")
     private Integer status;
 

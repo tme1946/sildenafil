@@ -3,6 +3,12 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.TeacherSave;
+import com.jnshu.sildenafil.common.validation.TeacherUpdate;
+import com.jnshu.sildenafil.common.validation.VideoUpdate;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -20,6 +26,7 @@ public class Teacher implements Serializable {
     /**
      * 老师id
      */
+    @NotNull(message = "{teacher.id.validation.error}", groups = { TeacherUpdate.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -38,12 +45,14 @@ public class Teacher implements Serializable {
     /**
      * 昵称
      */
+    @NotBlank(message = "{teacher.nickname.validation.error}", groups = { TeacherUpdate.class, TeacherSave.class})
     @TableField("nickname")
     private String nickname;
 
     /**
      * 头像
      */
+    @NotBlank(message = "{teacher.img.validation.error}", groups = { TeacherUpdate.class, TeacherSave.class})
     @TableField("img")
     private String img;
 

@@ -8,13 +8,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author Taimur
- * @since 2018-10-31
+ * @author lihoo
+ * @since 2018-11-11
  */
 public interface LikeAssetService extends IService<LikeAsset> {
 
     /**
-     * 前台对文章进行点赞
+     * 前台对资料进行点赞
      * @param type 资料类型
      * @param typeId 资料id
      * @param studentId 学生id

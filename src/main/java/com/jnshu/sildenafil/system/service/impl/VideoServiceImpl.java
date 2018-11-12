@@ -6,10 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.common.validation.VideoUpdate;
-import com.jnshu.sildenafil.system.domain.LikeAsset;
-import com.jnshu.sildenafil.system.domain.Student;
-import com.jnshu.sildenafil.system.domain.Teacher;
-import com.jnshu.sildenafil.system.domain.Video;
+import com.jnshu.sildenafil.system.domain.*;
+import com.jnshu.sildenafil.system.mapper.CollectionAssetDao;
 import com.jnshu.sildenafil.system.mapper.LikeAssetDao;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
@@ -41,12 +39,15 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     private final VideoDao videoDao;
     private final TeacherDao teacherDao;
     private final LikeAssetDao likeAssetDao;
+    private final CollectionAssetDao collectionAssetDao;
 
     @Autowired(required = false)
-    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao, LikeAssetDao likeAssetDao) {
+    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao,
+                            LikeAssetDao likeAssetDao, CollectionAssetDao collectionAssetDao) {
         this.videoDao = videoDao;
         this.teacherDao = teacherDao;
         this.likeAssetDao = likeAssetDao;
+        this.collectionAssetDao = collectionAssetDao;
     }
 
     /**
@@ -195,7 +196,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     }
 
     /**
-     * 前台改变点赞状态，增加点赞数PUT
+     * 前台增加点赞数PUT
      * 一个学生id只能给一个视频点一个赞
      * @param videoId 视频id
      * @return 点赞数
@@ -215,15 +216,22 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     }
 
     /**
-     * 前台改变收藏状态，增加收藏数PUT
+     * 前台增加收藏数PUT
      * @param videoId 视频id
      * @return 收藏数
      */
     @Override
     public int updateCollectionAmount(Long videoId) {
-
-
-        return 1;
+        log.info("args for updateCollectionAmount is: {}", videoId);
+        QueryWrapper<CollectionAsset> countQueryWrapper = new QueryWrapper<>();
+        countQueryWrapper.eq("type_id", videoId);
+        int collectionAmount =  collectionAssetDao.selectCount(countQueryWrapper);
+        Video v = new Video();
+        v.setId(videoId);
+        v.setCollectionAmount(collectionAmount);
+        Long id = videoDao.updateById(v) > 0 ? v.getId() : -10000;
+        log.info("result for updateCollectionAmount success; result detail: videoId={}", id);
+        return collectionAmount;
     }
 
     /**

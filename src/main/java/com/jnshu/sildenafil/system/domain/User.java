@@ -3,6 +3,12 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.UserSave;
+import com.jnshu.sildenafil.common.validation.UserUpdate;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -20,6 +26,7 @@ public class User implements Serializable {
     /**
      * 用户id
      */
+    @NotNull(message ="{user.userId.validation.error}" ,groups = {UserUpdate.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -50,18 +57,23 @@ public class User implements Serializable {
     /**
      * 后台账户名
      */
+    @Max(value = 20,message = "{user.userName.validation.maxError}",groups = {UserSave.class})
+    @NotBlank(message ="{user.userName.validation.error}" ,groups = {UserSave.class})
     @TableField("user_name")
     private String userName;
 
     /**
      * 后台账户密码
      */
+    @Max(value = 20,message = "{user.password.validation.maxError}",groups = {UserSave.class})
+    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class})
     @TableField("password")
     private String password;
 
     /**
      * 角色id
      */
+    @NotNull(message ="{user.roleId.validation.error}" ,groups = {UserUpdate.class,UserSave.class})
     @TableField("role_id")
     private Long roleId;
 
