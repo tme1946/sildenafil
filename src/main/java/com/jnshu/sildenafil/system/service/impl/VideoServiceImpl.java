@@ -3,18 +3,16 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.common.validation.VideoUpdate;
 import com.jnshu.sildenafil.system.domain.*;
-import com.jnshu.sildenafil.system.mapper.CollectionAssetDao;
-import com.jnshu.sildenafil.system.mapper.LikeAssetDao;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.mapper.VideoDao;
 import com.jnshu.sildenafil.system.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jnshu.sildenafil.util.MyPage;
-import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +36,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
 
     private final VideoDao videoDao;
     private final TeacherDao teacherDao;
-    private final LikeAssetDao likeAssetDao;
-    private final CollectionAssetDao collectionAssetDao;
 
     @Autowired(required = false)
-    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao,
-                            LikeAssetDao likeAssetDao, CollectionAssetDao collectionAssetDao) {
+    public VideoServiceImpl(VideoDao videoDao, TeacherDao teacherDao) {
         this.videoDao = videoDao;
         this.teacherDao = teacherDao;
-        this.likeAssetDao = likeAssetDao;
-        this.collectionAssetDao = collectionAssetDao;
     }
 
     /**
@@ -67,6 +60,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      * @return 视频每页详情
      */
     @Override
+    @UseLog("后台视频列表模糊查询")
     public IPage getPage(Integer page, Integer size, String title, Integer type, Integer grade, Integer subject,
                          Integer likeStart, Integer likeEnd, Integer collectStart, Integer collectEnd,
                          String teacher, Integer status) {
@@ -194,54 +188,5 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
         log.info("result for updateStatus success; result detail: videoId={}", vid);
         return v;
     }
-
-    /**
-     * 前台增加点赞数PUT
-     * 一个学生id只能给一个视频点一个赞
-     * @param videoId 视频id
-     * @return 点赞数
-     */
-    @Override
-    public int updateLikeAmount(Long videoId) {
-        log.info("args for updateLikeAmount is: {}", videoId);
-        QueryWrapper<LikeAsset> countQueryWrapper = new QueryWrapper<>();
-        countQueryWrapper.eq("type_id", videoId);
-        int likeAmount =  likeAssetDao.selectCount(countQueryWrapper);
-        Video v = new Video();
-        v.setId(videoId);
-        v.setLikeAmount(likeAmount);
-        Long id = videoDao.updateById(v) > 0 ? v.getId() : -10000;
-        log.info("result for updateLikeAmount success; result detail: videoId={}", id);
-        return likeAmount;
-    }
-
-    /**
-     * 前台增加收藏数PUT
-     * @param videoId 视频id
-     * @return 收藏数
-     */
-    @Override
-    public int updateCollectionAmount(Long videoId) {
-        log.info("args for updateCollectionAmount is: {}", videoId);
-        QueryWrapper<CollectionAsset> countQueryWrapper = new QueryWrapper<>();
-        countQueryWrapper.eq("type_id", videoId);
-        int collectionAmount =  collectionAssetDao.selectCount(countQueryWrapper);
-        Video v = new Video();
-        v.setId(videoId);
-        v.setCollectionAmount(collectionAmount);
-        Long id = videoDao.updateById(v) > 0 ? v.getId() : -10000;
-        log.info("result for updateCollectionAmount success; result detail: videoId={}", id);
-        return collectionAmount;
-    }
-
-    /**
-     * 前台Banner视频列表
-     * @return Banner视频List
-     */
-    @Override
-    public List getBannerList() {
-        return null;
-    }
-
 
 }

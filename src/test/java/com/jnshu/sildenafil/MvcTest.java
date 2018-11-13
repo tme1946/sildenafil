@@ -52,4 +52,15 @@ public class MvcTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
+    @Test
+    public void testVideo() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/a/u/admin/video/")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("page","1")
+                .param("size","5")
+                .param("title","t")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 }

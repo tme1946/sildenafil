@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.LLL;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -142,9 +142,9 @@ public class VideoTest {
     public void testGetVideoPage() {
 
         IPage aaaa = videoService
-                .getPage(1,5, "b", null, null, null,
+                .getPage(1,5, null, null, null, null,
                         null, null, null, null,
-                        null,null);
+                        "尼",null);
         aaaa.getRecords().forEach(System.out::println);
 
 
@@ -259,8 +259,8 @@ public class VideoTest {
 
     @Test
     public void updateLike() {
-        Long videoId = 2L;
-        System.out.println(videoService.updateLikeAmount(videoId));
+//        Long videoId = 2L;
+//        System.out.println(videoService.updateLikeAmount(videoId));
     }
 
     @Test

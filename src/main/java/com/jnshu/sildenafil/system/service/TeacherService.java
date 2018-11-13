@@ -23,13 +23,13 @@ public interface TeacherService extends IService<Teacher> {
      * @return 老师昵称List
      */
     List getTeacherNameList();
+
     /**
      * 后台通过id查询老师详情
      * @param teacherId 老师id
      * @return 查询到的老师详情
      */
     Teacher getTeacherById(Long teacherId);
-
 
     /**
      * 新增老师信息详情

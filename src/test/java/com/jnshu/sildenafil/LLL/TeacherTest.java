@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.LLL;
 
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.service.TeacherService;
