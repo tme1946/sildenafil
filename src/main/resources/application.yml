@@ -61,6 +61,10 @@ mybatis-plus:
 tasksecurity:
     # 登录路径
     login-url: /denglu
+    # 登录成功路径
+    login-success-url: /bsHome
+    # 登录失败路径
+    login-fail-url: /error
     # 登出路径
     logout-url: /dengchu
     # 首页路径
