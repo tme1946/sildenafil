@@ -3,6 +3,13 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.Save;
+import com.jnshu.sildenafil.common.validation.Update;
+import com.jnshu.sildenafil.common.validation.UserSave;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -20,6 +27,7 @@ public class Role implements Serializable {
     /**
      * 表id
      */
+    @NotBlank(message ="{role.roleId.validation.error}" ,groups = {Update.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -50,6 +58,9 @@ public class Role implements Serializable {
     /**
      * 角色名称
      */
+    @Min(value = 6,message = "{role.roleName.validation.minError}",groups = {Save.class})
+    @Max(value = 16,message = "{role.roleName.validation.maxError}",groups = {Save.class})
+    @NotBlank(message ="{role.roleName.validation.error}" ,groups = {Save.class})
     @TableField("role_name")
     private String roleName;
 

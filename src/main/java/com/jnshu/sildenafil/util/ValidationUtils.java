@@ -23,7 +23,7 @@ public class ValidationUtils {
             .byProvider(HibernateValidator.class)
             .configure()
             //快速失败，启用的话验证结果有错就停止
-            .failFast(false)
+            .failFast(true)
             .buildValidatorFactory()
             .getValidator();
 

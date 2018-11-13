@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.feifei;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.User;
 import com.jnshu.sildenafil.system.mapper.UserDao;
@@ -37,5 +38,12 @@ public class UserTest {
     public void userTest1() {
         User user=null;
         System.out.println(userDao.updateById(null));
+    }
+
+    @Test
+    public void getUserPageTest() {
+        IPage iPage=userService.getUserList(null,null,null,
+                "o");
+        System.out.println(iPage);
     }
 }

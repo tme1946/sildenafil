@@ -3,9 +3,12 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.common.exception.ServiceException;
+import com.jnshu.sildenafil.common.validation.UserSave;
 import com.jnshu.sildenafil.common.validation.UserUpdate;
 import com.jnshu.sildenafil.system.domain.Article;
+import com.jnshu.sildenafil.system.domain.Role;
 import com.jnshu.sildenafil.system.domain.User;
+import com.jnshu.sildenafil.system.mapper.RoleDao;
 import com.jnshu.sildenafil.system.mapper.UserDao;
 import com.jnshu.sildenafil.system.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -31,7 +36,8 @@ import java.sql.SQLException;
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
     @Autowired(required = false)
     private UserDao userDao;
-
+    @Autowired(required = false)
+    private RoleDao roleDao;
     /**条件查询用户列表
      * @param page 页码
      * @param size 每页数量
@@ -50,10 +56,14 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         QueryWrapper<User> queryWrapper=new QueryWrapper<>();
         queryWrapper
                 .eq(null!=roleId,"role_id",roleId)
-                .eq(StringUtils.isNotBlank(userName),"user_name",userName);
-        IPage userIPage=userDao.selectPage( pageQuery,queryWrapper);
+                .like(StringUtils.isNotBlank(userName),"user_name",userName);
+        IPage<User> userIPage=userDao.selectPage( pageQuery,queryWrapper);
         if(userIPage.getRecords().size()>0)
         {
+            //存在数据;根据roleId查询roleName进行拼接
+//            List roleNamelist=userIPage.getRecords().stream()
+//                    .map(rd -> roleDao.selectById(rd.getRoleId()).getRoleName()).collect(Collectors.toList());
+//            List allPage=userIPage.getRecords();
             log.info("result for getUserList's size is {}",userIPage.getRecords().size());
             return userIPage;
         } else{
@@ -89,19 +99,19 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      * @return 单个用户对象
      */
     @Override
-    public User getUserByUserId(Long userId){
+    public User getUserByUserId(Long userId) throws ServiceException{
         log.info("args for getUserByUserId: userId={}",userId);
-        if(null!=userId){
-            User user=userDao.selectById(userId);
-            if(user==null){
-                log.error("result for getUserByUserId error;userId is notExit");
-                return null;
-            }
+        if(null==userId){
+            log.error("result for getUserByUserId error;userId is null");
+            throw new ServiceException("getUserByUserId error;args null");
+        }
+        User user=userDao.selectById(userId);
+        if(user==null){
+            log.error("result for getUserByUserId error;userId is notExit");
+            return null;
+        }
             log.info("result for getUserByUserId is:{}",user);
             return user;
-        }
-        log.error("result for getUserByUserId error;userId is null");
-        return null;
     }
 
     /**根据用户id删除用户
@@ -109,19 +119,45 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      * @return 删除的用户id
      */
     @Override
-    public Long deleteUserByUserId(Long userId){
+    public Long deleteUserByUserId(Long userId) throws ServiceException{
         log.info("args for deleteUserByUserId: userId={}",userId);
-        if(null!=userId){
-            int i=userDao.deleteById(userId);
-            if(i==0){
-                log.error("result for deleteUserByUserId error;userId is notExit");
-                return null;
-            }
-            log.info("result for deleteUserByUserId's id:{}",userId);
-            return userId;
+        if(null==userId){
+            log.error("result for deleteUserByUserId error;userId is null");
+            throw new ServiceException("deleteUserByUserId error;args null");
         }
-        log.error("result for getUserByUserId error;userId is null");
-        return null;
+        int i=userDao.deleteById(userId);
+        if(i==0){
+            log.error("result for deleteUserByUserId error;userId is notExit");
+            return null;
+        }
+        log.info("result for deleteUserByUserId's id:{}",userId);
+        return userId;
+    }
+
+    /**增加用户
+     * @param user 用户信息
+     * @return 保存的用户id
+     */
+    @Override
+    public Long saveUser(User user) throws ServiceException{
+        log.info("args for saveUser: user={}",user);
+        if(null==user){
+            log.error("result for saveUser error;user is null");
+            throw new ServiceException("saveUser error;args null");
+        }
+        //校验结果抛出serviceException
+        ValidationUtils.validate(user,UserSave.class);
+        user.setCreateAt(System.currentTimeMillis());
+        user.setCreateBy("admin");
+        user.setUpdateAt(System.currentTimeMillis());
+        user.setUpdateBy("admin");
+        int i=userDao.insert(user);
+        if(i==0){
+            log.error("result for saveUser error;save error");
+            return null;
+        }
+        log.info("result for saveUser's id:{}",user.getId());
+        return user.getId();
     }
 
     /**根据用户id修改用户信息
