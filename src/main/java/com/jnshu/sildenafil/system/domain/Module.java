@@ -3,6 +3,9 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.Update;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -20,6 +23,7 @@ public class Module implements Serializable {
     /**
      * 模块id
      */
+    @NotBlank(message ="{module.moduleId.validation.error}" ,groups = {Update.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

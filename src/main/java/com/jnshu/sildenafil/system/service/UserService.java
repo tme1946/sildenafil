@@ -34,13 +34,19 @@ public interface UserService extends IService<User> {
      * @param userId 用户id
      * @return 单个用户对象
      */
-    User getUserByUserId(Long userId);
+    User getUserByUserId(Long userId) throws ServiceException;
 
     /**根据用户id删除用户
      * @param userId 用户id
      * @return 用户id
      */
-    Long deleteUserByUserId(Long userId);
+    Long deleteUserByUserId(Long userId) throws ServiceException;
+
+    /**增加用户
+     * @param user 用户信息
+     * @return 保存的用户id
+     */
+    Long saveUser(User user) throws ServiceException;
 
     /**根据用户id修改用户信息
      * @param user 用户信息
