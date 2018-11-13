@@ -25,8 +25,11 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 
 import javax.sql.DataSource;
 
+/**拦截配置类
+ *
+ * @author 24569
+ */
 @Configuration
-//@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -37,10 +40,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     TaSecurityProperties taSecurityProperties;
     @Autowired(required = false)
-    TaUserDetailsServiceImpl taUserDetailsServiceImp;
-    // 数据库处理 rememberMe 自动登录认证；使用缓存的记住我功能
+    TaUserDetailsServiceImpl taUserDetailsServiceImpl;
     @Autowired(required = false)
     private DataSource dataSource;
+
+    /**数据库保存rememberMe状态
+     * @return 持久化token仓库位置
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
@@ -50,24 +56,33 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         jdbcTokenRepository.setCreateTableOnStartup(false);
         return jdbcTokenRepository;
     }
-    //使用自定义失效session策略，指定失效后的重定向网址
+
+    /**自定义失效session失效策略，指定失效后的重定向网址
+     * @return session失效策略
+     */
     @Bean
     public InvalidSessionStrategy invalidSessionStrategy(){
         return new TaInvalidSessionStrategy();
     }
-    //使用自定义失效session策略，处理并发登陆
+
+    /**自定义session过期策略，处理并发登陆
+     * @return session过期策略
+     */
     @Bean
     public SessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
         return new TaExpiredSessionStrategy();
     }
-    //session注册中心
+
+    /**
+     * @return session注册中心
+     */
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //将路径拆分成单个字符
+        //将路径字符串拆分成字符数组
         String[] anonResourcesUrl =
                 StringUtils.splitByWholeSeparatorPreserveAllTokens(taSecurityProperties.getAnonResourcesUrl(),",");
 
@@ -81,18 +96,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()// 表单登录
                 .loginProcessingUrl(taSecurityProperties.getLoginUrl()) // 登录 Action 的 URI
                 .loginPage(taSecurityProperties.getLoginUrl()) // 登录页面 URI
-                .successForwardUrl("/bsHome")
-                .failureForwardUrl("/error")
+                .successForwardUrl(taSecurityProperties.getLoginSuccessUrl())
+                .failureForwardUrl(taSecurityProperties.getLoginFailUrl())
                 .and()
                 .rememberMe() // 添加记住我功能
                 .tokenRepository(persistentTokenRepository()) // 配置 token 持久化仓库
-                .tokenValiditySeconds(taSecurityProperties.getRememberMeTimeout()) // rememberMe 过期时间，单为秒
-                .userDetailsService(taUserDetailsServiceImp) // 处理自动登录逻辑
+                .tokenValiditySeconds(taSecurityProperties.getRememberMeTimeout()) // rememberMe 过期时间，秒登录
+                .userDetailsService(taUserDetailsServiceImpl) // 处理自动登录逻辑
                 .and()
                 .sessionManagement()//配置 session管理器
                 .invalidSessionStrategy(invalidSessionStrategy())//处理 session失效,可不配，使用默认
                 .maximumSessions(taSecurityProperties.getMaximumSessions())//最大并发登录数
-                .expiredUrl("/login")//失效后的重定向地址
+                .expiredUrl(taSecurityProperties.getLoginUrl())//失效后的重定向地址
 //                .expiredSessionStrategy(sessionInformationExpiredStrategy())//处理并发登录被踢出后的吹,自定义类
 //                .maxSessionsPreventsLogin(false)//false后登录踢掉前登录,true则不允许之后登录，默认为false
                 .sessionRegistry(sessionRegistry())//配置 session注册中心，可不配，使用默认
@@ -106,7 +121,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-    // spring security自带的密码加密工具类
+    /**spring security自带的密码加密工具,md5加盐严密
+     * @return 加密工具类
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -115,6 +132,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //user Details Service验证,指定使用默认密码加密方式；不指定为默认；
-        auth.userDetailsService(taUserDetailsServiceImp).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(taUserDetailsServiceImpl).passwordEncoder(passwordEncoder());
     }
 }
