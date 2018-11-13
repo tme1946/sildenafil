@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.domain.ResponseBo;
 import com.jnshu.sildenafil.system.domain.Review;
 import com.jnshu.sildenafil.system.service.ReviewService;
@@ -28,6 +29,7 @@ public class ReviewController {
      * @return  com.jnshu.sildenafil.common.domain.ResponseBo
      */
     @ResponseBody
+    @UseLog("listByType")
     @GetMapping(value = "/a/u/admin/reviews/type")
     public ResponseBo listByType(Integer page,Integer size ,Integer type,Long typeId){
         log.info("args for type,typeId is: type={},typeId{}",type,typeId);

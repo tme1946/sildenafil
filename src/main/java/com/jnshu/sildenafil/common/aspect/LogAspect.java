@@ -50,7 +50,6 @@ public class LogAspect {
         try {
             // 执行方法
             result = point.proceed();
-            System.out.println("--------------------------已切入----------------------");
         } catch (Throwable e) {
             log.error(e.getMessage());
         }
