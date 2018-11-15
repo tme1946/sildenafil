@@ -75,4 +75,5 @@ public interface ArticleService extends IService<Article> {
      */
     Long updateArticleStatus(Long articleId,Integer type,Integer status);
 
+
 }

@@ -3,6 +3,8 @@ package com.jnshu.sildenafil.system.service;
 import com.jnshu.sildenafil.system.domain.CollectionAsset;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -31,4 +33,10 @@ public interface CollectionAssetService extends IService<CollectionAsset> {
      */
     int selectCollection(Integer type,Long typeId,Long studentId);
 
+    /**
+     * 查询学生收藏列表
+     * @param [type, studentId]
+     * @return  java.util.List
+     */
+    List<Long> studentCollection(Integer type,Long studentId);
 }
