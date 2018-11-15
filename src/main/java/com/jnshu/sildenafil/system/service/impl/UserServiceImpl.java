@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public IPage getUserList(Integer page, Integer size, Long roleId, String userName){
-        log.info("args for getUserList: page={}&size={}&roleId={}&userName={}",page,size,roleId,userName);
+        log.debug("args for getUserList: page={}&size={}&roleId={}&userName={}",page,size,roleId,userName);
         //调整page和size默认值--
         page= null==page||page<=1 ? 1 : page;
         size= null==size||size<=1||size>20 ? 10 : size;
@@ -78,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public User getUserByUserName(String userName){
-        log.info("args for getUserByUserName: userName={}",userName);
+        log.debug("args for getUserByUserName: userName={}",userName);
         if(StringUtils.isNotEmpty(userName)){
             QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
             userQueryWrapper.eq("user_name",userName);
@@ -100,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public User getUserByUserId(Long userId) throws ServiceException{
-        log.info("args for getUserByUserId: userId={}",userId);
+        log.debug("args for getUserByUserId: userId={}",userId);
         if(null==userId){
             log.error("result for getUserByUserId error;userId is null");
             throw new ServiceException("getUserByUserId error;args null");
