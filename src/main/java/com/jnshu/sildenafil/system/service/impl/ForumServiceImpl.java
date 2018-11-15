@@ -49,11 +49,4 @@ public class ForumServiceImpl extends ServiceImpl<ForumDao, Forum> implements Fo
         IPage forumPage = forumDao.selectPage(myPage,wrapper);
         return forumPage;
     }
-    @Override
-    public IPage forumFrontList(Integer page,Integer size){
-        IPage frontPage = new MyPage(page,size).setDesc("create_at");
-        QueryWrapper<Forum> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("create_at");
-        return forumDao.selectPage(frontPage,wrapper);
-    }
 }
