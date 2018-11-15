@@ -161,11 +161,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
 
     /**后台保存文章
      * @param article 文章信息
-     * @return 插入后的article
+     * @return 插入后的articleId
      */
     @Override
     public Article saveArticle(Article article) {
-        log.info("args for saveArticle is: {}",article);
+        log.debug("args for saveArticle is: {}",article);
         //参数验证，验证必要的参数是否填了；
         try{
             //使用save验证组对参数进行验证
@@ -178,7 +178,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             log.info("result for saveArticle success;result detail: articleId={};{}",l,article);
             return article;
         }catch(ServiceException se){
-          log.error("result for saveArticle error;reason is args error;detail exception is:{}",
+          log.warn("result for saveArticle error;reason is args error;detail exception is:{}",
                   se.getMessage());
           return null;
         }catch(IllegalArgumentException iae) {
@@ -203,7 +203,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             //设置更改人；如果是后台管理员，改为管理员id
             article.setUpdateBy("studentId:" + article.getId());
             //id符合格式，但是id不存在报错为-3003
-            long l = articleDao.updateById(article) > 0 ? article.getId() : -3003;
+            Long l = articleDao.updateById(article) > 0 ? article.getId() : null;
             log.info("result for update articleId={}", l);
             return l;
         }catch(ServiceException se){

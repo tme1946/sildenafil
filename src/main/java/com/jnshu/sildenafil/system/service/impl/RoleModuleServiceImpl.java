@@ -124,4 +124,29 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
         log.info("result for updateRoleModuleByRoleId's id:[{}]",roleId);
         return roleId;
     }
+
+    /**增加某个角色的权限
+     * @param roleId 角色id
+     * @param moduleIdList 权限id集合
+     * @return 角色id
+     * @throws ServiceException
+     */
+    @Override
+    public Long saveRoleModuleListByRoleId(Long roleId, List<Long> moduleIdList) throws ServiceException{
+        log.debug("args for saveRoleModuleListByRoleId: roleId=[{}]&moduleIdList=[{}]",roleId,moduleIdList);
+        if(null==roleId||moduleIdList==null||moduleIdList.size()==0){
+            log.error("result for saveRoleModuleListByRoleId error;args is null");
+            throw new ServiceException("saveRoleModuleListByRoleId error;args null");
+        }
+        //进行记录的插入
+        RoleModule roleModule=new RoleModule();
+        roleModule.setRoleId(roleId);
+        //循坏遍历插入数据
+        for (Long aLong : moduleIdList) {
+            roleModule.setModuleId(aLong);
+            roleModuleDao.insert(roleModule);
+        }
+        log.info("result for saveRoleModuleListByRoleId's id:[{}]",roleId);
+        return roleId;
+    }
 }

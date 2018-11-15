@@ -30,6 +30,12 @@ public interface ModuleService extends IService<Module> {
      */
     List<Module> getModuleListByUserName(String userName);
 
+    /**后台根据roleId查询模块列表
+     * @param roleId 用户名
+     * @return 用户模块列表
+     */
+    List<Module> getModuleListByRoleId(Long roleId);
+
     /**查询模块列表
      * @param page 页码
      * @param size 每页数量

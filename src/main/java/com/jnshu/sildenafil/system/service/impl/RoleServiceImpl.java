@@ -17,6 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  *  服务实现类
@@ -71,6 +74,22 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         }
         log.info("result for getRoleByRoleId is:{}",role);
         return role;
+    }
+    /**根据用户List查询角色List
+     * @param userIPage 用户page类
+     * @return 单个用户对象
+     * @throws ServiceException 自定义异常
+     */
+    @Override
+    public List<Role> getRoleListByUserList(IPage userIPage) throws ServiceException{
+        if(null==userIPage){
+            log.error("result for getRoleListByUserList error;roleId is null");
+            throw new ServiceException("getRoleListByUserList error;args null");
+        }
+        List<User> userList=userIPage.getRecords();
+        List<Role> roleList=userList.stream().map(usr->roleDao.selectById(usr.getId())).collect(Collectors.toList());
+        log.info("result for getRoleListByUserList size:[{}]",roleList.size());
+        return roleList;
     }
 
     /**根据角色id删除角色
