@@ -55,7 +55,12 @@ public class UserController {
     public ResponseBo getUserByUserId(Long userId) throws Exception{
         log.info("args for getUserByUserId: userId={}",userId);
         User user=userService.getUserByUserId(userId);
-        return ResponseBo.ok().put("data",user);
+        if(user==null){
+            log.error("结果为空");
+            return ResponseBo.error("参数异常");
+        }
+        Role role=roleService.getRoleByRoleId(user.getRoleId());
+        return ResponseBo.ok().put("user",user).put("role",role);
     }
 
     /**增加用户
@@ -65,7 +70,11 @@ public class UserController {
     @PostMapping(value = "/a/u/admin/user")
     public ResponseBo saveUser(User user) throws Exception {
         log.info("args for saveUser: user={}",user);
-        userService.saveUser(user);
+        Long userId=userService.saveUser(user);
+        if(userId==null){
+            log.error("插入失败");
+            return ResponseBo.error("插入失败");
+        }
         return ResponseBo.ok();
     }
 
@@ -76,7 +85,11 @@ public class UserController {
     @PutMapping(value = "/a/u/admin/user")
     public ResponseBo updateUserByUserId(User user) throws Exception {
         log.info("args for updateUserByUserId: user={}",user);
-        userService.updateUserByUserId(user);
+        Long userId=userService.updateUserByUserId(user);
+        if(userId==null){
+            log.error("更新失败");
+            return ResponseBo.error("更新失败");
+        }
         return ResponseBo.ok();
     }
 
