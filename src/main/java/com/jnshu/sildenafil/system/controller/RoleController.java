@@ -38,7 +38,7 @@ public class RoleController {
         IPage roleList=roleService.getRoleList(page,size);
         if(roleList==null){
             log.error("结果为空");
-            return ResponseBo.error("参数异常");
+            return ResponseBo.error("结果异常").put("code",-1000);
         }
         return ResponseBo.ok("请求成功").put("data",roleList);
     }
@@ -53,8 +53,9 @@ public class RoleController {
         Role role =roleService.getRoleByRoleId(roleId);
         if(role==null){
             log.error("结果为空");
-            return ResponseBo.error("参数异常");
+            return ResponseBo.error("结果异常").put("code",-1000);
         }
+        //权限id列表
         List<RoleModule> roleModules=roleModuleService.getModuleIdListByRoleId(role.getId());
         return ResponseBo.ok().put("role",role).put("modules",roleModules);
     }
@@ -69,8 +70,10 @@ public class RoleController {
         Long roleId2=roleService.deleteRoleByRoleId(roleId);
         if(roleId2==null){
             log.error("result for deleteRoleByRoleId fail");
-            return ResponseBo.error("结果为空").put("code",-1000);
+            return ResponseBo.error("结果异常").put("code",-1000);
         }
+        //删除中间表
+        Long roleModuleId=roleModuleService.deleteRoleModuleByRoleId(roleId);
         return ResponseBo.ok();
     }
 
@@ -84,7 +87,7 @@ public class RoleController {
         Long roleId2=roleService.saveRole(role);
         if(roleId2==null){
             log.error("result for saveRole fail");
-            return ResponseBo.error("操作失败").put("code",-1000);
+            return ResponseBo.error("结果异常").put("code",-1000);
         }
         //插入失败抛出异常
         roleModuleService.saveRoleModuleListByRoleId(roleId2,moduleIdList);
@@ -104,7 +107,7 @@ public class RoleController {
         Long roleId1=roleModuleService.updateRoleModuleByRoleId(roleId, moduleIdList);
         if(roleId1==null){
             log.error("result for saveRole fail");
-            return ResponseBo.error("操作失败").put("code",-1000);
+            return ResponseBo.error("结果异常").put("code",-1000);
         }
         return ResponseBo.ok();
     }
