@@ -17,6 +17,8 @@ import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -134,6 +136,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         return userId;
     }
 
+    /**security默认加密方式
+     * @return 加密类
+     */
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){return new BCryptPasswordEncoder();}
     /**增加用户
      * @param user 用户信息
      * @return 保存的用户id
@@ -151,6 +158,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         user.setCreateBy("admin");
         user.setUpdateAt(System.currentTimeMillis());
         user.setUpdateBy("admin");
+        //将密码加密，使用security框架自带的加密
+        String psswordEncrypt=this.bCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(psswordEncrypt);
         int i=userDao.insert(user);
         if(i==0){
             log.error("result for saveUser error;save error");
