@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.system.domain.Sign;
 import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.mapper.SignDao;
@@ -45,6 +46,7 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      * @return 签到是否成功
      */
     @Override
+    @UseLog("前台签到")
     public boolean addSign(Long studentId) {
         log.info("args for sign is: {}", studentId);
         Sign sign = new Sign();
@@ -124,6 +126,7 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      * @return 该学生签到记录List
      */
     @Override
+    @UseLog("前台获取签到列表")
     public List getSignList(Long studentId) {
         log.info("args for getSignList is: {}", studentId);
         QueryWrapper<Sign> signQueryWrapper = new QueryWrapper<>();

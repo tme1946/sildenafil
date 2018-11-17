@@ -66,6 +66,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
                          String teacher, Integer status) {
         log.info("args for getPage is: {}", page, size, title, type, grade, subject,
                                             likeStart, likeEnd, collectStart, collectEnd, teacher, status);
+        //调整page和size默认值--
+        page= null==page||page<=1 ? 1 : page;
+        size= null==size||size<=1||size>20 ? 10 : size;
         IPage<Video> findPage = new MyPage<Video>(page, size).setDesc("update_at");
         QueryWrapper<Video> videoQueryWrapper = new QueryWrapper<>();
         if (teacher != null) {

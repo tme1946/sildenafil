@@ -81,7 +81,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
         }
         ValidationUtils.validate(teacher);
         teacher.setCreateAt(NOW);
-        teacher.setCreateBy("admin-lihoo");
+        teacher.setCreateBy("admin");
         Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
         log.info("result for saveTeacher success; result detail: teacherId={}; {}", id, teacher);
         return teacher;

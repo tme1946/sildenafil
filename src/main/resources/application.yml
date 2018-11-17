@@ -1,5 +1,3 @@
-server:
-  port: 20670
 spring:
   #未使用redis，配为none
   session:
@@ -72,7 +70,7 @@ tasksecurity:
     # 首页路径
     index-url: /index
     # 免认证资源路径
-    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/denglu,/dengchu,/va/**,/bsHome,/a/u/**
+    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/denglu,/dengchu,/va/**,/bsHome
     # 记住我有效时间，单位为秒
     remember-me-timeout: 36000
     #session的同时存在；-1表示无限制
