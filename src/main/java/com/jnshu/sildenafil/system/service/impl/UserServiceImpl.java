@@ -96,6 +96,28 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         return null;
     }
 
+    /**根据用户名查询roleId
+     * @param userName 用户名
+     * @return 单个用户对象
+     */
+    @Override
+    public Long getRoleIdByUserName(String userName){
+        log.debug("args for getRoleIdByUserName: userName={}",userName);
+        if(StringUtils.isNotBlank(userName)){
+            QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+            userQueryWrapper.eq("user_name",userName);
+            User user=userDao.selectOne(userQueryWrapper);
+            if(user==null){
+                log.error("result for getRoleIdByUserName error;userName is notExit");
+                return null;
+            }
+            log.info("result for getRoleIdByUserName is:{}",user.getRoleId());
+            return user.getRoleId();
+        }
+        log.error("result for getRoleIdByUserName error;userName is null");
+        return null;
+    }
+
     /**根据用户id查询用户
      * @param userId 用户id
      * @return 单个用户对象

@@ -58,31 +58,31 @@ public class ModuleController {
         return ResponseBo.error("结果异常").put("code",-1000);
     }
 
-    /**根据模块id删除模块
+    /**根据模块id删除roleModule
      * @param moduleId 模块id
      * @return 模块id
      */
     @DeleteMapping(value = "/a/u/admin/module")
-    public ResponseBo deleteModule(Long moduleId) throws Exception {
+    public ResponseBo deleteModule(Long moduleId,String userName) throws Exception {
         log.info("args for deleteModule: moduleId={}",moduleId);
-        Long moduleId1=moduleService.deleteModuleByModuleId(moduleId);
-        if(moduleId1!=null){
-
+        Long roleId=roleModuleService.deleteRoleModuleByUserName(userName,moduleId);
+        if(roleId!=null){
             return ResponseBo.ok("请求成功");
         }
         log.error("结果为空");
         return ResponseBo.error("结果异常").put("code",-1000);
     }
 
-    /**增加模块
+    /**根据userName增加模块和roleModule
      * @param module 模块信息
      * @return 保存的模块id
      */
     @PostMapping(value = "/a/u/admin/module")
-    public ResponseBo saveModule(Module module) throws Exception {
+    public ResponseBo saveModule(Module module,String userName) throws Exception {
         log.info("args for saveModule: module={}",module);
         Long moduleId=moduleService.saveModule(module);
-        if(moduleId!=null){
+        Long roleId=roleModuleService.saveRoleModuleByUserName(userName,moduleId);
+        if(roleId!=null){
             return ResponseBo.ok("请求成功");
         }
         log.error("结果为空");

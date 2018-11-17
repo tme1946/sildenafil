@@ -4,7 +4,7 @@
     <property name="PROJECT_NAME" value="sildenafilTest"/>
 
     <!--定义日志文件的存储地址  LogBack 的配置中必须使用相对路径-->
-    <property name="LOG_HOME" value="/bootlog/logs/"/>
+    <property name="LOG_HOME" value="bootlog/logs/"/>
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

@@ -7,6 +7,7 @@ import com.jnshu.sildenafil.system.domain.RoleModule;
 import com.jnshu.sildenafil.system.mapper.RoleModuleDao;
 import com.jnshu.sildenafil.system.service.RoleModuleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jnshu.sildenafil.system.service.UserService;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
 
     @Autowired(required = false)
     private RoleModuleDao roleModuleDao;
-
+    @Autowired
+    private UserService userService;
     /**后台根据roleId查询menuId列表
      * @param roleId 角色id
      * @return menuId列表列表
@@ -44,7 +46,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
                 log.error("result for getModuleIdListByRoleId error;roleId is notExit");
                 return null;
             }
-            log.info("result for getModuleIdListByRoleId:{}",moduleIdList);
+            log.info("result for getModuleIdListByRoleId's size:{}",moduleIdList.size());
             return moduleIdList;
         }
         log.error("result for getModuleIdListByRoleId error;roleId is null");
@@ -73,7 +75,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
         return roleModule.getId();
     }
 
-    /**删除角色权限
+    /**删除角色全部权限
      * @param roleId 角色id
      * @return 返回记录id
      */
@@ -92,6 +94,57 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
             return null;
         }
         log.info("result for deleteRoleModuleByRoleId's id:{}",roleId);
+        return roleId;
+    }
+
+    /**删除角色单个权限
+     * @param roleId 角色id
+     * @param moduleId 模块id
+     * @return 返回记录id
+     */
+    @Override
+    public Long deleteRoleModuleByRMid(Long roleId,Long moduleId) throws ServiceException{
+        log.info("args for deleteRoleModuleByRMid: roleId={}&moduleId={}",roleId,moduleId);
+        if(null==roleId){
+            log.error("result for deleteRoleModuleByRMid error;roleId is null");
+            throw new ServiceException("deleteRoleModuleByRMid error;args null");
+        }
+        QueryWrapper<RoleModule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id",roleId).eq("module_id",moduleId);
+        int i=roleModuleDao.delete(queryWrapper);
+        if(i==0){
+            log.error("result for deleteRoleModuleByRMid error;roleId&&moduleId is notExit");
+            return null;
+        }
+        log.info("result for deleteRoleModuleByRMid's id:{}",roleId);
+        return roleId;
+    }
+
+    /**根据用户名删除角色单个权限
+     * @param moduleId 角色id
+     * @param userName 用户名
+     * @return 返回记录id
+     */
+    @Override
+    public Long deleteRoleModuleByUserName(String userName,Long moduleId) throws ServiceException{
+        log.info("args for deleteRoleModuleByUserName: userName={}&moduleId={}",userName,moduleId);
+        if(null==userName||null==moduleId){
+            log.warn("result for deleteRoleModuleByUserName error;userName||moduleId is null");
+            throw new ServiceException("deleteRoleModuleByUserName error;args null");
+        }
+        Long roleId=userService.getRoleIdByUserName(userName);
+        if(roleId==null){
+            log.warn("result for deleteRoleModuleByUserName error;userName is notExit");
+            throw new ServiceException("deleteRoleModuleByUserName error;args null");
+        }
+        QueryWrapper<RoleModule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id",roleId).eq("module_id",moduleId);
+        int i=roleModuleDao.delete(queryWrapper);
+        if(i==0){
+            log.warn("result for deleteRoleModuleByUserName error;moduleId is notExit");
+            return null;
+        }
+        log.info("result for deleteRoleModuleByUserName's userName:{}",roleId);
         return roleId;
     }
 
@@ -147,6 +200,32 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
             roleModuleDao.insert(roleModule);
         }
         log.info("result for saveRoleModuleListByRoleId's id:[{}]",roleId);
+        return roleId;
+    }
+
+    /**根据userName增加某个角色的单个权限
+     * @param userName 用户名
+     * @param moduleId 权限id集合
+     * @return 角色id
+     * @throws ServiceException
+     */
+    @Override
+    public Long saveRoleModuleByUserName(String userName, Long moduleId) throws ServiceException{
+        log.debug("args for saveRoleModuleByUserName: userName=[{}]&moduleId=[{}]",userName,moduleId);
+        if(null==userName||null==moduleId){
+            log.error("result for saveRoleModuleByUserName error;userName||moduleId is null");
+            throw new ServiceException("saveRoleModuleByUserName error;args null");
+        }
+        Long roleId=userService.getRoleIdByUserName(userName);
+        if(roleId==null){
+            log.warn("result for saveRoleModuleByUserName error;userName is notExit");
+            throw new ServiceException("saveRoleModuleByUserName error;args null");
+        }
+        RoleModule roleModule=new RoleModule();
+        roleModule.setRoleId(roleId);
+        roleModule.setModuleId(moduleId);
+        roleModuleDao.insert(roleModule);
+        log.info("result for saveRoleModuleByUserName's roleId:[{}]",roleId);
         return roleId;
     }
 }

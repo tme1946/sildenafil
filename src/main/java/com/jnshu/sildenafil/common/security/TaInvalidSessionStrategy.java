@@ -22,6 +22,9 @@ public class TaInvalidSessionStrategy implements InvalidSessionStrategy {
     @Override
     public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //返回登陆界面
+        System.out.println(request);
+        System.out.println(response);
+        System.out.println(securityProperties.getLogoutUrl());
         redirectStrategy.sendRedirect(request, response, securityProperties.getLogoutUrl());
     }
 
