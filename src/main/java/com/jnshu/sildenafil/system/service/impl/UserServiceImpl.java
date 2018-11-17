@@ -213,7 +213,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             }
             //密码相等
             if(passwordOld.equals(user.getPassword())){
-                user.setPassword(passwordNew);
+                //将密码加密，使用security框架自带的加密
+                String psswordEncrypt=this.bCryptPasswordEncoder().encode(passwordNew);
+                user.setPassword(psswordEncrypt);
                 user.setUpdateAt(System.currentTimeMillis());
                 user.setUpdateBy("admin");
                 userDao.updateById(user);
