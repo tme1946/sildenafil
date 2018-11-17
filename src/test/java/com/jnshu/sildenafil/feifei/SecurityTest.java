@@ -50,4 +50,14 @@ public class SecurityTest {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    public void moduleUpdateTest() {
+        List<Long> moduleIdList = new ArrayList<>();
+        long j;
+        for (int i = 0; i < 10; i++) {
+            j = i+2;
+            moduleIdList.add(i, j);
+        }
+
+    }
 }
