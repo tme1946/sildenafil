@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.jnshu.sildenafil.common.validation.ArticleSave;
 import com.jnshu.sildenafil.common.validation.ArticleUpdate;
+import org.hibernate.validator.constraints.Length;
 
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -58,7 +60,7 @@ public class Article implements Serializable {
     /**
      * 文章作者
      */
-    @Max(value = 20,message = "{article.author.validation.maxError}",groups = { ArticleSave.class, ArticleUpdate.class })
+    @Size(max=10, min=1,message = "{article.author.validation.sizeError}",groups = { ArticleSave.class, ArticleUpdate.class })
     @NotBlank(message = "{article.author.validation.error}",groups = { ArticleSave.class, ArticleUpdate.class })
     @TableField("author")
     private String author;
@@ -80,7 +82,6 @@ public class Article implements Serializable {
     /**
      * 封面图片链接
      */
-    @Max(value = 100,message = "{article.cover.validation.maxError}",groups = { ArticleSave.class, ArticleUpdate.class })
     @NotBlank(message = "{article.cover.validation.error}",groups = { ArticleSave.class, ArticleUpdate.class })
     @TableField("cover")
     private String cover;
@@ -88,7 +89,7 @@ public class Article implements Serializable {
     /**
      * 摘要
      */
-    @Max(value = 100,message = "{article.digest.validation.maxError}",groups = { ArticleSave.class, ArticleUpdate.class })
+//    @Max(value = 100,message = "{article.digest.validation.maxError}",groups = { ArticleSave.class, ArticleUpdate.class })
     @NotBlank(message = "{article.digest.validation.error}",groups = { ArticleSave.class, ArticleUpdate.class })
     @TableField("digest")
     private String digest;
@@ -96,7 +97,7 @@ public class Article implements Serializable {
     /**
      * 标题
      */
-    @Max(value = 50,message = "{article.title.validation.maxError}",groups = { ArticleSave.class, ArticleUpdate.class })
+    @Size(max=15, min=1,message = "{article.title.validation.sizeError}",groups = { ArticleSave.class, ArticleUpdate.class })
     @NotBlank(message = "{article.title.validation.error}",groups = { ArticleSave.class, ArticleUpdate.class })
     @TableField("title")
     private String title;

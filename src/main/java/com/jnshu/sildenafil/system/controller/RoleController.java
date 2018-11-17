@@ -36,11 +36,12 @@ public class RoleController {
     public ResponseBo getRoleList(Integer page, Integer size) throws Exception{
         log.info("args for getRoleList: page={}&size={}",page,size);
         IPage roleList=roleService.getRoleList(page,size);
-        if(roleList==null){
-            log.error("结果为空");
-            return ResponseBo.error("结果异常").put("code",-1000);
+        if(roleList!=null){
+            return ResponseBo.ok("请求成功").put("data",roleList);
+
         }
-        return ResponseBo.ok("请求成功").put("data",roleList);
+        log.error("结果为空");
+        return ResponseBo.error("结果异常").put("code",-1000);
     }
 
     /**根据角色id查询角色
@@ -51,13 +52,13 @@ public class RoleController {
     public ResponseBo getRoleByRoleId(Long roleId) throws Exception{
         log.info("args for getRoleByRoleId: roleId={}",roleId);
         Role role =roleService.getRoleByRoleId(roleId);
-        if(role==null){
-            log.error("结果为空");
-            return ResponseBo.error("结果异常").put("code",-1000);
+        if(role!=null){
+            List<RoleModule> roleModules=roleModuleService.getModuleIdListByRoleId(role.getId());
+            return ResponseBo.ok().put("role",role).put("modules",roleModules);
         }
         //权限id列表
-        List<RoleModule> roleModules=roleModuleService.getModuleIdListByRoleId(role.getId());
-        return ResponseBo.ok().put("role",role).put("modules",roleModules);
+        log.error("结果为空");
+        return ResponseBo.error("结果异常").put("code",-1000);
     }
 
     /**根据角色id删除角色
@@ -68,13 +69,13 @@ public class RoleController {
     public ResponseBo deleteRoleByRoleId(Long roleId) throws Exception {
         log.info("args for deleteRoleByRoleId: roleId={}",roleId);
         Long roleId2=roleService.deleteRoleByRoleId(roleId);
-        if(roleId2==null){
-            log.error("result for deleteRoleByRoleId fail");
-            return ResponseBo.error("结果异常").put("code",-1000);
+        if(roleId2!=null){
+            roleModuleService.deleteRoleModuleByRoleId(roleId);
+            return ResponseBo.ok();
         }
         //删除中间表
-        Long roleModuleId=roleModuleService.deleteRoleModuleByRoleId(roleId);
-        return ResponseBo.ok();
+        log.error("result for deleteRoleByRoleId fail");
+        return ResponseBo.error("结果异常").put("code",-1000);
     }
 
     /**增加角色及角色权限信息
@@ -85,13 +86,14 @@ public class RoleController {
     public ResponseBo saveRole(Role role,List<Long> moduleIdList) throws Exception {
         log.info("args for saveRole: role={}",role);
         Long roleId2=roleService.saveRole(role);
-        if(roleId2==null){
-            log.error("result for saveRole fail");
-            return ResponseBo.error("结果异常").put("code",-1000);
+        if(roleId2!=null){
+            //插入失败抛出异常
+            roleModuleService.saveRoleModuleListByRoleId(roleId2,moduleIdList);
+            return ResponseBo.ok();
+
         }
-        //插入失败抛出异常
-        roleModuleService.saveRoleModuleListByRoleId(roleId2,moduleIdList);
-        return ResponseBo.ok();
+        log.error("result for saveRole fail");
+        return ResponseBo.error("结果异常").put("code",-1000);
     }
 
     /**更新某个角色的权限
@@ -105,11 +107,11 @@ public class RoleController {
     public ResponseBo updateRoleModuleByRoleId(Long roleId, List<Long> moduleIdList)  throws Exception {
         log.info("args for updateRoleModuleByRoleId: roleId=[{}]&moduleIdList=[{}]",roleId,moduleIdList);
         Long roleId1=roleModuleService.updateRoleModuleByRoleId(roleId, moduleIdList);
-        if(roleId1==null){
-            log.error("result for saveRole fail");
-            return ResponseBo.error("结果异常").put("code",-1000);
+        if(roleId1!=null){
+            return ResponseBo.ok();
         }
-        return ResponseBo.ok();
+        log.error("result for saveRole fail");
+        return ResponseBo.error("结果异常").put("code",-1000);
     }
 
 }
