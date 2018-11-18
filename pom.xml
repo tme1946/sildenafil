@@ -112,7 +112,7 @@
 
 
     <build>
-        <finalName>sildenafil</finalName>
+        <finalName>sildenafil-admin</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
