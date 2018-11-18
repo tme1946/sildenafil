@@ -61,9 +61,10 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
     }
 
     /**
-     * 前台对资料取消点赞
-     * @param type 资料类型
-     * @param typeId 资料id
+     * 前台查询资料的点赞状态
+     *
+     * @param type      资料类型
+     * @param typeId    资料id
      * @param studentId 学生id
      * @return 返回资料id
      */
@@ -116,5 +117,4 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
         List<Long> idList = collectionList.stream().map(CollectionAsset::getTypeId).collect(Collectors.toList());
         return idList;
     }
-
 }
