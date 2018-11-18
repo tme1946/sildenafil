@@ -90,7 +90,25 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleDao, Module> implements
         log.error("result for getModuleListByUserName error;userName format error");
         return null;
     }
-
+    /**后台根据roleId查询模块列表
+     * @param roleId 用户名
+     * @return 用户模块列表
+     */
+    @Override
+    public List<Module> getModuleListByRoleId(Long roleId){
+        if(roleId!=null) {
+            //根据账户角色id查询moduleIdList
+            List<RoleModule> moduleIdList=roleModuleService.getModuleIdListByRoleId(roleId);
+            //根据moduleIdList查询出moduleList
+            List<Module> moduleList=moduleIdList.stream()
+                    .map((roleModule)->moduleDao.selectById(roleModule.getModuleId()))
+                    .collect(Collectors.toList());
+            log.info("result for getModuleListByRoleId's size is:{}",moduleList.size());
+            return moduleList;
+        }
+        log.error("result for getModuleListByRoleId error;userName format error");
+        return null;
+    }
     /**查询模块列表
      * @param page 页码
      * @param size 每页数量

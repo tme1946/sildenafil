@@ -42,4 +42,12 @@ public interface RoleModuleService extends IService<RoleModule> {
      * @throws ServiceException
      */
     Long updateRoleModuleByRoleId(Long roleId,List<Long> moduleIdList) throws ServiceException;
+
+    /**增加某个角色的权限
+     * @param roleId 角色id
+     * @param moduleIdList 权限id集合
+     * @return 角色id
+     * @throws ServiceException
+     */
+    Long saveRoleModuleListByRoleId(Long roleId,List<Long> moduleIdList) throws ServiceException;
 }
