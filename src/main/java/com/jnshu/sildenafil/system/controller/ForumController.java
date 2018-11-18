@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * @ProjectName: sildenafil
- * @Package: com.jnshu.sildenafil.system.controller
+ * @Package: com.jnshu.sildenafil.system.exceptionHandler
  * @ClassName: ForumController
  * @Description: 帖子模块Controller
  * @Author: Taimur
