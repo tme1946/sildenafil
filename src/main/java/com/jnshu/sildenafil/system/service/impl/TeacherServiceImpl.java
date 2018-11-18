@@ -57,15 +57,15 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
      * @return 查询到的老师详情
      */
     @Override
-    public Teacher getTeacherById(Long teacherId) {
+    public Teacher getTeacherById(Long teacherId) throws ParamIsNullException {
         log.info("args for getTeacherById is: {}", teacherId);
         if (teacherId != null) {
             Teacher teacher = teacherDao.selectById(teacherId);
             log.info("result of getTeacherById is: {}", teacher);
             return teacher;
         } else {
-            log.error("args is null!");
-            return null;
+            log.error("result for getTeacherById error;teacherId is null");
+            throw new ParamIsNullException("getTeacherById error;args null");
         }
     }
 
@@ -94,15 +94,15 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
      * @return 是否成功删除老师
      */
     @Override
-    public Boolean removeTeacherById(Long teacherId) {
+    public Boolean removeTeacherById(Long teacherId) throws ParamIsNullException {
         log.info("args for removeTeacherById is: {}", teacherId);
         if (teacherId != null) {
             int flag = teacherDao.deleteById(teacherId);
             log.info("result of removeTeacherById is: {}", flag);
             return true;
         } else {
-            log.error("args is null!");
-            return null;
+            log.error("result for removeTeacherById error;teacherId is null");
+            throw new ParamIsNullException("removeTeacherById error;args null");
         }
     }
 }

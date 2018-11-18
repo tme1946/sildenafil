@@ -2,6 +2,8 @@ package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jnshu.sildenafil.common.annotation.UseLog;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.Sign;
 import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.mapper.SignDao;
@@ -47,8 +49,12 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      */
     @Override
     @UseLog("前台签到")
-    public boolean addSign(Long studentId) {
+    public boolean addSign(Long studentId) throws ParamIsNullException {
         log.info("args for sign is: {}", studentId);
+        if (studentId == null) {
+            log.error("result for addSign error;studentId is null");
+            throw new ParamIsNullException("addSign error;args null");
+        }
         Sign sign = new Sign();
         Student student = new Student();
         QueryWrapper<Sign> qw = new QueryWrapper<>();
@@ -127,8 +133,12 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      */
     @Override
     @UseLog("前台获取签到列表")
-    public List getSignList(Long studentId) {
+    public List getSignList(Long studentId) throws ParamIsNullException {
         log.info("args for getSignList is: {}", studentId);
+        if (studentId == null) {
+            log.error("result for getSignList error;studentId is null");
+            throw new ParamIsNullException("getSignList error;args null");
+        }
         QueryWrapper<Sign> signQueryWrapper = new QueryWrapper<>();
         List<Sign> signList = signDao.selectList(signQueryWrapper);
         List signTimelineList = signList.stream().map(Sign::getCreateAt).collect(Collectors.toList());

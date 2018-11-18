@@ -107,7 +107,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     public Video saveVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for saveVideo is: {}", video);
         if (video == null) {
-            throw new ParamIsNullException("video is null");
+            log.error("result for saveVideo error;video is null");
+            throw new ParamIsNullException("args is null");
         }
         ValidationUtils.validate(video,VideoSave.class);
         video.setCreateAt(NOW);
@@ -137,7 +138,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     public Long updateVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for updateVideo is: {}", video);
         if (video == null) {
-            throw new ParamIsNullException("video is null");
+            log.error("result for updateVideo error;video is null");
+            throw new ParamIsNullException("args is null");
         }
         Long videoId = video.getId();
         ValidationUtils.validate(video, VideoUpdate.class);
@@ -163,8 +165,12 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      * @return 更新上下架后的视频
      */
     @Override
-    public Video updateStatus(Long videoId, Integer status) {
+    public Video updateStatus(Long videoId, Integer status) throws ParamIsNullException {
         log.info("args for updateStatus is: {}", videoId);
+        if (videoId==null&&status==null) {
+            log.error("result for updateStatus error;videoId null, status null");
+            throw new ParamIsNullException("args is null");
+        }
         Video v = new Video();
         v.setId(videoId);
         v.setStatus(status);

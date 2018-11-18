@@ -30,9 +30,9 @@ public class LikeAssetController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/front/video/like")
-    public ResponseBo like(Integer type, Long videoId, Long studentId) {
-        log.info("args for like : type={}, videoId={}, studentId={}",type,videoId,studentId);
-        Long id = likeAssetService.insertLike(type,videoId,studentId);
+    public ResponseBo like(Long videoId, Long studentId) throws Exception {
+        log.info("args for like : videoId={}, studentId={}",videoId,studentId);
+        Long id = likeAssetService.insertLike(1,videoId,studentId);
         if (id == null) {
             return ResponseBo.error("参数异常，点赞失败");
         }

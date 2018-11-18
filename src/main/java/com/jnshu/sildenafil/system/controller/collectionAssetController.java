@@ -30,9 +30,9 @@ public class collectionAssetController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/front/video/collection")
-    public ResponseBo collect(Integer type, Long videoId, Long studentId) {
-        log.info("args for collect : type={}, videoId={}, studentId={}",type,videoId,studentId);
-        Long id = collectionAssetService.insertCollection(type,videoId,studentId);
+    public ResponseBo collect(Long videoId, Long studentId) {
+        log.info("args for collect : videoId={}, studentId={}",videoId,studentId);
+        Long id = collectionAssetService.insertCollection(1,videoId,studentId);
         if (id == null) {
             return ResponseBo.error("参数异常，收藏失败");
         }
@@ -41,9 +41,9 @@ public class collectionAssetController {
 
     @ResponseBody
     @DeleteMapping(value = "/a/u/front/video/collection")
-    public ResponseBo deleteCollection(Integer type, Long videoId, Long studentId) {
-        log.info("args for deleteCollection : type={}, videoId={}, studentId={}",type,videoId,studentId);
-        Long vid = collectionAssetService.removeCollection(type,videoId,studentId);
+    public ResponseBo deleteCollection( Long videoId, Long studentId) {
+        log.info("args for deleteCollection : videoId={}, studentId={}",videoId,studentId);
+        Long vid = collectionAssetService.removeCollection(1,videoId,studentId);
         if (vid == null) {
             return ResponseBo.error("参数异常，取消收藏失败");
         }

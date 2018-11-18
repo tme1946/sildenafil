@@ -65,5 +65,5 @@ public interface VideoService extends IService<Video> {
      * @param status 视频上下架状态
      * @return 更新上下架后的视频
      */
-    Video updateStatus(Long videoId, Integer status);
+    Video updateStatus(Long videoId, Integer status) throws ParamIsNullException;
 }
