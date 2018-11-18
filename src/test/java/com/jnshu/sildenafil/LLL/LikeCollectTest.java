@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.LLL;
 
 import com.jnshu.sildenafil.system.service.CollectionAssetService;
 import com.jnshu.sildenafil.system.service.LikeAssetService;
@@ -28,7 +28,6 @@ public class LikeCollectTest {
     @Autowired
     private LikeAssetService likeAssetService;
 
-
     @Autowired
     private CollectionAssetService collectionAssetService;
 
@@ -44,7 +43,6 @@ public class LikeCollectTest {
         System.out.println(aaa);
     }
 
-
     @Test
     public void collUpdate() {
         System.out.println(collectionAssetService.insertCollection(1, 1L, 1L));
@@ -55,7 +53,5 @@ public class LikeCollectTest {
     public void collStatus() {
         System.out.println(collectionAssetService.selectCollection(1, 1L, 101L));
     }
-
-
 
 }

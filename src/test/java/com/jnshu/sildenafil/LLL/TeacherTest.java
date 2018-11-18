@@ -1,4 +1,4 @@
-package com.jnshu.sildenafil;
+package com.jnshu.sildenafil.LLL;
 
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.service.TeacherService;
@@ -36,8 +36,8 @@ public class TeacherTest {
     @Test
     public void addTeacher() throws ServiceException, ParamIsNullException {
         Teacher t = new Teacher();
-        t.setNickname("李白");
-        t.setImg("yashilali");
+        t.setNickname("甜饼老师");
+        t.setImg("https://lihoo.oss-cn-beijing.aliyuncs.com/sildenafil/123.png");
         Teacher aaa = teacherService.saveTeacher(t);
         System.out.println(aaa);
     }
