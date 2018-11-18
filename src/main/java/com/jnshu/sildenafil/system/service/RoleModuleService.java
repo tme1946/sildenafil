@@ -34,6 +34,19 @@ public interface RoleModuleService extends IService<RoleModule> {
      */
     Long deleteRoleModuleByRoleId(Long roleId) throws ServiceException;
 
+    /**删除角色单个权限
+     * @param roleId 角色id
+     * @param moduleId 模块id
+     * @return 返回记录id
+     */
+    Long deleteRoleModuleByRMid(Long roleId,Long moduleId) throws ServiceException;
+
+    /**根据用户名删除角色单个权限
+     * @param moduleId 角色id
+     * @param userName 用户名
+     * @return 返回记录id
+     */
+    Long deleteRoleModuleByUserName(String userName,Long moduleId) throws ServiceException;
 
     /**更新某个角色的权限
      * @param roleId 角色id
@@ -50,4 +63,12 @@ public interface RoleModuleService extends IService<RoleModule> {
      * @throws ServiceException
      */
     Long saveRoleModuleListByRoleId(Long roleId,List<Long> moduleIdList) throws ServiceException;
+
+    /**根据userName增加某个角色的单个权限
+     * @param userName 用户名
+     * @param moduleId 权限id集合
+     * @return 角色id
+     * @throws ServiceException
+     */
+    Long saveRoleModuleByUserName(String userName, Long moduleId) throws ServiceException;
 }

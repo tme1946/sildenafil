@@ -58,8 +58,8 @@ public class User implements Serializable {
     /**
      * 后台账户名
      */
-    @Min(value = 6,message = "{user.userName.validation.minError}",groups = {UserSave.class})
-    @Max(value = 16,message = "{user.userName.validation.maxError}",groups = {UserSave.class})
+//    @Min(value = 6,message = "{user.userName.validation.minError}",groups = {UserSave.class})
+//    @Max(value = 16,message = "{user.userName.validation.maxError}",groups = {UserSave.class})
     @NotBlank(message ="{user.userName.validation.error}" ,groups = {UserSave.class})
     @TableField("user_name")
     private String userName;
@@ -67,16 +67,16 @@ public class User implements Serializable {
     /**
      * 后台账户密码
      */
-    @Min(value = 6,message = "{user.password.validation.minError}",groups = {UserSave.class,UserUpdate.class})
-    @Max(value = 16,message = "{user.password.validation.maxError}",groups = {UserSave.class,UserUpdate.class})
-    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class,UserUpdate.class})
+//    @Min(value = 6,message = "{user.password.validation.minError}",groups = {UserSave.class,UserUpdate.class})
+//    @Max(value = 16,message = "{user.password.validation.maxError}",groups = {UserSave.class,UserUpdate.class})
+//    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class,UserUpdate.class})
     @TableField("password")
     private String password;
 
     /**
      * 角色id
      */
-    @NotNull(message ="{user.roleId.validation.error}" ,groups = {UserUpdate.class,UserSave.class})
+//    @NotNull(message ="{user.roleId.validation.error}" ,groups = {UserUpdate.class,UserSave.class})
     @TableField("role_id")
     private Long roleId;
 

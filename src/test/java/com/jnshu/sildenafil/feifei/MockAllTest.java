@@ -13,6 +13,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MockAllTest {
@@ -48,7 +51,39 @@ public class MockAllTest {
     public void userGetTest()throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/a/u/admin/user")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .param("userId", "5")
+                .param("userId", "1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void userSaveTest()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.post("/a/u/admin/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("userName", "admin")
+                .param("password", "123456")
+                .param("roleId", "1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void userUpdateTest()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.put("/a/u/admin/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("id", "1")
+                .param("passwordOld", "1")
+                .param("passwordNew", "123456")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void roleSaveTest()throws Exception{
+        List<Long> moduleList=new ArrayList<>();
+        mockMvc.perform(MockMvcRequestBuilders.post("/a/u/admin/role")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("roleName","管理员")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -59,6 +94,33 @@ public class MockAllTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .param("page", "1")
                 .param("size", "2")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void moduleSaveTest()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.post("/a/u/admin/module")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("name", "留言删除")
+                .param("permission", "review:delete")
+                .param("url", "/a/u/admin/review")
+                .param("type", "1")
+                .param("parentId", "9")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+    @Test
+    public void moduleUpdateTest()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.put("/a/u/admin/module")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("id","34")
+                .param("name", "留言列表")
+                .param("permission", "review:list")
+                .param("url", "/a/u/admin/review/list")
+                .param("type", "1")
+                .param("parentId", "9")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
