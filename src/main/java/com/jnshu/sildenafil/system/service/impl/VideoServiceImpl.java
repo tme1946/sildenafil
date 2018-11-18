@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
+import com.jnshu.sildenafil.common.validation.VideoSave;
 import com.jnshu.sildenafil.common.validation.VideoUpdate;
 import com.jnshu.sildenafil.system.domain.*;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
@@ -98,24 +99,6 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     }
 
     /**
-     * 前台通过id获取视频
-     * @param videoId 视频id
-     * @return 查询到的视频详情
-     */
-    @Override
-    public Video getVideoById(Long videoId) {
-        log.info("args for saveVideo is: {}", videoId);
-        if (videoId != null) {
-            Video video = videoDao.selectById(videoId);
-            log.info("result of getVideoById is: {}", video);
-            return video;
-        } else {
-            log.error("args is null");
-            return null;
-        }
-    }
-
-    /**
      * 后台新增视频详情
      * @param video 视频
      * @return 新增视频详情
@@ -126,7 +109,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
         if (video == null) {
             throw new ParamIsNullException("video is null");
         }
-        ValidationUtils.validate(video);
+        ValidationUtils.validate(video,VideoSave.class);
         video.setCreateAt(NOW);
         video.setUpdateAt(NOW);
         //后台管理员admin
@@ -154,8 +137,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     public Long updateVideo(Video video) throws ServiceException, ParamIsNullException {
         log.info("args for updateVideo is: {}", video);
         if (video == null) {
-            throw new ParamIsNullException("hhh video is null");
-
+            throw new ParamIsNullException("video is null");
         }
         Long videoId = video.getId();
         ValidationUtils.validate(video, VideoUpdate.class);
@@ -187,6 +169,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
         Video v = new Video();
         v.setId(videoId);
         v.setStatus(status);
+
         Long vid = videoDao.updateById(v) > 0 ? v.getId() : -10000;
         log.info("result for updateStatus success; result detail: videoId={}", vid);
         return v;

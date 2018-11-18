@@ -37,7 +37,7 @@ public class SildenafilApplicationTests {
 
 
     @Test
-    private void contextLoads() {
+    public void contextLoads() {
 //        Student student = new Student();
 //        student.setCreateAt(TIME);
 //        student.setUpdateAt(TIME);
@@ -69,9 +69,9 @@ public class SildenafilApplicationTests {
 //        for (Object o : list) {
 //            System.out.println(o);
 //        }
-        IPage page = studentService.studentFuzzySelect(1,2,null,null,null,null,null,null,1,null);
-        System.out.println(page.getRecords());
-
+        Long id = null;
+        Student student = studentService.getById(id);
+        System.out.println(student);
     }
 
 }

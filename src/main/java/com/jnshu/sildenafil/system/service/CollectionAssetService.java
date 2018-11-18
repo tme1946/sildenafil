@@ -20,9 +20,18 @@ public interface CollectionAssetService extends IService<CollectionAsset> {
      * @param type 资料类型
      * @param typeId 资料id
      * @param studentId 学生id
-     * @return 返回点赞的结果
+     * @return 返回id
      */
     Long insertCollection(Integer type,Long typeId,Long studentId);
+
+    /**
+     * 前台对资料取消点赞
+     * @param type 资料类型
+     * @param typeId 资料id
+     * @param studentId 学生id
+     * @return 返回资料id
+     */
+    Long removeCollection(Integer type,Long typeId,Long studentId);
 
     /**
      * 前台查询资料的点赞状态

@@ -40,13 +40,6 @@ public interface VideoService extends IService<Video> {
                   Integer likeStart, Integer likeEnd, Integer collectStart, Integer collectEnd,
                   String teacher, Integer status);
 
-    /**
-     * 前台查询视频详情
-     * @param videoId 视频id
-     * @return 查询到的视频详情
-     */
-    Video getVideoById(Long videoId);
-
 
     /**
      * 后台新增视频

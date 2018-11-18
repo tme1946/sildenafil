@@ -11,6 +11,7 @@ import com.jnshu.sildenafil.common.validation.VideoUpdate;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -87,7 +88,7 @@ public class Video implements Serializable {
     /**
      * 封面
      */
-    @Max(value = 100, message = "{video.cover.validation.maxError}", groups = {VideoSave.class, VideoUpdate.class })
+    @Size(max = 100, min = 1, message = "{video.cover.validation.sizeError}", groups = {VideoSave.class, VideoUpdate.class })
     @NotBlank(message = "{video.cover.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("cover")
     private String cover;
@@ -109,7 +110,7 @@ public class Video implements Serializable {
     /**
      * 摘要
      */
-    @Max(value = 100,message = "{video.digest.validation.maxError}",groups = {VideoSave.class, VideoUpdate.class })
+    @Size(max = 100, min = 1, message = "{video.digest.validation.sizeError}",groups = {VideoSave.class, VideoUpdate.class })
     @NotBlank(message = "{video.digest.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("digest")
     private String digest;
@@ -117,7 +118,7 @@ public class Video implements Serializable {
     /**
      * 标题
      */
-    @Max(value = 50,message = "{video.title.validation.maxError}",groups = {VideoSave.class, VideoUpdate.class })
+    @Size(max= 50, min = 1, message = "{video.title.validation.sizeError}",groups = {VideoSave.class, VideoUpdate.class })
     @NotBlank(message = "{video.title.validation.error}",groups = {VideoSave.class, VideoUpdate.class })
     @TableField("title")
     private String title;

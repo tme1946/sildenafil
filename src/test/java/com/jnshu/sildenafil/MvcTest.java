@@ -56,11 +56,34 @@ public class MvcTest {
 
     @Test
     public void testVideo() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/a/u/admin/video/")
+        mockMvc.perform(MockMvcRequestBuilders.put("/a/u/admin/video/status")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .param("page","1")
-                .param("size","5")
-                .param("title","t")
+//                .param("page","1")
+//                .param("size","10")
+//                .param("id", "74")
+                .param("videoId", "74")
+//                .param("grade", "1")
+//                .param("subject", "1")
+//                .param("teacherId", "1")
+//                .param("title", "www")
+//                .param("type", "1")
+//                .param("cover", "https: !!!!")
+//                .param("digest", "nice大幅")
+//                .param("url", "hhhhhhhhhhhhhh")
+//                .param("timeLength", "14:20")
+//                .param("body", " 我我我wwwwwww 我QQ无无无无")
+                .param("status", "0")
+
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void sign() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/a/u/front/sign")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("studentId", "1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -73,5 +96,33 @@ public class MvcTest {
                 .param("")
 
                 );
+    }
+
+    @Test
+    public void teacher() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/a/u/admin/teacher/list")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+
+//                .param("nickname", "麝鱼")
+//                .param("img","https://lihoo.oss-cn-beijing.aliyuncs.com/sildenafil/123.png")
+//                .param("teacherId", "7")
+
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    public void like() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/a/u/front/video/like")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("type", "1")
+                .param("studentId", "3")
+                .param("videoId", "2")
+
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 }

@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jnshu.sildenafil.common.validation.TeacherSave;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.mapper.TeacherDao;
 import com.jnshu.sildenafil.system.service.TeacherService;
@@ -79,7 +80,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
         if (teacher == null) {
             throw new ParamIsNullException("teacher is null");
         }
-        ValidationUtils.validate(teacher);
+        ValidationUtils.validate(teacher, TeacherSave.class);
         teacher.setCreateAt(NOW);
         teacher.setCreateBy("admin");
         Long id = teacherDao.insert(teacher) > 0 ? teacher.getId() : -10000;
