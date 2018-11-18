@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.system.service;
 
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.system.domain.LikeAsset;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -20,7 +21,7 @@ public interface LikeAssetService extends IService<LikeAsset> {
      * @param studentId 学生id
      * @return 返回点赞的结果
      */
-    Long insertLike(Integer type,Long typeId,Long studentId);
+    Long insertLike(Integer type,Long typeId,Long studentId) throws ParamIsNullException;
 
     /**
      * 前台查询资料的点赞状态
@@ -29,5 +30,5 @@ public interface LikeAssetService extends IService<LikeAsset> {
      * @param studentId 学生id
      * @return 0为不赞，1为点赞
      */
-    int selectLike(Integer type,Long typeId,Long studentId);
+    int selectLike(Integer type,Long typeId,Long studentId) throws ParamIsNullException;
 }

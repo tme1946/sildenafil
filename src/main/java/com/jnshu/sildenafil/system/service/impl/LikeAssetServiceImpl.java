@@ -1,6 +1,8 @@
 package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
+import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.LikeAsset;
 import com.jnshu.sildenafil.system.mapper.LikeAssetDao;
 import com.jnshu.sildenafil.system.service.LikeAssetService;
@@ -37,8 +39,12 @@ public class LikeAssetServiceImpl extends ServiceImpl<LikeAssetDao, LikeAsset> i
      * @return 返回点赞的结果
      */
     @Override
-    public Long insertLike(Integer type, Long typeId, Long studentId){
+    public Long insertLike(Integer type, Long typeId, Long studentId) throws ParamIsNullException {
         log.info("args for insertLike is : type={}&typeId={}&studentId={}&",type,typeId,studentId);
+        if(type==null||typeId==null||studentId==null){
+            log.error("result for insertLike error;type is null,typeId is null,studentId is null");
+            throw new ParamIsNullException("insertLike error;args null");
+        }
         QueryWrapper<LikeAsset> likeAssetQueryWrapper = new QueryWrapper<>();
         likeAssetQueryWrapper
                 .eq("type_id", typeId)
@@ -64,8 +70,12 @@ public class LikeAssetServiceImpl extends ServiceImpl<LikeAssetDao, LikeAsset> i
      * @return 0为不赞，1为点赞
      */
     @Override
-    public int selectLike(Integer type, Long typeId, Long studentId){
+    public int selectLike(Integer type, Long typeId, Long studentId) throws ParamIsNullException {
         log.info("args for insertLike is : type={}&typeId={}&studentId={}&",type,typeId,studentId);
+        if(type==null||typeId==null||studentId==null){
+            log.error("result for selectLike error;type is null,typeId is null,studentId is null");
+            throw new ParamIsNullException("selectLike error;args null");
+        }
         QueryWrapper<LikeAsset> likeAssetQueryWrapper = new QueryWrapper<>();
         likeAssetQueryWrapper
                 .eq("type_id", typeId)

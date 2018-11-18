@@ -66,6 +66,27 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
      * @param type      资料类型
      * @param typeId    资料id
      * @param studentId 学生id
+     * @return 返回资料id
+     */
+    @Override
+    public Long removeCollection(Integer type, Long typeId, Long studentId) {
+        log.info("args for removeCollection is : type={}&typeId={}&studentId={}&", type, typeId, studentId);
+        QueryWrapper<CollectionAsset> collectionAssetQueryWrapper = new QueryWrapper<>();
+        collectionAssetQueryWrapper
+                .eq("type_id", typeId)
+                .eq("student_id", studentId)
+                .eq("type", type);
+        Long id = collectionAssetDao.delete(collectionAssetQueryWrapper) > 0 ? typeId : -10000;
+        log.info("result for removeCollection success; result detail: id={}", id);
+        return id;
+    }
+
+    /**
+     * 前台查询资料的点赞状态
+     *
+     * @param type      资料类型
+     * @param typeId    资料id
+     * @param studentId 学生id
      * @return 0为不赞，1为点赞
      */
     @Override

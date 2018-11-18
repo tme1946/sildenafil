@@ -1,5 +1,6 @@
 package com.jnshu.sildenafil.system.service;
 
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.system.domain.Sign;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,13 +17,14 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface SignService extends IService<Sign> {
 
+
     /**
-     * 学生签到
-     *
-     * @param studentId 实体对象
+     *  学生签到
+     * @param studentId 学生id
      * @return 签到是否成功
+     * @throws ParamIsNullException 空参
      */
-    boolean addSign(Long studentId);
+    boolean addSign(Long studentId) throws ParamIsNullException;
 
     /**
      * 进入签到页面
@@ -30,7 +32,8 @@ public interface SignService extends IService<Sign> {
      * 根据签到记录判断当天是否签到
      * @param studentId 学生id
      * @return 该学生签到记录List
+     * @throws ParamIsNullException 空参
      */
-    List getSignList(Long studentId);
+    List getSignList(Long studentId) throws ParamIsNullException;
 
 }
