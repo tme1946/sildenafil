@@ -154,7 +154,6 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
         }
         videoDao.updateById(video);
         return videoId;
-
     }
 
     /**
