@@ -1,6 +1,6 @@
 package com.jnshu.sildenafil.system.mapper;
 
-import com.jnshu.sildenafil.system.domain.Log;
+import com.jnshu.sildenafil.system.domain.AdminLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Taimur
  * @since 2018-11-12
  */
-public interface LogDao extends BaseMapper<Log> {
+public interface LogDao extends BaseMapper<AdminLog> {
 
 }

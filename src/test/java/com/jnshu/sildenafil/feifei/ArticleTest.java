@@ -2,7 +2,10 @@ package com.jnshu.sildenafil.feifei;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.system.domain.Article;
+import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.service.ArticleService;
+import com.jnshu.sildenafil.system.service.LogService;
+import com.jnshu.sildenafil.system.service.StudentService;
 import com.jnshu.sildenafil.util.MyPage;
 import com.jnshu.sildenafil.util.ValidationUtils;
 import org.junit.Test;
@@ -59,4 +62,5 @@ public class ArticleTest {
         Article article=new Article();
         articleService.saveArticle(article);
     }
+
 }

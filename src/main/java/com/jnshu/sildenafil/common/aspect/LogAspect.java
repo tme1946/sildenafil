@@ -2,7 +2,7 @@ package com.jnshu.sildenafil.common.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jnshu.sildenafil.common.config.LogsProperies;
-import com.jnshu.sildenafil.system.domain.Log;
+import com.jnshu.sildenafil.system.domain.AdminLog;
 import com.jnshu.sildenafil.system.service.LogService;
 import com.jnshu.sildenafil.util.HttpContextUtils;
 import com.jnshu.sildenafil.util.IPUtils;
@@ -62,7 +62,7 @@ public class LogAspect {
         if (logsProperies.isOpenAopLog()) {
             // 保存日志
             //User user = (User) SecurityUtils.getSubject().getPrincipal();
-            Log log = new Log();
+            AdminLog log = new AdminLog();
             log.setUsername("tme");//user.getUsername());
             log.setIp(ip);
             log.setTime(time);
