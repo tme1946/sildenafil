@@ -10,10 +10,8 @@ import com.jnshu.sildenafil.system.service.RoleService;
 import com.jnshu.sildenafil.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +26,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+
     /**条件查询用户列表
      * @param page 页码
      * @param size 每页数量
@@ -35,6 +34,7 @@ public class UserController {
      * @param userName 用户名
      * @return 列表信息
      */
+    @PreAuthorize("hasAuthority('user:list')")
     @GetMapping(value = "/a/u/admin/user/list")
     public ResponseBo getUserList(Integer page, Integer size, Long roleId, String userName)throws Exception{
         log.info("args for getUserList: page={}&size={}&roleId={}&userName={}",page,size,roleId,userName);
@@ -51,6 +51,7 @@ public class UserController {
      * @param userId 用户id
      * @return 单个用户对象
      */
+    @PreAuthorize("hasAuthority('user:list')")
     @GetMapping(value = "/a/u/admin/user")
     public ResponseBo getUserByUserId(Long userId) throws Exception{
         log.info("args for getUserByUserId: userId={}",userId);
@@ -67,6 +68,7 @@ public class UserController {
      * @param user 用户信息
      * @return 保存的用户id
      */
+    @PreAuthorize("hasAuthority('user:save')")
     @PostMapping(value = "/a/u/admin/user")
     public ResponseBo saveUser(User user) throws Exception {
         log.info("args for saveUser: user={}",user);
@@ -82,6 +84,7 @@ public class UserController {
      * @param user 用户信息
      * @return 用户id
      */
+    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping(value = "/a/u/admin/user")
     public ResponseBo updateUserByUserId(User user) throws Exception {
         log.info("args for updateUserByUserId: user={}",user);
@@ -100,6 +103,7 @@ public class UserController {
      * @return 用户id
      * @throws ServiceException 自定义异常
      */
+    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping(value = "/a/u/admin/user/password")
     public ResponseBo updateUserPasswordByUserId(String passwordOld, String passwordNew, Long userId) throws Exception {
         log.info("args for updateUserPasswordByUserId: passwordOld={}&passwordNew={}&userId={}",passwordOld,passwordNew,userId);
@@ -109,5 +113,21 @@ public class UserController {
             return ResponseBo.error("修改失败");
         }
         return ResponseBo.ok();
+    }
+
+    /**根据用户id删除用户
+     * @param userId 用户id
+     * @return 删除的用户id
+     */
+    @PreAuthorize("hasAuthority('user:delete')")
+    @DeleteMapping(value = "/a/u/admin/user")
+    public ResponseBo deleteUser(Long userId) throws Exception {
+        log.info("args for deleteUser: userId={}",userId);
+        Long userId1=userService.deleteUserByUserId(userId);
+        if(null!=userId1){
+            return ResponseBo.ok();
+        }
+        log.error("账户不存在");
+        return ResponseBo.error("操作失败");
     }
 }

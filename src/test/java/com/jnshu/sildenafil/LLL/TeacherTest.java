@@ -28,7 +28,7 @@ public class TeacherTest {
     private TeacherService teacherService;
 
     @Test
-    public void getTeacherById() {
+    public void getTeacherById() throws Exception{
         String teacherName = teacherService.getTeacherById(3L).getNickname();
         System.out.println(teacherName);
     }

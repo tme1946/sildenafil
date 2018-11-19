@@ -47,7 +47,7 @@ public class TeacherController {
 
     @ResponseBody
     @DeleteMapping(value = "/a/u/admin/teacher")
-    public ResponseBo deleteTeacher(Long teacherId) {
+    public ResponseBo deleteTeacher(Long teacherId) throws Exception {
         log.info("args for deleteTeacher is: teacherId={}", teacherId);
         Boolean flag = teacherService.removeTeacherById(teacherId);
         if (!flag) {
@@ -69,7 +69,7 @@ public class TeacherController {
 
     @ResponseBody
     @GetMapping(value = "/a/u/admin/teacher")
-    public ResponseBo getTeacherById(Long teacherId) {
+    public ResponseBo getTeacherById(Long teacherId) throws Exception{
         log.info("args for getTeacherById is: teacherId={}", teacherId);
         Teacher t = teacherService.getTeacherById(teacherId);
         if (t == null) {

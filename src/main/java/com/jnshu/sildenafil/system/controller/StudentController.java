@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ProjectName: sildenafil
- * @Package: com.jnshu.sildenafil.system.controller
+ * @Package: com.jnshu.sildenafil.system.exceptionHandler
  * @ClassName: StudentController
  * @Description: java类作用描述
  * @Author: Taimur

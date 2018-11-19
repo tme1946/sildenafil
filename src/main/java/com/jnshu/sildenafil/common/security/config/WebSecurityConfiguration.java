@@ -105,7 +105,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(taUserDetailsServiceImpl) // 处理自动登录逻辑
                 .and()
                 .sessionManagement()//配置 session管理器
-                .invalidSessionStrategy(invalidSessionStrategy())//处理 session失效,可不配，使用默认
+//                .invalidSessionStrategy(invalidSessionStrategy())//处理 session失效,可不配，使用默认
                 .maximumSessions(taSecurityProperties.getMaximumSessions())//最大并发登录数
                 .expiredUrl(taSecurityProperties.getLoginUrl())//失效后的重定向地址
 //                .expiredSessionStrategy(sessionInformationExpiredStrategy())//处理并发登录被踢出后的吹,自定义类

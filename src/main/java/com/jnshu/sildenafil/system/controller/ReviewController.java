@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @ProjectName: sildenafil
- * @Package: com.jnshu.sildenafil.system.controller
+ * @Package: com.jnshu.sildenafil.system.exceptionHandler
  * @ClassName: ReviewController
  * @Description: java类作用描述
  * @Author: Taimur

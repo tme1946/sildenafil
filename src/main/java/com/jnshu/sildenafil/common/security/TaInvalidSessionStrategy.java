@@ -24,8 +24,9 @@ public class TaInvalidSessionStrategy implements InvalidSessionStrategy {
         //返回登陆界面
         System.out.println(request);
         System.out.println(response);
-        System.out.println(securityProperties.getLogoutUrl());
-        redirectStrategy.sendRedirect(request, response, securityProperties.getLogoutUrl());
+//        System.out.println(securityProperties.getLogoutUrl());
+        System.out.println("/error");
+        redirectStrategy.sendRedirect(request, response, "/error");
     }
 
     public TaSecurityProperties getSecurityProperties() {

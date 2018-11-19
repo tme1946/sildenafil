@@ -88,7 +88,7 @@ public class Generator {
 //         strategy.setSuperServiceClass(PackegeName+".common.baseService");
         // 自定义 service 实现类父类
 //         strategy.setSuperServiceImplClass(PackegeName+".common.baseService.Impl");
-        // 自定义 controller 父类
+        // 自定义 exceptionHandler 父类
         // strategy.setSuperControllerClass("com.baomidou.demo.TestController");
         // 【实体】是否生成字段常量（默认 false）
         // public static final String ID = "test_id";

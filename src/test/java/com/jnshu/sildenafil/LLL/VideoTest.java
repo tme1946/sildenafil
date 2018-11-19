@@ -249,7 +249,7 @@ public class VideoTest {
     }
 
     @Test
-    public void updateStatus() {
+    public void updateStatus() throws Exception{
         Video vvv =  videoService.updateStatus(71L, 1);
         System.out.println(vvv.getStatus());
     }

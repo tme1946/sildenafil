@@ -73,7 +73,7 @@ public class VideoController {
 
     @ResponseBody
     @PutMapping(value = "/a/u/admin/video/status")
-    public ResponseBo updateVideoStatus(Long videoId, Integer status) {
+    public ResponseBo updateVideoStatus(Long videoId, Integer status) throws Exception {
         log.info("args for updateVideoStatus : videoId={}, status={}", videoId, status);
         Video video = videoService.updateStatus(videoId, status);
         if (video == null) {

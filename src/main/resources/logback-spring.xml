@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
     <!-- 项目名称 -->
-    <property name="PROJECT_NAME" value="sildenafilTest"/>
+    <property name="PROJECT_NAME" value="sildenafilAdmin"/>
 
     <!--定义日志文件的存储地址  LogBack 的配置中必须使用相对路径-->
     <property name="LOG_HOME" value="bootlog/logs/"/>
