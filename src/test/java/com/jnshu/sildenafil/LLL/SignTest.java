@@ -26,7 +26,7 @@ public class SignTest {
     }
 
     @Test
-    public void getSignList() {
+    public void getSignList() throws Exception {
         signService.getSignList(1L).forEach(System.out::println);
     }
 }

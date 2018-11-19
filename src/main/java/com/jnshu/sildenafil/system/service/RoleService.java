@@ -39,6 +39,7 @@ public interface RoleService extends IService<Role> {
      * @throws ServiceException 自定义异常
      */
     List<Role> getRoleListByUserList(IPage<User> userIPage) throws ServiceException;
+
     /**根据角色id删除角色
      * @param roleId 角色id
      * @return 角色id

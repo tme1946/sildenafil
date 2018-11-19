@@ -3,13 +3,11 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.jnshu.sildenafil.common.validation.UserLogin;
 import com.jnshu.sildenafil.common.validation.UserSave;
 import com.jnshu.sildenafil.common.validation.UserUpdate;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -59,7 +57,7 @@ public class User implements Serializable {
      * 后台账户名
      */
 //    @Min(value = 6,message = "{user.userName.validation.minError}",groups = {UserSave.class})
-//    @Max(value = 16,message = "{user.userName.validation.maxError}",groups = {UserSave.class})
+    @Size(min = 1,max = 16,message = "{user.userName.validation.sizeError}",groups = {UserSave.class,UserLogin.class,UserUpdate.class})
     @NotBlank(message ="{user.userName.validation.error}" ,groups = {UserSave.class})
     @TableField("user_name")
     private String userName;
@@ -68,8 +66,8 @@ public class User implements Serializable {
      * 后台账户密码
      */
 //    @Min(value = 6,message = "{user.password.validation.minError}",groups = {UserSave.class,UserUpdate.class})
-//    @Max(value = 16,message = "{user.password.validation.maxError}",groups = {UserSave.class,UserUpdate.class})
-//    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class,UserUpdate.class})
+    @Size(min = 6,max = 16,message = "{user.userName.validation.sizeError}",groups = {UserSave.class,UserLogin.class,UserUpdate.class})
+    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class,UserUpdate.class})
     @TableField("password")
     private String password;
 

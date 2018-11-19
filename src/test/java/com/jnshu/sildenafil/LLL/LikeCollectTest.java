@@ -32,25 +32,25 @@ public class LikeCollectTest {
     private CollectionAssetService collectionAssetService;
 
     @Test
-    public void like() {
+    public void like() throws Exception{
         Long aaa = likeAssetService.insertLike(1, 1L, 1L);
         System.out.println(aaa);
     }
 
     @Test
-    public void likeStatus() {
+    public void likeStatus() throws Exception{
         int aaa =  likeAssetService.selectLike(1, 2L, 2L);
         System.out.println(aaa);
     }
 
     @Test
-    public void collUpdate() {
+    public void collUpdate() throws Exception{
         System.out.println(collectionAssetService.insertCollection(1, 1L, 1L));
 
     }
 
     @Test
-    public void collStatus() {
+    public void collStatus()throws Exception {
         System.out.println(collectionAssetService.selectCollection(1, 1L, 101L));
     }
 

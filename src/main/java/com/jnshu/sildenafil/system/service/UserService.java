@@ -70,4 +70,11 @@ public interface UserService extends IService<User> {
      */
     Long updateUserPasswordByUserId (String passwordOld,String passwordNew,Long userId) throws ServiceException;
 
+    /**登陆验证密码
+     * @param userName 用户登陆名
+     * @param password 用户登陆密码
+     * @return 登陆的账户id
+     * @throws ServiceException 参数异常
+     */
+    Long userLogin(String userName,String password) throws ServiceException;
 }

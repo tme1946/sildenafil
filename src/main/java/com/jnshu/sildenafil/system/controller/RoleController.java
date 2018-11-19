@@ -11,6 +11,7 @@ import com.jnshu.sildenafil.system.service.RoleModuleService;
 import com.jnshu.sildenafil.system.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class RoleController {
      * @param size 每页数量
      * @return 列表信息
      */
+    @PreAuthorize("hasAuthority('role:list')")
     @GetMapping(value = "/a/u/admin/role/list")
     public ResponseBo getRoleList(Integer page, Integer size) throws Exception{
         log.info("args for getRoleList: page={}&size={}",page,size);
@@ -48,6 +50,7 @@ public class RoleController {
      * @param roleId 角色id
      * @return 单个用户对象
      */
+    @PreAuthorize("hasAuthority('role:list')")
     @GetMapping(value = "/a/u/admin/role")
     public ResponseBo getRoleByRoleId(Long roleId) throws Exception{
         log.info("args for getRoleByRoleId: roleId={}",roleId);
@@ -65,6 +68,7 @@ public class RoleController {
      * @param roleId 角色id
      * @return 角色id
      */
+    @PreAuthorize("hasAuthority('role:delete')")
     @DeleteMapping(value = "/a/u/admin/role")
     public ResponseBo deleteRoleByRoleId(Long roleId) throws Exception {
         log.info("args for deleteRoleByRoleId: roleId={}",roleId);
@@ -82,6 +86,7 @@ public class RoleController {
      * @param role 角色信息
      * @return 保存的角色id
      */
+    @PreAuthorize("hasAuthority('role:save')")
     @PostMapping(value = "/a/u/admin/role")
     public ResponseBo saveRole(Role role,List<Long> moduleIdList) throws Exception {
         log.info("args for saveRole: role={}",role);
@@ -103,6 +108,7 @@ public class RoleController {
      * @throws ServiceException
      * 根据角色id,先将表中改角色id的数据删除然后在循环遍历模块id列表进行增加;
      */
+    @PreAuthorize("hasAuthority('role:update')")
     @PutMapping(value = "/a/u/admin/role")
     public ResponseBo updateRoleModuleByRoleId(Long roleId, List<Long> moduleIdList)  throws Exception {
         log.info("args for updateRoleModuleByRoleId: roleId=[{}]&moduleIdList=[{}]",roleId,moduleIdList);

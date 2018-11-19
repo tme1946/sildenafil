@@ -31,12 +31,11 @@ public class TaUserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) {
-        log.info("args for security's loadUserByUsername is: username={}",username);
+        log.info("args for security's loadUserByUsername is: username=[{}]",username);
         User user = userService.getUserByUserName(username);
         if (user != null) {
             //根据用户名得到用户权限字符串
             String permissions = menuService.getPermissionsByUserName(user.getUserName());
-            System.out.println(user.getUserName() + "对应的权限为：" + permissions);
             //使用用户名密码和权限字符串生成userDetails对象
             return new MyUserDetails(user.getUserName(), user.getPassword(), true, true, true, true,
                     AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));

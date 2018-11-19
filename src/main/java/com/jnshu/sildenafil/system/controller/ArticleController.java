@@ -9,6 +9,7 @@ import com.jnshu.sildenafil.system.service.ArticleService;
 import com.jnshu.sildenafil.util.MyPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,10 @@ public class ArticleController {
      * @param likeEnd 点赞上限
      * @param collectionStart 收藏下限
      * @param collectionEnd 收藏上限
-     * @return 文章list
+     * @return 文章list和分页信息
      */
     @ResponseBody
+    @PreAuthorize("hasAuthority('artilce:list')")
     @GetMapping(value = "/a/u/admin/article/list")
     public ResponseBo getArticleList(Integer page, Integer size,String title,String author,
                                   Integer type,Integer status,Integer likeStart,Integer likeEnd,
@@ -57,26 +59,12 @@ public class ArticleController {
      * @return 文章内容
      */
     @ResponseBody
+    @PreAuthorize("hasAuthority('artilce:list')")
     @GetMapping(value = "/a/u/admin/article")
     public ResponseBo getArticleByArticleId(Long articleId){
         log.info("args for getArticleByArticleId : articleId={}",articleId);
         //真数据
         Article article=articleService.getArticleById(articleId);
-        //假数据
-//        Article article=new Article();
-//        article.setId(articleId);
-//        article.setCreateAt(System.currentTimeMillis());
-//        article.setCreateBy("假数据创建人");
-//        article.setUpdateAt(System.currentTimeMillis());
-//        article.setUpdateBy("假数据更新人");
-//        article.setTitle("假数据标题");
-//        article.setAuthor("假数据作者");
-//        article.setDigest("假数据摘要");
-//        article.setBody("假数据正文");
-//        article.setCover("https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwikyK_ahNbeAhUZITQIHbRYC6EQjRx6BAgBEAU&url=https%3A%2F%2Fbaike.baidu.com%2Fitem%2F%25E5%2591%25B5%25E5%2591%25B5%2F34431&psig=AOvVaw2JVJ7IJs9JiM8faqiCpdbt&ust=1542358865301283");
-//        article.setLikeAmount(1000);
-//        article.setCollectionAmount(2000);
-//        article.setStatus(1);
         if(article!=null){
             log.info("result for getArticleByArticleId : article={}",article);
             return ResponseBo.ok("操作成功").put("article",article);
@@ -89,6 +77,7 @@ public class ArticleController {
      * @return 状态
      */
     @ResponseBody
+    @PreAuthorize("hasAuthority('artilce:save')")
     @PostMapping(value = "/a/u/admin/article")
     public ResponseBo saveArticle(Article article) {
         log.info("args for saveArticle is:*** article=[{}] ***"
@@ -105,6 +94,7 @@ public class ArticleController {
      * @return 成功后返回修改的记录的id
      */
     @ResponseBody
+    @PreAuthorize("hasAuthority('artilce:update')")
     @PutMapping(value = "/a/u/admin/article")
     public ResponseBo updateArticleById(Article article) {
         log.info("args for updateArticleById is:*** article=[{}] ***"
@@ -123,6 +113,7 @@ public class ArticleController {
      * @return 成功后返回修改的记录的id
      */
     @ResponseBody
+    @PreAuthorize("hasAuthority('artilce:list')")
     @PutMapping(value = "/a/u/admin/article/status")
     public ResponseBo updateArticleStatus(Long articleId,Integer type,Integer status) {
         log.info("args for updateArticleStatus: articleId=[{}]&type=[{}]&status=[{}]",articleId,type,status);

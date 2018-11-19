@@ -29,7 +29,7 @@ public class SignController {
 
     @ResponseBody
     @GetMapping(value = "/a/u/front/sign")
-    public ResponseBo getSignList(Long studentId) {
+    public ResponseBo getSignList(Long studentId) throws Exception{
         log.info("args for getSignList : studentId={}", studentId);
         if (studentId == null){
             return ResponseBo.error("参数为空，获取数据失败");
@@ -43,7 +43,7 @@ public class SignController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/front/sign")
-    public ResponseBo sign(Long studentId) {
+    public ResponseBo sign(Long studentId) throws Exception{
         log.info("args for sign : studentId={}",studentId);
         Boolean flag = signService.addSign(studentId);
         if (!flag) {

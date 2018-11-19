@@ -62,17 +62,17 @@ mybatis-plus:
 #secuirty的相关信息配置
 tasksecurity:
     # 登录路径
-    login-url: /denglu
+    login-url: /login
     # 登录成功路径
-    login-success-url: /bsHome
+    login-success-url: /index
     # 登录失败路径
     login-fail-url: /error
     # 登出路径
-    logout-url: /dengchu
+    logout-url: /loginout
     # 首页路径
     index-url: /index
     # 免认证资源路径
-    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/denglu,/dengchu,/va/**,/bsHome,/a/u/**
+    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/login,/loginout,/va/**,/bsHome,/a/u/**
     # 记住我有效时间，单位为秒
     remember-me-timeout: 36000
     #session的同时存在；-1表示无限制
