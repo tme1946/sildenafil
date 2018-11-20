@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.domain.ResponseBo;
 import com.jnshu.sildenafil.system.domain.Student;
 import com.jnshu.sildenafil.system.service.StudentService;
@@ -35,18 +36,15 @@ public class StudentController {
      * @param [page, size, id, nickname, grade, email, phone, status, minBean, maxBean]
      * @return  com.jnshu.sildenafil.common.domain.ResponseBo
      */
+    @UseLog("学生列表")
     @ResponseBody
     @GetMapping(value = "/a/u/admin/student/list")
     public ResponseBo studentList(Integer page, Integer size
             , Long id,String nickname,Integer grade
             ,String email,Long phone,Integer status
             ,Integer minBean,Integer maxBean){
-        log.info("args for studentFuzzySelect is : " +
-                "id={},nickname={},grade={},email={},phone={},status={},minBean={},maxBean={}"
-                ,id,nickname,grade,email,phone,status,minBean,maxBean);
         IPage studentList = studentService.studentFuzzySelect(page,size
                 ,id,nickname,grade,email,phone,status,minBean,maxBean);
-        log.info("result for studentFuzzySelectSize is : Size={}",studentList.getSize());
         return ResponseBo.ok().put("data",studentList);
     }
     /**
@@ -54,10 +52,10 @@ public class StudentController {
      * @param [id]
      * @return  com.jnshu.sildenafil.common.domain.ResponseBo
      */
+    @UseLog("修改学生状态")
     @ResponseBody
     @GetMapping(value = "/a/u/admin/student/state")
     public  ResponseBo changeStudentState(Long id){
-        log.info("args for student,studentId is: studentId={}",id);
         if(id == null){
             log.error("args for studentId is null");
             return ResponseBo.error("studentId is null");
@@ -67,13 +65,10 @@ public class StudentController {
         int state = student.getStatus() > 0? 0:1;
         student.setStatus(state);
         if(studentService.updateById(student)){
-            log.info("result for changeStuStates is : studentId={}",student.getId());
             return ResponseBo.ok().put("data",student);
         }else {
             log.error("result for changeStudentState error");
             return ResponseBo.error("change states error");
         }
     }
-
-
 }

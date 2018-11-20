@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.domain.ResponseBo;
 import com.jnshu.sildenafil.system.domain.Forum;
 import com.jnshu.sildenafil.system.domain.Student;
@@ -33,14 +34,35 @@ public class ForumController {
     StudentService studentService;
     /**
      * 后台帖子列表
-     * @param [page, size, title, author, start, end]
+     * @param page, size, title, author, start, end
      * @return  com.jnshu.sildenafil.common.domain.ResponseBo
      */
+    @UseLog("帖子列表")
     @ResponseBody
     @GetMapping(value = "/a/u/admin/forum/list")
     public ResponseBo forumList(Integer page, Integer size
             , String title, String author, Long start, Long end){
-        IPage forumList = forumService.forumFuzzySelect(page,size,title,author,start,end);
-        return ResponseBo.ok().put("forumList",forumList);
+        IPage forumPage = forumService.forumFuzzySelect(page,size,title,author,start,end);
+        List<Forum> forumList = forumPage.getRecords();
+        List<Long> idList= forumList.stream().map(Forum::getId).collect(Collectors.toList());
+        List<Student> studentList = idList.stream().map(id->studentService.getById(id)).collect(Collectors.toList());
+        List<String> nameList = studentList.stream().map(Student::getNickname).collect(Collectors.toList());
+        return ResponseBo.ok().put("data",forumPage).put("nickname",nameList);
+    }
+    /**
+     *  帖子主键查询
+     * @param forumId
+     * @return  com.jnshu.sildenafil.common.domain.ResponseBo
+     */
+    @UseLog("查询帖子")
+    @ResponseBody
+    @GetMapping(value = "/a/u/admin/forum")
+    public ResponseBo getForum(Long forumId){
+        if(forumId == null){
+            log.error("args for forumId is null");
+            return ResponseBo.error("forumId is null");}
+        Forum forum = forumService.getById(forumId);
+        String nickname = studentService.getById(forum.getStudentId()).getNickname();
+        return ResponseBo.ok().put("data",forum).put("nickname",nickname);
     }
 }
