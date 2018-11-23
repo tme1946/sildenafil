@@ -3,7 +3,6 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jnshu.sildenafil.common.annotation.UseLog;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.common.validation.VideoSave;
@@ -61,12 +60,15 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      * @return 视频每页详情
      */
     @Override
-    @UseLog("后台视频列表模糊查询")
     public IPage getPage(Integer page, Integer size, String title, Integer type, Integer grade, Integer subject,
                          Integer likeStart, Integer likeEnd, Integer collectStart, Integer collectEnd,
-                         String teacher, Integer status) {
+                         String teacher, Integer status) throws ParamIsNullException {
         log.info("args for getPage is: {}", page, size, title, type, grade, subject,
                                             likeStart, likeEnd, collectStart, collectEnd, teacher, status);
+        if (page==null&&size==null) {
+            log.error("result for getPage error;page is null,size is null");
+            throw new ParamIsNullException("getPage error;args null");
+        }
         //调整page和size默认值--
         page= null==page||page<=1 ? 1 : page;
         size= null==size||size<=1||size>20 ? 10 : size;
@@ -167,14 +169,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     @Override
     public Video updateStatus(Long videoId, Integer status) throws ParamIsNullException {
         log.info("args for updateStatus is: {}", videoId);
-        if (videoId==null&&status==null) {
+        if (videoId==null||status==null) {
             log.error("result for updateStatus error;videoId null, status null");
             throw new ParamIsNullException("args is null");
         }
         Video v = new Video();
         v.setId(videoId);
         v.setStatus(status);
-
         Long vid = videoDao.updateById(v) > 0 ? v.getId() : -10000;
         log.info("result for updateStatus success; result detail: videoId={}", vid);
         return v;
