@@ -3,9 +3,7 @@ package com.jnshu.sildenafil.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.jnshu.sildenafil.common.validation.UserLogin;
-import com.jnshu.sildenafil.common.validation.UserSave;
-import com.jnshu.sildenafil.common.validation.UserUpdate;
+import com.jnshu.sildenafil.common.validation.*;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -25,7 +23,7 @@ public class User implements Serializable {
     /**
      * 用户id
      */
-    @NotNull(message ="{user.userId.validation.error}" ,groups = {UserUpdate.class})
+    @Min(value = 0,message ="{user.userId.validation.error}" ,groups = {Update.class})
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -55,26 +53,24 @@ public class User implements Serializable {
 
     /**
      * 后台账户名
+     * 允许5-16字节，允许字母数字下划线
      */
-//    @Min(value = 6,message = "{user.userName.validation.minError}",groups = {UserSave.class})
-    @Size(min = 1,max = 16,message = "{user.userName.validation.sizeError}",groups = {UserSave.class,UserLogin.class,UserUpdate.class})
-    @NotBlank(message ="{user.userName.validation.error}" ,groups = {UserSave.class})
+    @Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$",message ="{user.userName.validation.error}" ,groups = {Save.class,UserLogin.class,Update.class})
     @TableField("user_name")
     private String userName;
 
     /**
      * 后台账户密码
+     * 允许5-16字节，允许字母数字下划线
      */
-//    @Min(value = 6,message = "{user.password.validation.minError}",groups = {UserSave.class,UserUpdate.class})
-    @Size(min = 6,max = 16,message = "{user.userName.validation.sizeError}",groups = {UserSave.class,UserLogin.class,UserUpdate.class})
-    @NotBlank(message ="{user.password.validation.error}" ,groups = {UserSave.class,UserUpdate.class})
+    @Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$",message ="{user.password.validation.error}" ,groups = {Save.class})
     @TableField("password")
     private String password;
 
     /**
      * 角色id
      */
-//    @NotNull(message ="{user.roleId.validation.error}" ,groups = {UserUpdate.class,UserSave.class})
+    @Min(value = 0,message ="{user.roleId.validation.error}" ,groups = {Update.class,Save.class})
     @TableField("role_id")
     private Long roleId;
 

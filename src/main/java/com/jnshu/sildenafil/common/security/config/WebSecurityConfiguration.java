@@ -115,7 +115,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // 登录失败后的页面URI
                 .and()
                 .logout().logoutUrl(taSecurityProperties.getLogoutUrl())//登出url
-                .logoutSuccessUrl(taSecurityProperties.getLoginUrl());//登出后的跳转
+                .logoutSuccessUrl(taSecurityProperties.getLogoutSuccessUrl());//登出后的跳转
 //        http.authorizeRequests().anyRequest().permitAll();//任何请求不用认证
 //        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }

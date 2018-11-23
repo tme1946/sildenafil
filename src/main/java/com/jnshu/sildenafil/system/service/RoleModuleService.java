@@ -4,6 +4,7 @@ import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.RoleModule;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public interface RoleModuleService extends IService<RoleModule> {
      * @return 角色id
      * @throws ServiceException
      */
-    Long saveRoleModuleListByRoleId(Long roleId,List<Long> moduleIdList) throws ServiceException;
+    Long saveRoleModuleListByRoleId(Long roleId,ArrayList<Long> moduleIdList) throws ServiceException;
 
     /**根据userName增加某个角色的单个权限
      * @param userName 用户名

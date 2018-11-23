@@ -31,7 +31,7 @@ public class ModuleController {
      * @param userName 用户名
      * @return 用户模块列表
      */
-    @PreAuthorize("hasAuthority('module:list')")
+//    @PreAuthorize("hasAuthority('module:list')")
     @GetMapping(value = "/a/u/admin/module/list")
     public ResponseBo getModuleList(String userName) throws Exception{
         log.info("args for getModuleList : userName={}",userName);
@@ -48,7 +48,7 @@ public class ModuleController {
      * @param moduleId 模块id
      * @return 单个模块对象
      */
-    @PreAuthorize("hasAuthority('module:list')")
+//    @PreAuthorize("hasAuthority('module:list')")
     @GetMapping(value = "/a/u/admin/module")
     public ResponseBo getModule(Long moduleId) throws Exception{
         log.debug("args for getModule: moduleId=[{}]",moduleId);
@@ -68,7 +68,7 @@ public class ModuleController {
     @PreAuthorize("hasAuthority('module:delete')")
     @DeleteMapping(value = "/a/u/admin/module")
     public ResponseBo deleteModule(Long moduleId,String userName) throws Exception {
-        log.info("args for deleteModule: moduleId={}",moduleId);
+        log.info("args for deleteModule: moduleId={}&userName={}",moduleId,userName);
         Long roleId=roleModuleService.deleteRoleModuleByUserName(userName,moduleId);
         if(roleId!=null){
             return ResponseBo.ok("请求成功");
@@ -81,10 +81,10 @@ public class ModuleController {
      * @param module 模块信息
      * @return 保存的模块id
      */
-    @PreAuthorize("hasAuthority('module:save')")
+//    @PreAuthorize("hasAuthority('module:save')")
     @PostMapping(value = "/a/u/admin/module")
     public ResponseBo saveModule(Module module,String userName) throws Exception {
-        log.info("args for saveModule: module={}",module);
+        log.info("args for saveModule: module={}&userName={}",module,userName);
         Long moduleId=moduleService.saveModule(module);
         Long roleId=roleModuleService.saveRoleModuleByUserName(userName,moduleId);
         if(roleId!=null){
@@ -99,7 +99,7 @@ public class ModuleController {
      * @return 模块id
      * @throws Exception 自定义异常
      */
-    @PreAuthorize("hasAuthority('module:update')")
+//    @PreAuthorize("hasAuthority('module:update')")
     @PutMapping(value = "/a/u/admin/module")
     public ResponseBo updateModuleByModuleId(Module module)  throws Exception {
         log.info("args for updateModuleByModuleId: module={}",module);

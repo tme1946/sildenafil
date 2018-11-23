@@ -34,7 +34,7 @@ public class UserController {
      * @param userName 用户名
      * @return 列表信息
      */
-    @PreAuthorize("hasAuthority('user:list')")
+//    @PreAuthorize("hasAuthority('user:list')")
     @GetMapping(value = "/a/u/admin/user/list")
     public ResponseBo getUserList(Integer page, Integer size, Long roleId, String userName)throws Exception{
         log.info("args for getUserList: page={}&size={}&roleId={}&userName={}",page,size,roleId,userName);
@@ -51,7 +51,7 @@ public class UserController {
      * @param userId 用户id
      * @return 单个用户对象
      */
-    @PreAuthorize("hasAuthority('user:list')")
+//    @PreAuthorize("hasAuthority('user:list')")
     @GetMapping(value = "/a/u/admin/user")
     public ResponseBo getUserByUserId(Long userId) throws Exception{
         log.info("args for getUserByUserId: userId={}",userId);
@@ -68,7 +68,7 @@ public class UserController {
      * @param user 用户信息
      * @return 保存的用户id
      */
-    @PreAuthorize("hasAuthority('user:save')")
+//    @PreAuthorize("hasAuthority('user:save')")
     @PostMapping(value = "/a/u/admin/user")
     public ResponseBo saveUser(User user) throws Exception {
         log.info("args for saveUser: user={}",user);
@@ -84,7 +84,7 @@ public class UserController {
      * @param user 用户信息
      * @return 用户id
      */
-    @PreAuthorize("hasAuthority('user:update')")
+//    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping(value = "/a/u/admin/user")
     public ResponseBo updateUserByUserId(User user) throws Exception {
         log.info("args for updateUserByUserId: user={}",user);
@@ -103,7 +103,7 @@ public class UserController {
      * @return 用户id
      * @throws ServiceException 自定义异常
      */
-    @PreAuthorize("hasAuthority('user:update')")
+//    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping(value = "/a/u/admin/user/password")
     public ResponseBo updateUserPasswordByUserId(String passwordOld, String passwordNew, Long userId) throws Exception {
         log.info("args for updateUserPasswordByUserId: passwordOld={}&passwordNew={}&userId={}",passwordOld,passwordNew,userId);
@@ -119,7 +119,7 @@ public class UserController {
      * @param userId 用户id
      * @return 删除的用户id
      */
-    @PreAuthorize("hasAuthority('user:delete')")
+//    @PreAuthorize("hasAuthority('user:delete')")
     @DeleteMapping(value = "/a/u/admin/user")
     public ResponseBo deleteUser(Long userId) throws Exception {
         log.info("args for deleteUser: userId={}",userId);

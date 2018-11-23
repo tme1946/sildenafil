@@ -62,18 +62,20 @@ mybatis-plus:
 #secuirty的相关信息配置
 tasksecurity:
     # 登录路径
-    login-url: /login
+    login-url: /a/login
     # 登录成功路径
-    login-success-url: /index
+    login-success-url: /a/login/success
     # 登录失败路径
-    login-fail-url: /error
+    login-fail-url: /a/fail
     # 登出路径
-    logout-url: /loginout
+    logout-url: /a/logout
+    # 登出路径
+    logout-success-url: /a/logout/success
     # 首页路径
     index-url: /index
     # 免认证资源路径
-    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/hello,/index,/fail,/login,/loginout,/va/**,/bsHome,/a/u/**
+    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**,/index,/bsHome,/a/**
     # 记住我有效时间，单位为秒
     remember-me-timeout: 36000
     #session的同时存在；-1表示无限制
-    maximum-sessions: 1
+    maximum-sessions: -1

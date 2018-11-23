@@ -19,6 +19,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MockAllTest {
+
     private MockMvc mockMvc;
     @Autowired
     private org.springframework.web.context.WebApplicationContext webApplicationContext;
@@ -102,9 +103,9 @@ public class MockAllTest {
     public void moduleSaveTest()throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/a/u/admin/module")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .param("name", "留言删除")
-                .param("permission", "review:delete")
-                .param("url", "/a/u/admin/review")
+                .param("name", "测试模块")
+                .param("permission", "test:test")
+                .param("url", "aaaaaafdfe")
                 .param("type", "1")
                 .param("parentId", "9")
                 .accept(MediaType.APPLICATION_JSON))

@@ -23,6 +23,7 @@ public class UserServiceImplTest {
 
     @Test
     public void getRoleIdByUserName() {
+        System.out.println(userService.getRoleIdByUserName("admin"));
     }
 
     @Test
@@ -50,4 +51,6 @@ public class UserServiceImplTest {
     public void userLoginTest() throws Exception{
         System.out.println(userService.userLogin("admin", "123456"));
     }
+
+
 }

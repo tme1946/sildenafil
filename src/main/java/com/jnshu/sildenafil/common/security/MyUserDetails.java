@@ -47,19 +47,17 @@ public class MyUserDetails extends User {
     private String updateBy;
 
     /**
-     * 后台账户名
-     */
-    private String userName;
-
-    /**
-     * 后台账户密码
-     */
-   private String password;
-
-    /**
      * 角色id
      */
     private Long roleId;
+
+    private String password;
+    private String username;
+    private Set<GrantedAuthority> authorities;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     public MyUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
