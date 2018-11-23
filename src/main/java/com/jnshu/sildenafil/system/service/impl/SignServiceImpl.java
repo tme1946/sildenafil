@@ -48,7 +48,6 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      * @return 签到是否成功
      */
     @Override
-    @UseLog("前台签到")
     public boolean addSign(Long studentId) throws ParamIsNullException {
         log.info("args for sign is: {}", studentId);
         if (studentId == null) {
@@ -132,7 +131,6 @@ public class SignServiceImpl extends ServiceImpl<SignDao, Sign> implements SignS
      * @return 该学生签到记录List
      */
     @Override
-    @UseLog("前台获取签到列表")
     public List getSignList(Long studentId) throws ParamIsNullException {
         log.info("args for getSignList is: {}", studentId);
         if (studentId == null) {

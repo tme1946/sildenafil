@@ -1,7 +1,6 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.jnshu.sildenafil.common.domain.ResponseBo;
-import com.jnshu.sildenafil.system.domain.Sign;
 import com.jnshu.sildenafil.system.service.SignService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 /**
  * #Title: SignController
  * #ProjectName sildenafil
- * #Description: TODO
+ * #Description: 蛤
  * #author lihoo
  * #date 2018/11/14-13:44
  * @author lihoo
@@ -24,12 +23,16 @@ import java.util.List;
 @Slf4j
 @Controller
 public class SignController {
+    private final SignService signService;
+
     @Autowired
-    private SignService signService;
+    public SignController(SignService signService) {
+        this.signService = signService;
+    }
 
     @ResponseBody
     @GetMapping(value = "/a/u/front/sign")
-    public ResponseBo getSignList(Long studentId) throws Exception{
+    public ResponseBo getSignList(Long studentId) throws Exception {
         log.info("args for getSignList : studentId={}", studentId);
         if (studentId == null){
             return ResponseBo.error("参数为空，获取数据失败");
@@ -43,7 +46,7 @@ public class SignController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/front/sign")
-    public ResponseBo sign(Long studentId) throws Exception{
+    public ResponseBo sign(Long studentId) throws Exception {
         log.info("args for sign : studentId={}",studentId);
         Boolean flag = signService.addSign(studentId);
         if (!flag) {

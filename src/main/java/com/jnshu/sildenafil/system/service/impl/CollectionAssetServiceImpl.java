@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.system.domain.CollectionAsset;
 import com.jnshu.sildenafil.system.mapper.CollectionAssetDao;
 import com.jnshu.sildenafil.system.service.CollectionAssetService;
@@ -41,8 +42,12 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
      * @return 返回点赞的结果
      */
     @Override
-    public Long insertCollection(Integer type, Long typeId, Long studentId) {
+    public Long insertCollection(Integer type, Long typeId, Long studentId) throws ParamIsNullException {
         log.info("args for insertCollection is : type={}&typeId={}&studentId={}&", type, typeId, studentId);
+        if(type==null||typeId==null||studentId==null){
+            log.error("result for insertCollection error;type is null,typeId is null,studentId is null");
+            throw new ParamIsNullException("insertCollection error;args null");
+        }
         QueryWrapper<CollectionAsset> collectionAssetQueryWrapper = new QueryWrapper<>();
         collectionAssetQueryWrapper
                 .eq("type_id", typeId)
@@ -69,8 +74,12 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
      * @return 返回资料id
      */
     @Override
-    public Long removeCollection(Integer type, Long typeId, Long studentId) {
+    public Long removeCollection(Integer type, Long typeId, Long studentId) throws ParamIsNullException {
         log.info("args for removeCollection is : type={}&typeId={}&studentId={}&", type, typeId, studentId);
+        if(type==null||typeId==null||studentId==null){
+            log.error("result for removeCollection error;type is null,typeId is null,studentId is null");
+            throw new ParamIsNullException("removeCollection error;args null");
+        }
         QueryWrapper<CollectionAsset> collectionAssetQueryWrapper = new QueryWrapper<>();
         collectionAssetQueryWrapper
                 .eq("type_id", typeId)
@@ -90,8 +99,12 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
      * @return 0为不赞，1为点赞
      */
     @Override
-    public int selectCollection(Integer type, Long typeId, Long studentId) {
+    public int selectCollection(Integer type, Long typeId, Long studentId) throws ParamIsNullException {
         log.info("args for selectCollection is : type={}&typeId={}&studentId={}&", type, typeId, studentId);
+        if(type==null||typeId==null||studentId==null){
+            log.error("result for selectCollection error;type is null,typeId is null,studentId is null");
+            throw new ParamIsNullException("selectCollection error;args null");
+        }
         QueryWrapper<CollectionAsset> collectionAssetQueryWrapper = new QueryWrapper<>();
         collectionAssetQueryWrapper
                 .eq("type_id", typeId)
@@ -108,7 +121,12 @@ public class CollectionAssetServiceImpl extends ServiceImpl<CollectionAssetDao, 
     }
 
     @Override
-    public List<Long> studentCollection(Integer type, Long studentId) {
+    public List<Long> studentCollection(Integer type, Long studentId) throws ParamIsNullException {
+        log.info("args for studentCollection is : type={}&studentId={}&", type, studentId);
+        if(type==null||studentId==null){
+            log.error("result for studentCollection error;type is null,studentId is null");
+            throw new ParamIsNullException("studentCollection error;args null");
+        }
         QueryWrapper<CollectionAsset> wrapper = new QueryWrapper<>();
         wrapper.eq("student_id", studentId)
                 .eq("type", type)

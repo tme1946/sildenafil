@@ -3,7 +3,7 @@ package com.jnshu.sildenafil.system.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jnshu.sildenafil.common.annotation.UseLog;
-import com.jnshu.sildenafil.system.domain.Log;
+import com.jnshu.sildenafil.system.domain.AdminLog;
 import com.jnshu.sildenafil.system.mapper.LogDao;
 import com.jnshu.sildenafil.system.service.LogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -32,7 +32,7 @@ import java.util.*;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class LogServiceImpl extends ServiceImpl<LogDao, Log> implements LogService {
+public class LogServiceImpl extends ServiceImpl<LogDao, AdminLog> implements LogService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -40,7 +40,7 @@ public class LogServiceImpl extends ServiceImpl<LogDao, Log> implements LogServi
     ObjectMapper objectMapper;
 
     @Override
-    public void saveLog(ProceedingJoinPoint joinPoint, Log log) throws JsonProcessingException {
+    public void saveLog(ProceedingJoinPoint joinPoint, AdminLog log) throws JsonProcessingException {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

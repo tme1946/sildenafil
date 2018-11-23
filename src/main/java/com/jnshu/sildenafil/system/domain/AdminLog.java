@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author Taimur
  * @since 2018-11-12
  */
-public class Log implements Serializable {
+public class AdminLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.jnshu.sildenafil.system.mapper.LogDao">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jnshu.sildenafil.system.domain.Log">
+    <resultMap id="BaseResultMap" type="com.jnshu.sildenafil.system.domain.AdminLog">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="operation" property="operation" />

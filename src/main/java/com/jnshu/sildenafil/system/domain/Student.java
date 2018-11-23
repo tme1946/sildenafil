@@ -69,7 +69,7 @@ public class Student implements Serializable {
      * 电话
      */
     @TableField("phone")
-    private Long phone;
+    private String phone;
 
     /**
      * 逆袭豆
@@ -163,11 +163,11 @@ public class Student implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
     public Integer getBean() {

@@ -2,8 +2,6 @@ package com.jnshu.sildenafil.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.common.domain.ResponseBo;
-import com.jnshu.sildenafil.common.exception.ParamIsNullException;
-import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.jnshu.sildenafil.system.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * #Title: VideoController
  * #ProjectName sildenafil
- * #Description: TODO
+ * #Description: 蛤
  * #author lihoo
  * #date 2018/11/13-11:11
  * @author lihoo
@@ -37,7 +35,7 @@ public class VideoController {
     @GetMapping(value = "/a/u/admin/video")
     public ResponseBo getVideoPage(Integer page, Integer size, String title, Integer type, Integer grade, Integer subject,
                                    Integer likeStart, Integer likeEnd, Integer collectStart, Integer collectEnd,
-                                   String teacher, Integer status) {
+                                   String teacher, Integer status) throws Exception {
         log.info("args for getVideoPage is : page={}, size={}",page,size);
         if(page == null || size == null) {
             return ResponseBo.error("参数为空，获取数据失败");
@@ -51,7 +49,7 @@ public class VideoController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/admin/video")
-    public ResponseBo saveVideo(Video video) throws ParamIsNullException, ServiceException {
+    public ResponseBo saveVideo(Video video) throws Exception {
         log.info("args for saveVideo : video={}",video);
         Video v = videoService.saveVideo(video);
         if (v == null) {
@@ -62,7 +60,7 @@ public class VideoController {
 
     @ResponseBody
     @PutMapping(value = "/a/u/admin/video")
-    public ResponseBo updateVideoById(Video video) throws ParamIsNullException, ServiceException {
+    public ResponseBo updateVideoById(Video video) throws Exception {
         log.info("args for updateVideoById : video={}", video);
         Long vid = videoService.updateVideo(video);
         if (vid == null) {

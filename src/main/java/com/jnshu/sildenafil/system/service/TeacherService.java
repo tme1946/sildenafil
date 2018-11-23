@@ -28,6 +28,7 @@ public interface TeacherService extends IService<Teacher> {
      * 后台通过id查询老师详情
      * @param teacherId 老师id
      * @return 查询到的老师详情
+     * @throws ParamIsNullException 空参
      */
     Teacher getTeacherById(Long teacherId) throws ParamIsNullException;
 
@@ -44,6 +45,7 @@ public interface TeacherService extends IService<Teacher> {
      * 后台删除老师
      * @param teacherId 老师id
      * @return 是否成功删除老师
+     * @throws ParamIsNullException 空参
      */
     Boolean removeTeacherById(Long teacherId) throws ParamIsNullException;
 

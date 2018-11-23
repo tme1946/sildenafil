@@ -1,8 +1,6 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.jnshu.sildenafil.common.domain.ResponseBo;
-import com.jnshu.sildenafil.common.exception.ParamIsNullException;
-import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.Teacher;
 import com.jnshu.sildenafil.system.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +34,7 @@ public class TeacherController {
 
     @ResponseBody
     @PostMapping(value = "/a/u/admin/teacher")
-    public ResponseBo saveTeacher(Teacher teacher)  throws ServiceException, ParamIsNullException {
+    public ResponseBo saveTeacher(Teacher teacher)  throws Exception {
         log.info("args for saveTeacher is: teacher={}", teacher);
         Teacher t = teacherService.saveTeacher(teacher);
         if (t == null) {
@@ -69,7 +67,7 @@ public class TeacherController {
 
     @ResponseBody
     @GetMapping(value = "/a/u/admin/teacher")
-    public ResponseBo getTeacherById(Long teacherId) throws Exception{
+    public ResponseBo getTeacherById(Long teacherId) throws Exception {
         log.info("args for getTeacherById is: teacherId={}", teacherId);
         Teacher t = teacherService.getTeacherById(teacherId);
         if (t == null) {

@@ -19,6 +19,7 @@ import java.nio.file.AccessDeniedException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
     public ResponseBo accessDeniedException(HttpServletRequest request, AccessDeniedException se){
