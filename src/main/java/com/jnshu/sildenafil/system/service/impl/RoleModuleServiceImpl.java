@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -133,7 +134,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
             throw new ServiceException("deleteRoleModuleByUserName error;args null");
         }
         Long roleId=userService.getRoleIdByUserName(userName);
-        if(roleId==null){
+        if(roleId==null||roleId==1L){
             log.warn("result for deleteRoleModuleByUserName error;userName is notExit");
             throw new ServiceException("deleteRoleModuleByUserName error;args null");
         }
@@ -185,7 +186,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleDao, RoleModule
      * @throws ServiceException
      */
     @Override
-    public Long saveRoleModuleListByRoleId(Long roleId, List<Long> moduleIdList) throws ServiceException{
+    public Long saveRoleModuleListByRoleId(Long roleId, ArrayList<Long> moduleIdList) throws ServiceException{
         log.debug("args for saveRoleModuleListByRoleId: roleId=[{}]&moduleIdList=[{}]",roleId,moduleIdList);
         if(null==roleId||moduleIdList==null||moduleIdList.size()==0){
             log.error("result for saveRoleModuleListByRoleId error;args is null");

@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.common.userName.UserNameUtil;
-import com.jnshu.sildenafil.common.validation.UserLogin;
-import com.jnshu.sildenafil.common.validation.UserSave;
-import com.jnshu.sildenafil.common.validation.UserUpdate;
+import com.jnshu.sildenafil.common.validation.*;
 import com.jnshu.sildenafil.system.domain.Article;
 import com.jnshu.sildenafil.system.domain.Role;
 import com.jnshu.sildenafil.system.domain.User;
@@ -116,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         log.debug("args for getRoleIdByUserName: userName={}", userName);
         if (StringUtils.isNotBlank(userName)) {
             QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-            userQueryWrapper.select("id").eq("user_name", userName);
+            userQueryWrapper.eq("user_name", userName);
             User user = userDao.selectOne(userQueryWrapper);
             if (user == null) {
                 log.error("result for getRoleIdByUserName error;userName is notExit");
@@ -201,7 +199,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             throw new ServiceException("saveUser error;args null");
         }
         //校验结果抛出serviceException
-        ValidationUtils.validate(user, UserSave.class);
+        ValidationUtils.validate(user, Save.class);
         user.setCreateAt(System.currentTimeMillis());
         user.setCreateBy("admin");
         user.setUpdateAt(System.currentTimeMillis());
@@ -232,7 +230,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             throw new ServiceException("updateUserByUserId error;args null");
         }
         //校验结果抛出serviceException
-        ValidationUtils.validate(user, UserUpdate.class);
+        ValidationUtils.validate(user, Update.class);
         user.setUpdateAt(System.currentTimeMillis());
         user.setUpdateBy("admin");
         int i = userDao.updateById(user);

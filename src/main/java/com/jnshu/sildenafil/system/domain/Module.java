@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.jnshu.sildenafil.common.validation.Save;
 import com.jnshu.sildenafil.common.validation.Update;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -25,7 +24,7 @@ public class Module implements Serializable {
     /**
      * 模块id
      */
-    @NotNull(message ="{module.id.validation.error}" ,groups = {Update.class})
+    @Min(value = 0,message ="{module.id.validation.error}" ,groups = {Update.class,Save.class} )
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -56,14 +55,13 @@ public class Module implements Serializable {
     /**
      * 模块名称
      */
-    @NotBlank(message ="{module.name.validation.error}" ,groups = {Update.class,Save.class})
+    @Size(min = 1,max=20,message ="{module.name.validation.error}" ,groups = {Update.class,Save.class})
     @TableField("name")
     private String name;
 
     /**
      * 权限标识
      */
-    @NotBlank(message ="{module.permission.validation.error}" ,groups = {Update.class,Save.class})
     @TableField("permission")
     private String permission;
 
@@ -77,14 +75,15 @@ public class Module implements Serializable {
     /**
      * 模块类型,0为菜单,1为按钮，默认为0；
      */
-    @NotNull(message ="{module.type.validation.error}" ,groups = {Update.class,Save.class})
+    @Max(value = 1,message ="{module.type.validation.error}" ,groups = {Update.class,Save.class} )
+    @Min(value = 0,message ="{module.type.validation.error}" ,groups = {Update.class,Save.class} )
     @TableField("type")
     private Integer type;
 
     /**
      * 父模块id
      */
-    @NotNull(message ="{module.parentId.validation.error}" ,groups = {Update.class,Save.class})
+    @Min(value = 0,message ="{module.parentId.validation.error}" ,groups = {Update.class,Save.class} )
     @TableField("parent_id")
     private Long parentId;
 

@@ -36,6 +36,10 @@ public class TaSecurityProperties {
      */
     private String logoutUrl;
     /**
+     * 登出成功 URL
+     */
+    private String logoutSuccessUrl;
+    /**
      * 主页 URL
      */
     private String indexUrl;

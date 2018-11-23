@@ -99,7 +99,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     @Override
     public Long deleteRoleByRoleId(Long roleId) throws ServiceException{
         log.info("args for deleteRoleByRoleId: roleId={}",roleId);
-        if(null==roleId){
+        if(null==roleId||1L==roleId){
             log.error("result for deleteRoleByRoleId error;roleId is null");
             throw new ServiceException("deleteRoleByRoleId error;args null");
         }

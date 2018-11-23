@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.system.controller;
 
 import com.jnshu.sildenafil.common.domain.ResponseBo;
+import com.jnshu.sildenafil.common.userName.UserNameUtil;
 import com.jnshu.sildenafil.system.domain.Role;
 import com.jnshu.sildenafil.system.domain.User;
 import com.jnshu.sildenafil.system.service.ModuleService;
@@ -26,41 +27,46 @@ public class SecurityController {
     private ModuleService moduleService;
     @Autowired
     private RoleService roleService;
-    /**
+
+    /**用来接收注销的用户并输出信息
      * @return
      */
     @ResponseBody
-    @RequestMapping("/denglu")
-    public ResponseBo denglu(String userName, String password) throws Exception {
-        log.info("args for userLogin: userName=[{}]&password=[{}]",userName,password);
-        Long userId=userService.userLogin(userName,password);
-        if(null!=userId){
+    @RequestMapping("/a/logout/success")
+    public ResponseBo logout()  {
+        //注销登陆
+        return ResponseBo.ok("注销成功");
+    }
+
+    /** 登陆成功后输出user和role信息
+     * @return 登陆成功的uer和role信息
+     * @throws Exception 抛出异常
+     */
+    @ResponseBody
+    @RequestMapping("/a/login/success")
+    public ResponseBo loginSuccess() throws Exception {
+        String userName=UserNameUtil.getUsername();
+        log.info("args for userLogin: userName=[{}]",userName);
+        if(null!=userName){
             //获取用户的user和role；
-            List moduleList=moduleService.getModuleListByUserName(userName);
             User user=userService.getUserByUserName(userName);
             Role role=roleService.getRoleByRoleId(user.getRoleId());
             return ResponseBo.ok("密码正确")
                     .put("user",user)
                     .put("role",role);
         }
+        return ResponseBo.ok("没有信息");
+    }
+
+    /**登陆失败处理的类
+     * @return 密码错误
+     */
+    @ResponseBody
+    @RequestMapping("/a/fail")
+    public ResponseBo loginFail() {
+        //获取用户的user和role；
         return ResponseBo.error("密码错误");
     }
 
-//    /**
-//     * @return
-//     */
-//    @RequestMapping("/error")
-//    public String error() {
-//
-//        return "/error";
-//    }
-    /**
-     * @return
-     */
-    @RequestMapping("/loginout")
-    public String loginout() {
-
-        return "/loginout";
-    }
 }
 

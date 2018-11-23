@@ -1,6 +1,7 @@
 package com.jnshu.sildenafil.feifei;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 import com.jnshu.sildenafil.system.domain.User;
@@ -45,5 +46,14 @@ public class UserTest {
         IPage iPage=userService.getUserList(null,null,null,
                 "o");
         System.out.println(iPage);
+    }
+
+    @Test
+    public void userDaoTest() {
+        String username="jjjjk";
+        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("user_name",username);
+        User user = userDao.selectOne(queryWrapper);
+        System.out.println(user);
     }
 }
