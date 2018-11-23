@@ -1,13 +1,12 @@
 package com.jnshu.sildenafil.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.jnshu.sildenafil.system.domain.LikeAsset;
 import com.jnshu.sildenafil.system.domain.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jnshu.sildenafil.common.exception.ParamIsNullException;
 import com.jnshu.sildenafil.common.exception.ServiceException;
 
-import java.util.List;
+
 
 /**
  * <p>
@@ -35,10 +34,11 @@ public interface VideoService extends IService<Video> {
      * @param teacher 老师名
      * @param status 上下架状态
      * @return 分页后的视频List
+     * @throws ParamIsNullException 空参
      */
     IPage getPage(Integer page, Integer size, String title, Integer type, Integer grade, Integer subject,
                   Integer likeStart, Integer likeEnd, Integer collectStart, Integer collectEnd,
-                  String teacher, Integer status);
+                  String teacher, Integer status) throws ParamIsNullException;
 
 
     /**
@@ -64,6 +64,7 @@ public interface VideoService extends IService<Video> {
      * @param videoId 视频id
      * @param status 视频上下架状态
      * @return 更新上下架后的视频
+     * @throws ParamIsNullException 空参
      */
     Video updateStatus(Long videoId, Integer status) throws ParamIsNullException;
 }

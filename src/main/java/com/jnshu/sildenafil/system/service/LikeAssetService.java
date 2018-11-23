@@ -20,6 +20,7 @@ public interface LikeAssetService extends IService<LikeAsset> {
      * @param typeId 资料id
      * @param studentId 学生id
      * @return 返回点赞的结果
+     * @throws ParamIsNullException 空参
      */
     Long insertLike(Integer type,Long typeId,Long studentId) throws ParamIsNullException;
 
@@ -29,6 +30,7 @@ public interface LikeAssetService extends IService<LikeAsset> {
      * @param typeId 资料id
      * @param studentId 学生id
      * @return 0为不赞，1为点赞
+     * @throws ParamIsNullException 空参
      */
     int selectLike(Integer type,Long typeId,Long studentId) throws ParamIsNullException;
 }
